@@ -1,0 +1,29 @@
+<app-header></app-header>
+<!-- <app-sidebar></app-sidebar> -->
+
+<div class="order-confirmation-container">
+  <div class="order-confirmation">
+    <h2>Order Confirmation</h2>
+    <p>Thank you for your order!</p>
+    <div class="order-details">
+      <h3>Order Details</h3>
+      <p>Order Number: {{ orderNumber }}</p>
+      <p>Estimated Delivery: {{ estimatedDeliveryDate }} at Noon Hour.</p>
+    </div>
+    <button>Continue Shopping</button>
+    <div class="confetti-container">
+      <div 
+        class="confetti" 
+        *ngFor="let confetti of confettis"
+        [ngStyle]="{
+          '--random-duration': confetti.duration,
+          '--random-delay': confetti.delay,
+          '--random-left': confetti.left,
+          '--random-size': confetti.size
+        }"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer> 

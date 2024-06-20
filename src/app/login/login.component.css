@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 0;
+  width: 100%;
+  height: 100vh;
+  margin-top: 60px;
+  margin-left: 50px;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%; 
+  object-fit: cover; 
+  margin-left: 20%;
+}
+
+label{
+  font-weight: bold;
+}
+
+.formdiv {
+  position: absolute;
+  top: 55%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(231, 228, 228, 0.8); 
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 90%; 
+  width: 300px; 
+}
+
+/* Media Query for responsiveness */
+@media (max-width: 768px) {
+  .formdiv {
+    width: 90%;
+    max-width: 90%;
+  }
+}

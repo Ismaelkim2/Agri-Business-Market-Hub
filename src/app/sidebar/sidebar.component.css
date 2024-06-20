@@ -1,0 +1,59 @@
+.sidebar {
+  background-color: rgb(10, 187, 10);
+  height: 100%;
+  width: 200px;
+  height: 100vh;
+  top: 0;
+  position: fixed;
+  overflow-y: auto;
+  transition: width 0.3s;
+}
+
+.nav-link {
+  color: #fff !important;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.nav-link.active {
+  background-color: #212529;
+}
+
+.nav {
+  margin-top: 20px;
+}
+
+.nav-item {
+  
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+  
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+  }
+
+  .navbar-toggler {
+      display: block;
+  }
+
+  .collapse {
+      display: none;
+  }
+
+  .collapse.show {
+      display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-item {
+      font-size: 20px;
+      padding-top: 10px;
+  }
+}

@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<div class="create-post-container">
+  <div class="create-post card shadow-sm p-4">
+    <div class="d-flex align-items-center mb-3">
+      <img src="assets/images/me.jpg" alt="User Photo" class="user-photo">
+      <input type="text" class="form-control" placeholder="Post your products here..." (focus)="navigateToNewPost()">
+    </div>
+  </div>
+</div>
+
+<div class="post-list">
+  <div class="updates">
+  <h2>Farmers Products</h2>
+  <button class="btn btn-primary mb-3" (click)="navigateToNewPost()">New Post</button>
+
+  <div *ngIf="posts.length === 0" class="alert alert-info">
+    No posts found.
+  </div>
+</div>
+
+  <div *ngFor="let post of posts" class="card mb-3">
+    <img class="card-img-top" [src]="post.imageUrl" alt="Post Image" style="height: 100px;width: 100px;">
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="card-text">{{ post.content }}</p>
+      <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+      <button class="btn btn-outline-primary" (click)="incrementLikes(post.id)">Like</button>
+      <button class="btn btn-outline-info" (click)="incrementViews(post.id)">View</button>
+      <button class="btn btn-outline-warning" (click)="editPost(post)">Edit</button>
+      <button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,22 @@
+<app-header></app-header>
+
+<div class="new-post">
+  <h2>Create New Post</h2>
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Title:</label>
+      <input type="text" formControlName="title" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Content:</label>
+      <textarea formControlName="content" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Image:</label>
+      <input type="file" (change)="onFileChange($event)" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Create Post</button>
+  </form>
+</div>
+
+<app-footer></app-footer>
