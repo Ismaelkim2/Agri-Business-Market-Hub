@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditPostComponent implements OnInit {
   post: Post | null = null;
   postId: number;
+  selectedFile: File | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,13 +40,23 @@ export class EditPostComponent implements OnInit {
     );
   }
 
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   savePost(): void {
     if (this.post) {
-      this.postService.updatePost(this.post).subscribe(
+      const postData = {
+        ...this.post,
+        // Include other fields if necessary
+      };
+      
+      this.postService.updatePost(postData, this.selectedFile).subscribe(
         () => {
           this.snackBar.open('Post updated successfully', 'Close', {
             duration: 5000,
           });
+          this.postService.notifyPostsChanged();  // Notify post update
           this.router.navigate(['/post-list']);
         },
         error => {

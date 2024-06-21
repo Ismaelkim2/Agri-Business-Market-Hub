@@ -16,8 +16,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
-    this.postsSubscription = this.postService.getPosts().subscribe(posts => {
-      this.posts = posts;
+    this.loadPosts();
+    this.postsSubscription = this.postService.postsChanged.subscribe(() => {
+      this.loadPosts();
     });
   }
 
@@ -25,6 +26,12 @@ export class PostListComponent implements OnInit, OnDestroy {
     if (this.postsSubscription) {
       this.postsSubscription.unsubscribe();
     }
+  }
+
+  loadPosts(): void {
+    this.postService.getPosts().subscribe(posts => {
+      this.posts = posts;
+    });
   }
 
   incrementLikes(postId: number): void {
@@ -51,7 +58,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   deletePost(postId: number): void {
     this.postService.deletePost(postId).subscribe(() => {
-      this.posts = this.posts.filter(p => p.id !== postId);
+      this.posts = this.posts.filter(post => post.id !== postId);
     });
   }
 
