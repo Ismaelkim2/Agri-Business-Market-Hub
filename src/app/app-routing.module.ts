@@ -18,6 +18,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: 'new-post', component: NewPostComponent },
   { path: 'edit-post/:id', component: EditPostComponent },
   {path: 'our-services',component:OurServicesComponent},
-  {path:'about-us',component:AboutUsComponent}
+  {path:'about-us',component:AboutUsComponent},
+  {path:'faq',component:FaqComponent}
 
 ];
 

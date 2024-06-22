@@ -28,6 +28,12 @@ export class ProductListComponent implements OnInit {
   }
 
   quickView(product: Product): void {
-    alert(`Quick view of ${product.name}`);
+    alert(`Quick view of ${product.name}
+      ${product.imageUrl}
+      ${product.description}
+      
+      `
+                        
+    );
   }
 }

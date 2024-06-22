@@ -31,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     NewPostComponent,
     EditPostComponent,
     OurServicesComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
