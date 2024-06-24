@@ -19,7 +19,7 @@ export class LoginComponent {
     this.dataService.signIn({ phoneNumber: this.phoneNumber, password: this.password })
       .subscribe(success => {
         if (success) {
-          this.router.navigate(['/payment-method']);
+          this.router.navigate(['/post-list']); // Navigate to post list upon successful login
         } else {
           this.errorMessage = 'Incorrect Phone Number or Password';
         }

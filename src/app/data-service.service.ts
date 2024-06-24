@@ -7,13 +7,14 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DataServiceService {
+  private apiUrl = 'http://localhost:8080/api/user';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   private loggedInUserSubject = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) { }
 
   signIn(credentials: { phoneNumber: string, password: string }): Observable<boolean> {
-    return this.http.post<any>('http://localhost:8080/api/user/login', credentials)
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
       .pipe(
         map(response => {
           if (response && response.token) {
@@ -34,7 +35,7 @@ export class DataServiceService {
   }
 
   private fetchUserDetails(phoneNumber: string): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/user/details', { params: { phoneNumber } });
+    return this.http.get<any>(`${this.apiUrl}/details`, { params: { phoneNumber } });
   }
 
   signOut(): void {
@@ -49,4 +50,5 @@ export class DataServiceService {
   get loggedInUser(): Observable<any> {
     return this.loggedInUserSubject.asObservable();
   }
+
 }

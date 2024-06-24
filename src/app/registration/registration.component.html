@@ -51,6 +51,15 @@
               </div>
             </div>
 
+
+            <div class="mb-0">
+              <label for="userImage" class="form-label">Upload User Image</label>
+              <input type="file" class="form-control" id="userImage" name="userImage" (change)="onFileChange($event)" accept="image/*" required>
+              <div class="invalid-feedback">
+                Please upload an image for your profile.
+              </div>
+            </div>
+
             <div class="form-check mb-0">
               <input type="checkbox" class="form-check-input" id="above18" name="above18" [(ngModel)]="formData.above18" required>
               <label class="form-check-label" for="above18">Are you above 18 years?</label>

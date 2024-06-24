@@ -7,7 +7,7 @@
         <div class="card-body">
           <div class="d-flex align-items-center mb-3">
             <img src="assets/images/me.jpg" alt="User Photo" class="user-photo">
-            <input type="text" class="form-control" placeholder="Post your products here..." (focus)="navigateToNewPost()">
+            <input type="text" class="form-control" placeholder="Post your products here..."  routerLink="/new-post">
           </div>
         </div>
       </div>
@@ -23,19 +23,33 @@
     No posts found.
   </div>
 </div>
-
+<!-- post-list.component.html -->
 <div *ngFor="let post of posts" class="card mb-3">
-  <img class="card-img-top" [src]="'http://localhost:8080/' + post.imageUrl" alt="Post Image" style="height: 200px;width: 100%">
   <div class="card-body">
-    <h5 class="card-title">{{ post.title }}</h5>
-    <p class="card-text">{{ post.productType }}</p>
-    <p class="card-text" *ngIf="post.age !== undefined"> <strong>Age</strong>: {{ post.age }}</p>
+
+ <!-- Display user image and name -->
+ <div class="align-items-center mb-3" *ngIf="loggedInUser">
+  <!-- <img *ngIf="loggedInUser.userImageUrl" [src]="'http://localhost:8080/' + loggedInUser.userImageUrl" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;"> -->
+  <img [src]="post.userImageUrl" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
+  <div>
+    <small>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }} updated this post.</small>
+  </div>
+</div>
+<div *ngIf="!loggedInUser">
+  <strong>User information not available</strong>
+</div>
+ 
+    <!-- Display post details -->
+    <h5 class="card-title"><strong>Title</strong>: {{ post.title }}</h5>
+    <p class="card-text"><strong>Type of Livestock</strong>: {{ post.productType }}</p>
+    <p class="card-text" *ngIf="post.age !== undefined"><strong>Age</strong>: {{ post.age }}</p>
     <p class="card-text" *ngIf="post.salesAmount !== undefined"><strong>Sales Amount</strong>: {{ post.salesAmount }}</p>
-    <p class="card-text" *ngIf="post.poultryType"> <strong>Poultry Type</strong>: {{ post.poultryType }}</p>
-    <p class="card-text" *ngIf="post.weight !== undefined"> <strong>Weight</strong>: {{ post.weight }}</p>
+    <p class="card-text" *ngIf="post.poultryType"><strong>Poultry Type</strong>: {{ post.poultryType }}</p>
+    <p class="card-text" *ngIf="post.weight !== undefined"><strong>Weight</strong>: {{ post.weight }}</p>
     <p class="card-text" *ngIf="post.livestockType"><strong>Livestock Type</strong>: {{ post.livestockType }}</p>
     <p class="card-text" *ngIf="post.livestockDescription"><strong>Livestock Description</strong>: {{ post.livestockDescription }}</p>
-    <p class="card-text" style="font-family:Haettenschweiler, sans-serif;"><small>Post CreatedBy</small>:{{ post.createdBy }}</p>
+    <img class="card-img-top" [src]="'http://localhost:8080/' + post.imageUrl" alt="Post Image" style="height: 200px; width: 100%">
+    <p class="card-text"><small>Post Created By</small>: {{ post.createdBy }}</p>
     <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
     <button class="btn btn-outline-primary" (click)="incrementLikes(post.id)">Like</button>
     <button class="btn btn-outline-info" (click)="incrementViews(post.id)">View</button>
@@ -44,5 +58,5 @@
   </div>
 </div>
 
-
 <app-footer></app-footer>
+

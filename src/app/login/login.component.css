@@ -5,7 +5,6 @@
   width: 100%;
   height: 100vh;
   margin-top: 60px;
-  margin-left: 50px;
 }
 
 .image-wrapper {
@@ -19,7 +18,7 @@
   width: 100%;
   height: 100%; 
   object-fit: cover; 
-  margin-left: 20%;
+  margin-left: 2%;
 }
 
 label{
@@ -28,8 +27,8 @@ label{
 
 .formdiv {
   position: absolute;
-  top: 55%;
-  left: 80%;
+  top: 45%;
+  left: 60%;
   transform: translate(-50%, -50%);
   background-color: rgba(231, 228, 228, 0.8); 
   border-radius: 12px;

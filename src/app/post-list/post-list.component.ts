@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from '../models/post.model';
 import { PostService } from '../post.service';
-import { Router } from '@angular/router';
+import { DataServiceService } from '../data-service.service';
 
 @Component({
   selector: 'app-post-list',
@@ -11,14 +11,22 @@ import { Router } from '@angular/router';
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
-  private postsSubscription: Subscription | null = null;
+  postsSubscription: Subscription | undefined;
+  loggedInUser: any; 
 
-  constructor(private postService: PostService, private router: Router) {}
+  constructor(private postService: PostService, private dataService: DataServiceService) { }
 
   ngOnInit(): void {
     this.loadPosts();
     this.postsSubscription = this.postService.postsChanged.subscribe(() => {
       this.loadPosts();
+    });
+
+    // Fetch logged in user details
+    this.dataService.loggedInUser.subscribe(user => {
+      this.loggedInUser = user;
+      console.log("loggedIn user:",this.loggedInUser)
+      this.loadPosts
     });
   }
 
@@ -28,7 +36,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadPosts(): void {
+  private loadPosts(): void {
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts;
     });
@@ -36,33 +44,23 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   incrementLikes(postId: number): void {
     this.postService.incrementLikes(postId).subscribe(() => {
-      const post = this.posts.find(p => p.id === postId);
-      if (post) {
-        post.likes++;
-      }
+      this.loadPosts();
     });
   }
 
   incrementViews(postId: number): void {
     this.postService.incrementViews(postId).subscribe(() => {
-      const post = this.posts.find(p => p.id === postId);
-      if (post) {
-        post.views++;
-      }
+      this.loadPosts();
     });
   }
 
   editPost(post: Post): void {
-    this.router.navigate(['/edit-post', post.id]);
+    // Implement edit post functionality
   }
 
   deletePost(postId: number): void {
     this.postService.deletePost(postId).subscribe(() => {
-      this.posts = this.posts.filter(post => post.id !== postId);
+      this.loadPosts();
     });
-  }
-
-  navigateToNewPost(): void {
-    this.router.navigate(['/new-post']);
   }
 }

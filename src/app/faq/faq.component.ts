@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from '../models/service.model';
-import { Modal } from 'bootstrap'; // Importing Bootstrap Modal
+import { Modal } from 'bootstrap'; 
 import { ServiceService } from '../service.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class FaqComponent implements OnInit {
     this.selectedFaq = faq;
     const modalElement = document.getElementById('faqModal');
     if (modalElement) {
-      const modal = new Modal(modalElement); // Creating a new instance of Modal
+      const modal = new Modal(modalElement); 
       modal.show();
     }
   }

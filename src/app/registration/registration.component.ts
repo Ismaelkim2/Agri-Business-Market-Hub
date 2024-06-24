@@ -8,7 +8,15 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-  formData = { firstName: '', lastName: '', email: '', phoneNumber: '', password: '', above18: false };
+  formData = { 
+    firstName: '', 
+    lastName: '', 
+    email: '', 
+    phoneNumber: '', 
+    password: '', 
+    above18: false,
+    userImage: null as File | null  
+  };
   error: string = '';
   success: string = '';
 
@@ -19,10 +27,30 @@ export class RegistrationComponent {
       return;
     }
 
-    this.http.post('http://localhost:8080/api/user/create', this.formData).subscribe(
+    // Create FormData object to send multipart/form-data
+    const formData = new FormData();
+    formData.append('firstName', this.formData.firstName);
+    formData.append('lastName', this.formData.lastName);
+    formData.append('email', this.formData.email);
+    formData.append('phoneNumber', this.formData.phoneNumber);
+    formData.append('password', this.formData.password);
+    formData.append('above18', String(this.formData.above18));
+    if (this.formData.userImage) {
+      formData.append('userImage', this.formData.userImage, this.formData.userImage.name); // Accessing name property
+    }
+
+    this.http.post('http://localhost:8080/api/user/create', formData).subscribe(
       (response: any) => {
         console.log('Registration successful', response);
-        this.formData = { firstName: '', lastName: '', email: '', phoneNumber: '', password: '', above18: false };
+        this.formData = { 
+          firstName: '', 
+          lastName: '', 
+          email: '', 
+          phoneNumber: '', 
+          password: '', 
+          above18: false,
+          userImage: null  
+        };
         this.error = '';
         this.success = 'Registration successful. Redirecting to login...';
 
@@ -39,13 +67,20 @@ export class RegistrationComponent {
             this.router.navigate(["/login"]);
           }, 3000);
         } else if (error.status === 400) {
-          this.error = error.error.message; // Use specific error message from the server
+          this.error = error.error.message; 
         } else {
           this.error = 'Registration failed. Please check your credentials and try again.';
         }
         this.success = '';
       }
     );
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formData.userImage = file;
+    }
   }
 
   private isFormValid(): boolean {
