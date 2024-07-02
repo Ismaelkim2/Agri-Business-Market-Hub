@@ -1,3 +1,4 @@
+<!-- post-list.component.html -->
 <app-header></app-header>
 
 <div class="container-fluid" style="margin-top: 80px;">
@@ -7,56 +8,58 @@
         <div class="card-body">
           <div class="d-flex align-items-center mb-3">
             <img src="assets/images/me.jpg" alt="User Photo" class="user-photo">
-            <input type="text" class="form-control" placeholder="Post your products here..."  routerLink="/new-post">
+            <div *ngIf="loggedInUser">
+              <strong>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</strong>
+            </div>
+            <input type="text" class="form-control" placeholder="Post your products here..." routerLink="/new-post">
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
+</div>
 
 <div class="post-list">
   <div class="updates">
-  <h2 style="text-align: center;">Farmers Products Updates:</h2>
-
-  <div *ngIf="posts.length === 0" class="alert alert-info">
-    No posts found.
+    <h2 style="text-align: center;">Farmers Products Updates:</h2>
+    <div *ngIf="posts.length === 0" class="alert alert-info">No posts found.</div>
   </div>
-</div>
-<!-- post-list.component.html -->
-<div *ngFor="let post of posts" class="card mb-3">
-  <div class="card-body">
 
- <!-- Display user image and name -->
- <div class="align-items-center mb-3" *ngIf="loggedInUser">
-  <!-- <img *ngIf="loggedInUser.userImageUrl" [src]="'http://localhost:8080/' + loggedInUser.userImageUrl" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;"> -->
-  <img [src]="post.userImageUrl" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
-  <div>
-    <small>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }} updated this post.</small>
-  </div>
-</div>
-<div *ngIf="!loggedInUser">
-  <strong>User information not available</strong>
-</div>
- 
-    <!-- Display post details -->
-    <h5 class="card-title"><strong>Title</strong>: {{ post.title }}</h5>
-    <p class="card-text"><strong>Type of Livestock</strong>: {{ post.productType }}</p>
-    <p class="card-text" *ngIf="post.age !== undefined"><strong>Age</strong>: {{ post.age }}</p>
-    <p class="card-text" *ngIf="post.salesAmount !== undefined"><strong>Sales Amount</strong>: {{ post.salesAmount }}</p>
-    <p class="card-text" *ngIf="post.poultryType"><strong>Poultry Type</strong>: {{ post.poultryType }}</p>
-    <p class="card-text" *ngIf="post.weight !== undefined"><strong>Weight</strong>: {{ post.weight }}</p>
-    <p class="card-text" *ngIf="post.livestockType"><strong>Livestock Type</strong>: {{ post.livestockType }}</p>
-    <p class="card-text" *ngIf="post.livestockDescription"><strong>Livestock Description</strong>: {{ post.livestockDescription }}</p>
-    <img class="card-img-top" [src]="'http://localhost:8080/' + post.imageUrl" alt="Post Image" style="height: 200px; width: 100%">
-    <p class="card-text"><small>Post Created By</small>: {{ post.createdBy }}</p>
-    <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
-    <button class="btn btn-outline-primary" (click)="incrementLikes(post.id)">Like</button>
-    <button class="btn btn-outline-info" (click)="incrementViews(post.id)">View</button>
-    <button class="btn btn-outline-warning" (click)="editPost(post)">Edit</button>
-    <button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button>
+  <div *ngFor="let post of posts" class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <div *ngIf="post.userDTO">
+          <img  [src]="'http://localhost:8080/' + post.userDTO.userImageUrl" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
+        </div>
+        <div>{{post.userDTO?.userImageUrl}}</div>
+        <i class="fa-solid fa-user"></i>     
+        <div style="color: rgb(55, 55, 238);margin-left: 4px;cursor: pointer;"> {{ post.createdBy }}</div>
+        <br>
+      </div>  
+      
+      <!-- <span>Post created {{ post.createdAt | timeAgo }}</span> -->
+      <p>{{ post.relativeCreatedAt }}</p>
+   
+      <!-- Display post details -->
+      <!-- <h5 class="card-title"><strong>Title</strong>: {{ post.title }}</h5> -->
+      <p class="card-text"><strong>Type of Livestock</strong>: {{ post.productType }}</p>
+      <p class="card-text" *ngIf="post.age !== undefined"><strong>Age</strong>: {{ post.age }}</p>
+      <p class="card-text" *ngIf="post.salesAmount !== undefined"><strong>Sales Amount</strong>: {{ post.salesAmount }}</p>
+      <p class="card-text" *ngIf="post.poultryType"><strong>Poultry Type</strong>: {{ post.poultryType }}</p>
+      <p class="card-text" *ngIf="post.weight !== undefined"><strong>Weight</strong>: {{ post.weight }}</p>
+      <p class="card-text" *ngIf="post.livestockType"><strong>Livestock Type</strong>: {{ post.livestockType }}</p>
+      <p class="card-text" *ngIf="post.livestockDescription"><strong>Livestock Description</strong>: {{ post.livestockDescription }}</p>
+      <img class="card-img-top" [src]="'http://localhost:8080/' + post.imageUrl" alt="Post Image" style="height: 200px; width: 100%">
+      <p class="card-text"><small>Post Created By</small>: {{ post.createdBy }}</p>
+      <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+     <!-- Assuming userId is available in the template -->
+     <button class="btn btn-outline-primary" (click)="incrementLikes(post.id, loggedInUser?.id ?? 0)">Like</button>
+
+      <button class="btn btn-outline-info" (click)="incrementViews(post.id)">View</button>
+      <button class="btn btn-outline-warning" (click)="editPost(post)">Edit</button>
+      <button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button>
+    </div>
   </div>
 </div>
 
 <app-footer></app-footer>
-

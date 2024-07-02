@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from '../post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataServiceService } from '../data-service.service';
 
 @Component({
   selector: 'app-new-post',
@@ -12,16 +13,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NewPostComponent implements OnInit {
   postForm: FormGroup;
   selectedFile: File | null = null;
+  loggedInUser: any;
 
   constructor(
     private fb: FormBuilder,
     private postService: PostService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dataService: DataServiceService
   ) {
     this.postForm = this.fb.group({
+      firstName: [{ value: '', disabled: true }, Validators.required],
+      userImage: [{ value: '', disabled: true }, Validators.required],
       title: ['', Validators.required],
-      // content: ['', Validators.required],
       productType: ['', Validators.required],
       age: [''],
       salesAmount: [''],
@@ -29,11 +33,34 @@ export class NewPostComponent implements OnInit {
       weight: [''],
       livestockType: [''],
       livestockDescription: [''],
-      createdBy: [' ', Validators.required] // Default or dynamically set 'createdBy'
+      createdBy: [{ value: '', disabled: true }, Validators.required]
     });
   }
 
   ngOnInit(): void {
+    this.dataService.isLoggedIn.subscribe(loggedIn => {
+      if (!loggedIn) {
+        this.snackBar.open('You need to be logged in to create a post', 'Close', {
+          duration: 5000,
+        });
+        this.router.navigate(['/login']);
+      } else {
+        this.dataService.loggedInUser.subscribe(user => {
+          if (user) {
+            this.loggedInUser = user;
+            console.log('User retrieved:', user);
+            this.postForm.patchValue({
+              firstName: user.firstName,
+              userImage: user.userImageUrl, // Corrected field name
+              createdBy: `${user.firstName} ${user.lastName}`
+            });
+          } else {
+            console.log('No user found');
+          }
+        });
+      }
+    });
+
     this.postForm.get('productType')?.valueChanges.subscribe(() => {
       this.onProductTypeChange();
     });
@@ -48,14 +75,17 @@ export class NewPostComponent implements OnInit {
       return;
     }
 
-    const postData = this.postForm.value;
+    const postData = this.postForm.getRawValue(); // get raw values to include disabled fields
+    postData.firstName = this.loggedInUser.firstName; // Include first name in postData
+    postData.userImage = this.loggedInUser.userImageUrl; // Include user image in postData
+    postData.createdBy = `${this.loggedInUser.firstName} ${this.loggedInUser.lastName}`;
 
     this.postService.createPost(postData, this.selectedFile).subscribe(
       () => {
         this.snackBar.open('Post created successfully', 'Close', {
           duration: 5000,
         });
-        this.postService.notifyPostsChanged();  // Notify post creation
+        this.postService.notifyPostsChanged();
         this.router.navigate(['/post-list']);
       },
       error => {

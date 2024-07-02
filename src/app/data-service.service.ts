@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { UserDTO } from './models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,10 @@ export class DataServiceService {
 
   get loggedInUser(): Observable<any> {
     return this.loggedInUserSubject.asObservable();
+  }
+
+  getUserById(userId: number): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.apiUrl}/${userId}`);
   }
 
 }

@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -8,19 +8,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-  formData = { 
-    firstName: '', 
-    lastName: '', 
-    email: '', 
-    phoneNumber: '', 
-    password: '', 
+  formData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
     above18: false,
-    userImage: null as File | null  
+    createdBy: 'self',
+    userImage: null as File | null
   };
   error: string = '';
   success: string = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
     if (!this.isFormValid()) {
@@ -35,28 +36,30 @@ export class RegistrationComponent {
     formData.append('phoneNumber', this.formData.phoneNumber);
     formData.append('password', this.formData.password);
     formData.append('above18', String(this.formData.above18));
+    formData.append('createdBy', this.formData.createdBy); // Ensure createdBy is included
     if (this.formData.userImage) {
-      formData.append('userImage', this.formData.userImage, this.formData.userImage.name); // Accessing name property
+      formData.append('userImage', this.formData.userImage, this.formData.userImage.name);
     }
 
     this.http.post('http://localhost:8080/api/user/create', formData).subscribe(
       (response: any) => {
         console.log('Registration successful', response);
-        this.formData = { 
-          firstName: '', 
-          lastName: '', 
-          email: '', 
-          phoneNumber: '', 
-          password: '', 
+        this.formData = {
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: '',
+          password: '',
           above18: false,
-          userImage: null  
+          createdBy: 'self', // Reset createdBy to default after successful registration
+          userImage: null
         };
         this.error = '';
         this.success = 'Registration successful. Redirecting to login...';
 
         setTimeout(() => {
           this.success = '';
-          this.router.navigate(["/login"]);
+          this.router.navigate(['/login']);
         }, 3000);
       },
       (error) => {
@@ -64,7 +67,7 @@ export class RegistrationComponent {
         if (error.status === 409) {
           this.error = 'Phone number is already registered. Redirecting to login...';
           setTimeout(() => {
-            this.router.navigate(["/login"]);
+            this.router.navigate(['/login']);
           }, 3000);
         } else if (error.status === 400) {
           this.error = error.error.message; 

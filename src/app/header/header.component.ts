@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cartSubscription: Subscription = new Subscription();
   cartUpdatedSubscription: Subscription = new Subscription();
   isLoggedInSubscription: Subscription = new Subscription();
-  userPhoneNumberSubscription: Subscription = new Subscription();
+  loggedInUserSubscription: Subscription = new Subscription();
   isLoggedIn: boolean = false;
-  userPhoneNumber: string | null = null;
+  userFirstName: string | null = null;
 
   constructor(
     private dataService: DataServiceService,
@@ -40,10 +40,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.isLoggedInSubscription = this.dataService.isLoggedIn.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
-    });
-
-    this.userPhoneNumberSubscription = this.dataService.loggedInUser.subscribe((user: any) => {
-      this.userPhoneNumber = user ? user.phoneNumber : null;
+      if (isLoggedIn) {
+        this.loggedInUserSubscription = this.dataService.loggedInUser.subscribe((user: any) => {
+          this.userFirstName = user ? user.firstName : null;
+        });
+      } else {
+        this.userFirstName = null;
+      }
     });
   }
 
@@ -51,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.cartSubscription.unsubscribe();
     this.cartUpdatedSubscription.unsubscribe();
     this.isLoggedInSubscription.unsubscribe();
-    this.userPhoneNumberSubscription.unsubscribe();
+    this.loggedInUserSubscription.unsubscribe();
   }
 
   removeFromCart(index: number): void {

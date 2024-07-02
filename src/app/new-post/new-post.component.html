@@ -1,16 +1,26 @@
 <app-header></app-header>
 
-<div class="container-fluid" style="margin-top: 80px;margin-bottom: 10px;">
+<div class="container-fluid" style="margin-top: 80px; margin-bottom: 10px;">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-6">
       <div class="card shadow-sm">
         <div class="card-body">
           <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            
+            <!-- <div class="form-group">
+              <label for="creatorImage">User Image</label>
+              <input type="file" id="creatorImage" class="form-control" formControlName="userImage" readonly>
+            </div> -->
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" class="form-control" formControlName="firstName" readonly>
+            </div>
+
             <div class="form-group">
               <label for="title">What would you wish to post (Title):</label>
               <input type="text" id="title" class="form-control" formControlName="title">
             </div>
-      
+
             <div class="form-group">
               <label for="productType">Product Type</label>
               <select id="productType" class="form-control" formControlName="productType" (change)="onProductTypeChange()">
@@ -19,6 +29,7 @@
                 <option value="Livestock">Livestock</option>
               </select>
             </div>
+            
             <div *ngIf="postForm.get('productType')?.value === 'Poultry'">
               <div class="form-group">
                 <label for="poultryType">Poultry Type</label>
@@ -29,6 +40,7 @@
                 <input type="text" id="weight" class="form-control" formControlName="weight">
               </div>
             </div>
+            
             <div *ngIf="postForm.get('productType')?.value === 'Livestock'">
               <div class="form-group">
                 <label for="livestockType">Livestock Type</label>
@@ -39,22 +51,27 @@
                 <input type="text" id="livestockDescription" class="form-control" formControlName="livestockDescription">
               </div>
             </div>
+
             <div class="form-group">
               <label for="age">Age</label>
               <input type="text" id="age" class="form-control" formControlName="age">
             </div>
+
             <div class="form-group">
               <label for="salesAmount">Sales Amount</label>
               <input type="text" id="salesAmount" class="form-control" formControlName="salesAmount">
             </div>
+
             <div class="form-group">
               <label for="image">Image</label>
               <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
             </div>
+
             <div class="form-group">
-              <label for="CreatedBy">createdBy</label>
-              <input type="text" id="createdBy" class="form-control" formControlName="createdBy">
+              <label for="createdBy">Created By</label>
+              <input type="text" id="createdBy" class="form-control" formControlName="createdBy" readonly>
             </div>
+
             <button type="submit" class="btn btn-primary">Create Post</button>
           </form>
         </div>
