@@ -33,8 +33,8 @@
             "scripts": [
                 "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
                 "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
-              "test:ng test"
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            
               
             ]
           },
