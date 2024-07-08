@@ -4,12 +4,9 @@ import { Post } from '../models/post.model';
 import { PostService } from '../post.service';
 import { DataServiceService } from '../data-service.service';
 import { UserDTO } from '../models/user.model';
-<<<<<<< HEAD
 import { ProductService } from '../product-service.service';
 import { CartService } from '../cart.service';
 import { Product } from '../models/product.model'; // Ensure Product model is imported
-=======
->>>>>>> origin/master
 
 @Component({
   selector: 'app-post-list',
@@ -21,21 +18,14 @@ export class PostListComponent implements OnInit, OnDestroy {
   postsSubscription: Subscription | undefined;
   loggedInUser: UserDTO | undefined;
   timeUpdateSubscription: Subscription | undefined;
-<<<<<<< HEAD
   products: Product[] = []; // Initialize products array
-=======
->>>>>>> origin/master
 
   constructor(
     private postService: PostService,
     private dataService: DataServiceService,
-<<<<<<< HEAD
     private cd: ChangeDetectorRef,
     private productService: ProductService,
     private cartService: CartService
-=======
-    private cd: ChangeDetectorRef
->>>>>>> origin/master
   ) {}
 
   ngOnInit(): void {
@@ -54,12 +44,9 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.timeUpdateSubscription = interval(60000).subscribe(() => {
       this.cd.markForCheck(); // Trigger change detection
     });
-<<<<<<< HEAD
 
     // Fetch products from productService
     this.products = this.productService.getProducts();
-=======
->>>>>>> origin/master
   }
 
   ngOnDestroy(): void {
@@ -162,7 +149,6 @@ export class PostListComponent implements OnInit, OnDestroy {
       console.error('Error deleting post:', error);
     });
   }
-<<<<<<< HEAD
 
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
@@ -178,6 +164,4 @@ export class PostListComponent implements OnInit, OnDestroy {
       imageUrl: post.imageUrl
     };
   }
-=======
->>>>>>> origin/master
 }
