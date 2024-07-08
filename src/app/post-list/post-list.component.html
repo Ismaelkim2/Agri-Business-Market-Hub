@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 
 <app-header></app-header>
-=======
-<!-- post-list.component.html -->
-<app-header></app-header>
-
->>>>>>> origin/master
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-6">
@@ -43,15 +37,8 @@
       </div>  
       
       <!-- <span>Post created {{ post.createdAt | timeAgo }}</span> -->
-<<<<<<< HEAD
       <p>{{ post.relativeCreatedAt}}</p>
    
-=======
-      <p>{{ post.relativeCreatedAt }}</p>
-   
-      <!-- Display post details -->
-      <!-- <h5 class="card-title"><strong>Title</strong>: {{ post.title }}</h5> -->
->>>>>>> origin/master
       <p class="card-text"><strong>Type of Livestock</strong>: {{ post.productType }}</p>
       <p class="card-text" *ngIf="post.age !== undefined"><strong>Age</strong>: {{ post.age }}</p>
       <p class="card-text" *ngIf="post.salesAmount !== undefined"><strong>Sales Amount</strong>: {{ post.salesAmount }}</p>
@@ -61,7 +48,6 @@
       <p class="card-text" *ngIf="post.livestockDescription"><strong>Livestock Description</strong>: {{ post.livestockDescription }}</p>
       <img class="card-img-top" [src]="'http://localhost:8080/' + post.imageUrl" alt="Post Image" style="height: 200px; width: 100%">
       <p class="card-text"><small>Post Created By</small>: {{ post.createdBy }}</p>
-<<<<<<< HEAD
 
      <div class="d-flex justify-content-between">
       <div><p>Likes: {{ post.likes }} | Views: {{ post.views }}</p></div>
@@ -74,15 +60,6 @@
       <div><button class="btn btn-outline-warning" (click)="editPost(post)">Edit</button></div>
       <div><button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button></div>
      </div> 
-=======
-      <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
-     <!-- Assuming userId is available in the template -->
-     <button class="btn btn-outline-primary" (click)="incrementLikes(post.id, loggedInUser?.id ?? 0)">Like</button>
-
-      <button class="btn btn-outline-info" (click)="incrementViews(post.id)">View</button>
-      <button class="btn btn-outline-warning" (click)="editPost(post)">Edit</button>
-      <button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button>
->>>>>>> origin/master
     </div>
   </div>
 </div>

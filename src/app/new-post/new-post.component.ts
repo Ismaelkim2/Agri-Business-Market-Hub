@@ -76,8 +76,8 @@ export class NewPostComponent implements OnInit {
     }
 
     const postData = this.postForm.getRawValue(); 
-    postData.firstName = this.loggedInUser.firstName; // Include first name in postData
-    postData.userImage = this.loggedInUser.userImageUrl; // Include user image in postData
+    postData.firstName = this.loggedInUser.firstName; 
+    postData.userImage = this.loggedInUser.userImageUrl; 
     postData.createdBy = `${this.loggedInUser.firstName} ${this.loggedInUser.lastName}`;
 
     this.postService.createPost(postData, this.selectedFile).subscribe(

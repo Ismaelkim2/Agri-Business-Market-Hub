@@ -16,11 +16,7 @@ export class ProductService {
     { id: 8, name: 'Wholesale Roast Maize', description: 'For Roasting, Processing or manufacturing purposes', imageUrl: 'assets/images/maize7.png', price: 200 },
     { id: 9, name: 'Roast Maize', description: 'Pieces of maize to be roasted', imageUrl: 'assets/images/maize8.png', price: 200 },
     { id: 10, name: 'Dried Maize', description: 'Dried in the farm-Sun Drying', imageUrl: 'assets/images/maize9.png', price: 2000 },
-<<<<<<< HEAD
   
-=======
-    // Add more products as needed
->>>>>>> origin/master
   ];
 
   getProducts(): Product[] {
