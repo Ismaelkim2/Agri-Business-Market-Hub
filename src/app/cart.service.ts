@@ -22,15 +22,25 @@ export class CartService {
   addToCart(product: Product): void {
     const currentCart = this.cartSubject.value;
     this.cartSubject.next([...currentCart, product]);
+<<<<<<< HEAD
     this.cartUpdatedSubject.next(`${product.name} added to cart`); // Pass product name
+=======
+    this.cartUpdatedSubject.next('Product added to cart');
+>>>>>>> origin/master
   }
 
   removeFromCart(index: number): void {
     const currentCart = this.cartSubject.value;
+<<<<<<< HEAD
     const removedProduct = currentCart[index];
     currentCart.splice(index, 1);
     this.cartSubject.next([...currentCart]);
     this.cartUpdatedSubject.next(`${removedProduct.name} removed from cart`); // Pass product name
+=======
+    currentCart.splice(index, 1);
+    this.cartSubject.next([...currentCart]);
+    this.cartUpdatedSubject.next('Product removed from cart');
+>>>>>>> origin/master
   }
 
   setPaymentMethod(paymentMethod: string): void {

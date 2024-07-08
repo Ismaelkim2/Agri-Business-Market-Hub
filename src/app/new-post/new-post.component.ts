@@ -51,7 +51,11 @@ export class NewPostComponent implements OnInit {
             console.log('User retrieved:', user);
             this.postForm.patchValue({
               firstName: user.firstName,
+<<<<<<< HEAD
               userImage: user.userImageUrl,
+=======
+              userImage: user.userImageUrl, // Corrected field name
+>>>>>>> origin/master
               createdBy: `${user.firstName} ${user.lastName}`
             });
           } else {
@@ -75,7 +79,11 @@ export class NewPostComponent implements OnInit {
       return;
     }
 
+<<<<<<< HEAD
     const postData = this.postForm.getRawValue(); 
+=======
+    const postData = this.postForm.getRawValue(); // get raw values to include disabled fields
+>>>>>>> origin/master
     postData.firstName = this.loggedInUser.firstName; // Include first name in postData
     postData.userImage = this.loggedInUser.userImageUrl; // Include user image in postData
     postData.createdBy = `${this.loggedInUser.firstName} ${this.loggedInUser.lastName}`;
