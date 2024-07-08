@@ -1,0 +1,65 @@
+.cart {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: auto;
+}
+
+.cart h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.cart-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.cart-info h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.cart-info p {
+  margin: 0;
+  color: #555;
+}
+
+.total-sum, .delivery-fees, .total {
+  margin-top: 20px;
+}
+
+.total-sum h3, .delivery-fees h3, .total h3 {
+  margin: 0;
+  color: #333;
+}
+
+.total-sum p, .delivery-fees p, .total p {
+  margin: 0;
+  color: #555;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}

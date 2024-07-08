@@ -1,0 +1,41 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="image-wrapper">
+    <img src="assets/images/farmer.png" alt="Login Image">
+    
+    <div class="formdiv">
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone number</label>
+          <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="password" class="form-label">password</label>
+          <div class="input-group">
+            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger" style="width: 200px; color: red;" >{{ errorMessage }}</div>
+      
+        <button type="submit" class="btn btn-primary">Login</button><br><br>
+
+
+      <h4 style="color: blue;cursor: pointer;" (click)="navigateToForgotPassword()">Forgot password?</h4>
+
+        <button routerLink="/registration" style="color: green;font-weight: bold;background-color: yellow;border: none;">Create Account</button>
+      </form>
+      
+    </div>
+  </div>
+</div>
+
+<!-- <app-footer></app-footer> -->
+

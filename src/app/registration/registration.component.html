@@ -1,0 +1,82 @@
+<app-header></app-header>
+
+<div class="container-fluid" style="padding-top: 10px;margin-right: 50px;">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="assets/images/registration.jpg" alt="Your Image" class="img-fluid">
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body" style="background-color: rgb(223, 216, 216); top: 0; margin-top: 0px;width: 520px;border-radius: 12px;">
+          <h2 class="text mb-4" style="font-weight: bold; color: #28a745;">Farmers Site Registration</h2>
+          <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+
+            <div class="mb-0">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="formData.firstName" required>
+              <div class="invalid-feedback">
+                Please enter your first name.
+              </div>
+            </div>
+
+            <div class="mb-0">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="formData.lastName" required>
+              <div class="invalid-feedback">
+                Please enter your last name.
+              </div>
+            </div>
+
+            <div class="mb-0">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="formData.phoneNumber" pattern="[0-9]{10,}" required>
+              <div class="invalid-feedback">
+                Please enter a valid phone number with at least 10 digits.
+              </div>
+            </div>
+
+            <div class="mb-0">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
+              <div class="invalid-feedback">
+                Please enter a valid email address.
+              </div>
+            </div>
+
+            <div class="mb-0">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="formData.password" required>
+              <div class="invalid-feedback">
+                Please enter a password.
+              </div>
+            </div>
+
+
+            <div class="mb-0">
+              <label for="userImage" class="form-label">Upload User Image</label>
+              <input type="file" class="form-control" id="userImage" name="userImage" (change)="onFileChange($event)" accept="image/*" required>
+              <div class="invalid-feedback">
+                Please upload an image for your profile.
+              </div>
+            </div>
+
+            <div class="form-check mb-0">
+              <input type="checkbox" class="form-check-input" id="above18" name="above18" [(ngModel)]="formData.above18" required>
+              <label class="form-check-label" for="above18">Are you above 18 years?</label>
+              <div class="invalid-feedback">
+                You must confirm you are above 18 years.
+              </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger" style="margin-top: 10px;">{{ error }}</div>
+            <div *ngIf="success" class="alert alert-success" style="margin-top: 10px;">{{ success }}</div>
+
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer style="width: 100%;"></app-footer>

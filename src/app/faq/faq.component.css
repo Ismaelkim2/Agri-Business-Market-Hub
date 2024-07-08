@@ -1,0 +1,23 @@
+.container {
+    margin-top: 50px;
+  }
+  
+  .text-center h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .accordion-button {
+    font-size: 1.25rem;
+  }
+  
+  .accordion-body p {
+    font-size: 1.1rem;
+    color: #343a40;
+  }
+  
+  .modal-body p {
+    font-size: 1.1rem;
+    color: #343a40;
+  }
+  

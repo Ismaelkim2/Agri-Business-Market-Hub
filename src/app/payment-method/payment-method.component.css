@@ -1,0 +1,83 @@
+.payment-method {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-top: 100px;
+  margin-bottom: 110px;
+}
+
+.payment-method h2 {
+  text-align: center;
+  color: #4CAF50;
+}
+
+.payment-method form {
+  margin-bottom: 20px;
+}
+
+.payment-method label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.payment-method input[type="radio"] {
+  margin-right: 10px;
+}
+
+.payment-method button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-method button:hover {
+  background-color: #45a049;
+}
+
+.payment-credentials {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+}
+
+.payment-credentials h3 {
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.payment-credentials label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.payment-credentials input[type="text"],
+.payment-credentials input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.payment-credentials button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-credentials button:hover {
+  background-color: #45a049;
+}

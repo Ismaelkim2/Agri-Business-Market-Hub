@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="container my-5">
+    <h2 class="text-center mb-5"  style="margin-top: 80px;">Frequently Asked Questions</h2>
+    <div class="accordion" id="faqAccordion">
+      <div *ngFor="let faq of faqs; let i = index" class="accordion-item">
+        <h2 class="accordion-header" id="heading{{i}}">
+          <button 
+            class="accordion-button" 
+            type="button" 
+            [attr.data-bs-toggle]="'collapse'"
+            [attr.data-bs-target]="'#collapse' + i" 
+            [attr.aria-expanded]="'true'" 
+            [attr.aria-controls]="'collapse' + i">
+            {{ faq.question }}
+          </button>
+        </h2>
+        <div 
+          id="collapse{{i}}" 
+          class="accordion-collapse collapse" 
+          [attr.aria-labelledby]="'heading' + i" 
+          data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            {{ faq.answer }}
+            <button class="btn btn-primary mt-3" (click)="openModal(faq)">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="faqModal" tabindex="-1" aria-labelledby="faqModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="faqModalLabel">{{ selectedFaq?.question }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ selectedFaq?.answer }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+  

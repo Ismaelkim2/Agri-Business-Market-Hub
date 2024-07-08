@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-fixed-top bg-body-tertiary">
+  <div class="container-fluid" style="background-color: green; height: 60px;">
+    <a class="navbar-brand" href="#" style="color: rgb(18, 211, 18); font-weight: bold;">AGRI-BUSINESS MARKET HUB</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div *ngIf="notification" class="notification">{{ notification }}</div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent2" style="width:auto;">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item mt-2">
+          <a class="nav-link active" aria-current="page" href="#" routerLink="/dashboard">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/post-list">Farmers-Posts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/contact">Contact Us</a>
+        </li>
+     
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#" routerLink="/about-us">About Us</a></li>
+            <li><a class="dropdown-item" href="#" routerLink="/our-services">Services</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" routerLink="/faq">FAQ</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <span class="btn btn-secondary dropdown-toggle mt-2" id="dropdownMenuButton" data-bs-toggle="dropdown">
+            <i class="fa fa-cart-shopping"></i> <sup>({{ cart.length }})</sup>
+          </span>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <li *ngIf="cart.length === 0" class="dropdown-item">No items in cart</li>
+            <li *ngFor="let item of cart; let i = index" class="dropdown-item">
+              <div class="d-flex justify-content-between">
+                <span>{{ item.name }} - ${{ item.price }}</span>
+                <button (click)="removeFromCart(i)" class="btn btn-danger btn-sm">Remove</button>
+              </div>
+            </li>
+            <li class="dropdown-item" style="margin-left: 0px;">
+              <button class="btn btn-primary btn-block" (click)="submitOrder()">Submit Order</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!-- <form class="d-flex" role="search">
+        <input class="form-control me-2 w-50" type="search" placeholder="Search" aria-label="Search" style="margin-left: 10px;">
+        <button class="btn btn-outline-success" type="submit" style="color: black; border-color: black; margin-right: 15px;">Search</button>
+      </form> -->
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button (click)="SignIn()" class="btn btn-primary">Sign In</button>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <span class="navbar-text">👋Hello {{ userFirstName }}, Welcome!
+            <button (click)="SignOut()" class="btn btn-primary ml-20 ">Sign Out</button>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

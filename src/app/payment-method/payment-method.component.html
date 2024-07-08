@@ -1,0 +1,56 @@
+<app-header></app-header>
+<!-- <app-sidebar></app-sidebar> -->
+
+<div class="payment-method">
+  <h2>Payment Method</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="M-pesa">
+        <input type="radio" id="M-pesa" name="payment" [(ngModel)]="selectedPaymentMethod" value="M-pesa" required>
+        M-pesa
+      </label>
+    </div>
+    <div>
+      <label for="PayPal">
+        <input type="radio" id="PayPal" name="payment" [(ngModel)]="selectedPaymentMethod" value="PayPal" required>
+        PayPal
+      </label>
+    </div>
+    <div>
+      <label for="CashOnDelivery">
+        <input type="radio" id="CashOnDelivery" name="payment" [(ngModel)]="selectedPaymentMethod" value="Cash on Delivery" required>
+        Cash on Delivery
+      </label>
+    </div>
+    <button type="submit">Proceed to Delivery</button>
+  </form>
+
+  <div *ngIf="selectedPaymentMethod === 'M-pesa'" class="payment-credentials">
+    <h3>M-pesa Payment Details</h3>
+    <form (ngSubmit)="onMpesasubmit()">
+      <label for="mpesaPhoneNumber">Phone Number</label>
+      <input type="text" id="mpesaPhoneNumber" [(ngModel)]="mpesaDetails.phoneNumber" name="phoneNumber" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div *ngIf="selectedPaymentMethod === 'PayPal'" class="payment-credentials">
+    <h3>PayPal Payment Details</h3>
+    <form (ngSubmit)="onPayPalSubmit()">
+      <label for="paypalEmail">PayPal Email</label>
+      <input type="email" id="paypalEmail" [(ngModel)]="payPalDetails.email" name="email" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div *ngIf="selectedPaymentMethod === 'Cash on Delivery'" class="payment-credentials">
+    <h3>Cash on Delivery Details</h3>
+    <form (ngSubmit)="onCashOnDeliverySubmit()">
+      <label for="deliveryAddress">Delivery Address</label>
+      <input type="text" id="deliveryAddress" [(ngModel)]="cashOnDeliveryDetails.address" name="address" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer> 

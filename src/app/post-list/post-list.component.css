@@ -1,0 +1,107 @@
+.card-body {
+  position: relative;
+  padding: 20px;
+}
+
+.card-title {
+  margin-top: 10px;
+}
+
+.create-post-container {
+display: flex;
+justify-content: center;
+margin-top: 80px; 
+}
+
+.create-post {
+width: 600px;
+background-color: #ffffff; 
+border-radius: 8px;
+padding: 20px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-post input {
+width: 100%;
+border: none;
+padding: 12px;
+outline: none;
+font-size: 16px;
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.user-photo {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+margin-right: 10px;
+}
+
+/* Styles for post list */
+.post-list {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 20px;
+margin-top: 20px;
+}
+
+.post-card {
+background-color: #ffffff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+overflow: hidden;
+transition: box-shadow 0.3s ease;
+}
+
+.post-card
+{
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-image {
+width: 100%;
+height: auto;
+border-bottom: 1px solid #e0e0e0; /* Divider line */
+}
+
+.post-content {
+padding: 15px;
+}
+
+.post-info {
+margin-top: 10px;
+color: #666666; /* Lighter text color */
+}
+
+.post-actions {
+display: flex;
+gap: 10px;
+margin-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.create-post {
+width: 100%;
+}
+
+.post-list {
+gap: 10px;
+}
+
+.post-card {
+width: 100%;
+}
+}
+
+.updates{
+width: 100vw;
+justify-content: center;
+}
