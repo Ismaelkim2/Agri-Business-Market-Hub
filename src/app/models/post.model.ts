@@ -1,4 +1,4 @@
-import { User } from './user.model';
+import { User, UserDTO } from './user.model';
 
 export class Post {
   id: number;
@@ -13,13 +13,20 @@ export class Post {
   imageUrl: string;
   createdBy: string;
   likes: number;
+  DatePipe:any
   views: number;
+  quantity?:number;
   createdAt: Date;
-  userDTO?: User;
+  userDTO?: UserDTO | null; 
+  userId?:number;
   relativeCreatedAt?: string;
+  likedBy?: number[]; 
+  likedByUser: boolean; 
+  isOwnedByLoggedInUser: boolean;
 
-  constructor(data: any) {
+  constructor(data: any, currentUserId: number) {
     this.id = data.id;
+    this.userId=data.user;
     this.title = data.title;
     this.productType = data.productType;
     this.age = data.age;
@@ -33,7 +40,6 @@ export class Post {
     this.likes = data.likes;
     this.views = data.views;
 
-    // Check if createdAt is an array and convert to Date object in UTC
     if (Array.isArray(data.createdAt) && data.createdAt.length >= 3) {
       this.createdAt = new Date(Date.UTC(
         data.createdAt[0], // year
@@ -51,6 +57,17 @@ export class Post {
     if (isNaN(this.createdAt.getTime())) {
       console.error('Invalid createdAt date:', data.createdAt);
     }
-    this.userDTO = data.userDTO;
+
+
+    this.userDTO = data.userDTO || null;
+
+
+    this.isOwnedByLoggedInUser = data.userDTO?.id === currentUserId;
+
+
+    this.likedBy = data.likedBy;
+
+    // Determine if the current user has liked this post
+    this.likedByUser = Array.isArray(this.likedBy) ? this.likedBy.includes(currentUserId) : false;
   }
 }

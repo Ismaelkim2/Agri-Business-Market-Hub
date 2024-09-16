@@ -1,12 +1,15 @@
+import { User, UserDTO } from './../models/user.model';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Subscription, interval } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 import { Post } from '../models/post.model';
 import { PostService } from '../post.service';
 import { DataServiceService } from '../data-service.service';
-import { UserDTO } from '../models/user.model';
 import { ProductService } from '../product-service.service';
 import { CartService } from '../cart.service';
-import { Product } from '../models/product.model'; // Ensure Product model is imported
+import { Product } from '../models/product.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { response } from 'express';
+import { error } from 'console';
 
 @Component({
   selector: 'app-post-list',
@@ -15,10 +18,15 @@ import { Product } from '../models/product.model'; // Ensure Product model is im
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
-  postsSubscription: Subscription | undefined;
+  user?:User[]=[];
+  userDTO:UserDTO[]=[];
+  formpost!: FormGroup;
   loggedInUser: UserDTO | undefined;
+  postsSubscription: Subscription | undefined;
   timeUpdateSubscription: Subscription | undefined;
-  products: Product[] = []; // Initialize products array
+  products: Product[] = [];
+  message:string='Not authorized to delete this post';
+  messageVisibility:boolean=false
 
   constructor(
     private postService: PostService,
@@ -36,17 +44,18 @@ export class PostListComponent implements OnInit, OnDestroy {
 
     this.dataService.loggedInUser.subscribe(user => {
       this.loggedInUser = user;
-      console.log('Logged In User:', this.loggedInUser);
       this.loadPosts();
     });
 
-    // Set up an interval to refresh the view every minute
     this.timeUpdateSubscription = interval(60000).subscribe(() => {
-      this.cd.markForCheck(); // Trigger change detection
+      this.cd.markForCheck();
     });
 
-    // Fetch products from productService
     this.products = this.productService.getProducts();
+
+    this.formpost = new FormGroup({
+      postInput: new FormControl('', Validators.required)
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,23 +69,62 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   private loadPosts(): void {
     this.postService.getPosts().subscribe(
-      (posts: any[]) => {
-        this.posts = posts.map((data: any) => {
-          const post = new Post(data);
+      (posts: Post[]) => {
+        this.posts = posts.map(post => {
+          if (!(post.createdAt instanceof Date)) {
+            if (Array.isArray(post.createdAt)) {
+              post.createdAt = new Date(Date.UTC(
+                post.createdAt[0], 
+                post.createdAt[1] - 1,
+                post.createdAt[2], 
+                post.createdAt[3] || 0, 
+                post.createdAt[4] || 0, 
+                post.createdAt[5] || 0, 
+                post.createdAt[6] || 0 
+              ));
+            } else {
+              post.createdAt = new Date(post.createdAt);
+            }
+          }
+
           if (isNaN(post.createdAt.getTime())) {
+            console.error('Invalid createdAt date:', post.createdAt);
             post.relativeCreatedAt = 'Invalid date';
           } else {
             post.relativeCreatedAt = this.calculateRelativeTime(post.createdAt);
           }
-          console.log(`Post createdAt: ${post.createdAt}, relativeCreatedAt: ${post.relativeCreatedAt}`);
+
+          if (post.userDTO && this.loggedInUser) {
+            post.isOwnedByLoggedInUser = post.userDTO.id === this.loggedInUser.id;
+          } else {
+            post.isOwnedByLoggedInUser = false;
+          }
+
+          post.likedByUser = Array.isArray(post.likedBy) && post.likedBy.includes(this.loggedInUser?.id ?? 0);
+
           return post;
         });
-        console.log('Posts loaded in component:', this.posts);
       },
       (error: any) => {
         console.error('Error fetching posts:', error);
       }
     );
+  }
+
+  createPost(){
+const postData=this.formpost.value;
+const Image:File| null=null;
+const userId=this.loggedInUser?.id
+
+    this.postService.createPost(postData, Image,userId??0).subscribe(
+      (response=>{
+        console.log('post created sucessfuly') 
+      }),
+      (error:any)=>{
+        console.log("post crestion failed")
+      }
+    );
+ 
   }
 
   private calculateRelativeTime(createdAt: Date): string {
@@ -85,7 +133,6 @@ export class PostListComponent implements OnInit, OnDestroy {
     const diffMilliseconds = currentDate.getTime() - postDate.getTime();
     const diffSeconds = Math.floor(diffMilliseconds / 1000);
 
-    // Calculate different time units
     const years = Math.floor(diffSeconds / (3600 * 24 * 365));
     const months = Math.floor(diffSeconds / (3600 * 24 * 30));
     const days = Math.floor(diffSeconds / (3600 * 24));
@@ -93,75 +140,73 @@ export class PostListComponent implements OnInit, OnDestroy {
     const minutes = Math.floor(diffSeconds / 60);
 
     if (years > 0) {
-      return years === 1 ? '1 year ago' : `${years} years ago`;
+      return years === 1 ? '1yr ago' : `${years} yr ago`;
     } else if (months > 0) {
-      return months === 1 ? '1 month ago' : `${months} months ago`;
+      return months === 1 ? '1m ago' : `${months} m ago`;
     } else if (days > 0) {
-      return days === 1 ? '1 day ago' : `${days} days ago`;
+      return days === 1 ? '1d ago' : `${days} d ago`;
     } else if (hours > 0) {
-      return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+      return hours === 1 ? '1h ago' : `${hours} h ago`;
+    } else if (minutes > 0) {
+      return minutes === 1 ? '1m ago' : `${minutes} m ago`;
     } else {
-      return minutes < 1 ? 'just now' : `${minutes} minutes ago`;
+      return diffSeconds < 60 ? 'just now' : `${diffSeconds} seconds ago`;
     }
   }
 
-  incrementLikes(postId: number, userId: number): void {
+  toggleLike(postId: number, userId: number): void {
     if (!userId) {
       console.error('User ID is undefined or null.');
       return;
     }
-  
-    this.postService.incrementLikes(postId, userId).subscribe(
+
+    this.postService.toggleLike(postId, userId).subscribe(
       (updatedPost: Post | null) => {
         if (updatedPost) {
           const index = this.posts.findIndex(post => post.id === updatedPost.id);
           if (index !== -1) {
             this.posts[index] = updatedPost;
           }
-        } else {
-          console.error('Error: Updated post is null or undefined.');
-          // Handle error or provide user feedback
         }
       },
-      (error: any) => {
-        console.error('Error incrementing likes:', error);
-        // Handle HTTP error or provide user feedback
+      error => {
+        console.error('Error liking the post:', error);
+      }
+    );
+  }
+
+  onComment(): void {
+    console.log('Comment functionality not implemented.');
+    alert(`comment section coming soon!`)
+  }
+
+  editPost(post: Post): void {
+    console.log('Edit functionality for post:', post);
+  }
+
+  deletePost(postId: number, userId: number | undefined): void {
+    if (!userId) {
+      console.error('User ID is undefined.');
+      this.messageVisibility = true;
+      setTimeout(() => {
+        this.messageVisibility = false;
+      }, 4000);
+      return;
+    }
+  
+    this.postService.deletePost(postId, userId).subscribe(
+      () => {
+        console.log('Post deleted successfully.');
+       
+      },
+      error => {
+        console.error('Error deleting the post:', error);
+        
       }
     );
   }
   
-  incrementViews(postId: number): void {
-    this.postService.incrementViews(postId).subscribe(() => {
-      this.loadPosts();
-    }, (error: any) => {
-      console.error('Error incrementing views:', error);
-    });
-  }
-
-  editPost(post: Post): void {
-    // Implement edit post functionality if needed
-  }
-
-  deletePost(postId: number): void {
-    this.postService.deletePost(postId).subscribe(() => {
-      this.loadPosts();
-    }, (error: any) => {
-      console.error('Error deleting post:', error);
-    });
-  }
-
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-  }
-
-  // Convert Post to Product
-  postToProduct(post: Post): Product {
-    return {
-      id: post.id, 
-      name: post.title,
-      description: post.livestockDescription ? post.livestockDescription : '', 
-      price: post.salesAmount ? post.salesAmount : 0, 
-      imageUrl: post.imageUrl
-    };
-  }
+   
+    
+  
 }

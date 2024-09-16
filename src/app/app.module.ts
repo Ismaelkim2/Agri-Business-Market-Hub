@@ -1,3 +1,5 @@
+// import { ChartsModule } from 'ng2-charts';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
@@ -33,6 +35,12 @@ import { OurServicesComponent } from './our-services/our-services.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { FaqComponent } from './faq/faq.component';
 import { TimeAgoPipe } from './time-ago.pipe';
+import { SummaryComponent } from './summary/summary.component';
+import { RecordsComponent } from './records/records.component';
+
+import { ChartComponent } from './chart/chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 
 @NgModule({
   declarations: [
@@ -56,8 +64,11 @@ import { TimeAgoPipe } from './time-ago.pipe';
     EditPostComponent,
     OurServicesComponent,
     AboutUsComponent,
+    SummaryComponent,
     FaqComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    RecordsComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -67,14 +78,19 @@ import { TimeAgoPipe } from './time-ago.pipe';
     BrowserAnimationsModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgApexchartsModule
+   
+    
+  
   ],
+  
   providers: [
     provideClientHydration(),
     ProductService,
     DataServiceService,
     CartService,
-    provideHttpClient(), // Keeping the default configuration
+    provideHttpClient(), 
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

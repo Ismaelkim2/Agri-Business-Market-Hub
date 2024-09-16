@@ -19,11 +19,13 @@ import { EditPostComponent } from './edit-post/edit-post.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { FaqComponent } from './faq/faq.component';
+import { SummaryComponent } from './summary/summary.component';
+import { RecordsComponent } from './records/records.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'product-list',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   { path: 'login', component: LoginComponent },
@@ -44,7 +46,9 @@ const routes: Routes = [
   { path: 'edit-post/:id', component: EditPostComponent },
   {path: 'our-services',component:OurServicesComponent},
   {path:'about-us',component:AboutUsComponent},
-  {path:'faq',component:FaqComponent}
+  {path:'faq',component:FaqComponent},
+  {path:'summary',component:SummaryComponent},
+  {path:'records',component:RecordsComponent}
 
 ];
 

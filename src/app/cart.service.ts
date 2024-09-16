@@ -10,6 +10,7 @@ export class CartService {
   private cartUpdatedSubject: Subject<string> = new Subject<string>();
   private paymentMethod: string = '';
   private deliveryInfo: any = {};
+  private userDeliveryInfo: any = {}; 
 
   getCart(): Observable<Product[]> {
     return this.cartSubject.asObservable();
@@ -30,7 +31,7 @@ export class CartService {
     const removedProduct = currentCart[index];
     currentCart.splice(index, 1);
     this.cartSubject.next([...currentCart]);
-    this.cartUpdatedSubject.next(`${removedProduct.name} removed from cart`); // Pass product name
+    this.cartUpdatedSubject.next(`${removedProduct.name} removed from cart`); 
   }
 
   setPaymentMethod(paymentMethod: string): void {
@@ -47,5 +48,13 @@ export class CartService {
 
   getDeliveryInfo(): any {
     return this.deliveryInfo;
+  }
+
+  setUserDeliveryInfo(userInfo: any): void {
+    this.userDeliveryInfo = userInfo;
+  }
+
+  getUserDeliveryInfo(): any {
+    return this.userDeliveryInfo;
   }
 }

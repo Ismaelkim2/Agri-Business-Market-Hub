@@ -7,11 +7,12 @@
 }
 
 body {
-    padding-top: 70px; /* Offset for fixed navbar */
+    padding-top: 70px;
 }
 
 .navbar {
-    background-color: #28a745;
+    background-color: #228B22; /* Green for agriculture */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
 }
 
 .navbar-brand {
@@ -48,7 +49,6 @@ body {
 .btn-primary {
     background-color: #145214;
     border-color: #145214;
-
 }
 
 .btn-primary:hover {
@@ -59,7 +59,7 @@ body {
 .notification {
     position: fixed;
     top: 70px;
-    left: 20%;
+    left: 50%;
     transform: translateX(-50%);
     background-color: #28a745;
     color: white;
@@ -69,6 +69,7 @@ body {
     text-align: center;
 }
 
+/* Responsive Design */
 @media (max-width: 767.98px) {
     .navbar-nav {
         text-align: center;
@@ -80,5 +81,9 @@ body {
 
     .navbar-text {
         margin-bottom: 10px;
+    }
+
+    .navbar-nav .dropdown-menu {
+        width: 100%; 
     }
 }

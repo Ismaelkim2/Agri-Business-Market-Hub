@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from '../post.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 import { DataServiceService } from '../data-service.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-new-post',
@@ -13,7 +14,8 @@ import { DataServiceService } from '../data-service.service';
 export class NewPostComponent implements OnInit {
   postForm: FormGroup;
   selectedFile: File | null = null;
-  loggedInUser: any;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
+  loggedInUser: User | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -26,13 +28,10 @@ export class NewPostComponent implements OnInit {
       firstName: [{ value: '', disabled: true }, Validators.required],
       userImage: [{ value: '', disabled: true }, Validators.required],
       title: ['', Validators.required],
-      productType: ['', Validators.required],
       age: [''],
       salesAmount: [''],
-      poultryType: [''],
-      weight: [''],
-      livestockType: [''],
-      livestockDescription: [''],
+      productType: [''],
+      image: [''],
       createdBy: [{ value: '', disabled: true }, Validators.required]
     });
   }
@@ -40,15 +39,12 @@ export class NewPostComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.isLoggedIn.subscribe(loggedIn => {
       if (!loggedIn) {
-        this.snackBar.open('You need to be logged in to create a post', 'Close', {
-          duration: 5000,
-        });
+        this.snackBar.open('You need to be logged in to create a post', 'Close', { duration: 5000 });
         this.router.navigate(['/login']);
       } else {
         this.dataService.loggedInUser.subscribe(user => {
           if (user) {
             this.loggedInUser = user;
-            console.log('User retrieved:', user);
             this.postForm.patchValue({
               firstName: user.firstName,
               userImage: user.userImageUrl,
@@ -60,63 +56,48 @@ export class NewPostComponent implements OnInit {
         });
       }
     });
-
-    this.postForm.get('productType')?.valueChanges.subscribe(() => {
-      this.onProductTypeChange();
-    });
   }
 
-  onFileChange(event: any): void {
+  onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-  }
-
-  onSubmit(): void {
-    if (this.postForm.invalid) {
-      return;
-    }
-
-    const postData = this.postForm.getRawValue(); 
-    postData.firstName = this.loggedInUser.firstName; 
-    postData.userImage = this.loggedInUser.userImageUrl; 
-    postData.createdBy = `${this.loggedInUser.firstName} ${this.loggedInUser.lastName}`;
-
-    this.postService.createPost(postData, this.selectedFile).subscribe(
-      () => {
-        this.snackBar.open('Post created successfully', 'Close', {
-          duration: 5000,
-        });
-        this.postService.notifyPostsChanged();
-        this.router.navigate(['/post-list']);
-      },
-      error => {
-        this.snackBar.open('Failed to create post', 'Close', {
-          duration: 5000,
-        });
-      }
-    );
-  }
-
-  onProductTypeChange(): void {
-    const productType = this.postForm.get('productType')?.value;
-    if (productType === 'Poultry') {
-      this.postForm.get('poultryType')?.setValidators([Validators.required]);
-      this.postForm.get('weight')?.setValidators([Validators.required]);
-      this.postForm.get('livestockType')?.clearValidators();
-      this.postForm.get('livestockDescription')?.clearValidators();
-    } else if (productType === 'Livestock') {
-      this.postForm.get('poultryType')?.clearValidators();
-      this.postForm.get('weight')?.clearValidators();
-      this.postForm.get('livestockType')?.setValidators([Validators.required]);
-      this.postForm.get('livestockDescription')?.setValidators([Validators.required]);
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.imagePreviewUrl = e.target.result;
+      reader.readAsDataURL(this.selectedFile);
     } else {
-      this.postForm.get('poultryType')?.clearValidators();
-      this.postForm.get('weight')?.clearValidators();
-      this.postForm.get('livestockType')?.clearValidators();
-      this.postForm.get('livestockDescription')?.clearValidators();
+      this.imagePreviewUrl = null;
     }
-    this.postForm.get('poultryType')?.updateValueAndValidity();
-    this.postForm.get('weight')?.updateValueAndValidity();
-    this.postForm.get('livestockType')?.updateValueAndValidity();
-    this.postForm.get('livestockDescription')?.updateValueAndValidity();
   }
+onSubmit(): void {
+  if (this.postForm.invalid) {
+    this.snackBar.open('Please fill all required fields', 'Close', { duration: 5000 });
+    return;
+  }
+
+  if (!this.loggedInUser || typeof this.loggedInUser.id === 'undefined') {
+    this.snackBar.open('User is not logged in or invalid', 'Close', { duration: 5000 });
+    return;
+  }
+
+  const postData = this.postForm.getRawValue();
+
+  const formData = new FormData();
+  formData.append('post', JSON.stringify(postData));
+
+  if (this.selectedFile) {
+    formData.append('image', this.selectedFile, this.selectedFile.name);
+  }
+
+  this.postService.createPost(postData, this.selectedFile, this.loggedInUser.id).subscribe(
+    () => {
+      this.snackBar.open('Post created successfully', 'Close', { duration: 5000 });
+      this.router.navigate(['/post-list']);
+    },
+    error => {
+      console.error('Error creating post:', error);
+      this.snackBar.open('Failed to create post', 'Close', { duration: 5000 });
+    }
+  );
+}
+
 }

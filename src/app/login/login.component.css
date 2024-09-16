@@ -37,7 +37,7 @@ label{
   width: 300px; 
 }
 
-/* Media Query for responsiveness */
+
 @media (max-width: 768px) {
   .formdiv {
     width: 90%;

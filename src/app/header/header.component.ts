@@ -35,13 +35,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.notification = message;
       setTimeout(() => {
         this.notification = null;
-      }, 3000); // Notification disappears after 3 seconds
+      }, 3000); 
     });
 
     this.isLoggedInSubscription = this.dataService.isLoggedIn.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
         this.loggedInUserSubscription = this.dataService.loggedInUser.subscribe((user: any) => {
+          console.log("User Details:", user);
           this.userFirstName = user ? user.firstName : null;
         });
       } else {
@@ -62,12 +63,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   submitOrder(): void {
-    this.router.navigate(['/login']);
+    if(this.isLoggedIn){
+this.router.navigate(['/delivery-form'])
+    }else{
+      this.router.navigate(['/login']);
+    }
+    
   }
 
   SignIn(): void {
     this.router.navigate(['/login']);
   }
+
+  SignUp(): void {
+    this.router.navigate(['/registration']);
+  }
+
 
   SignOut(): void {
     this.dataService.signOut();

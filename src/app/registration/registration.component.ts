@@ -28,7 +28,6 @@ export class RegistrationComponent {
       return;
     }
 
-    // Create FormData object to send multipart/form-data
     const formData = new FormData();
     formData.append('firstName', this.formData.firstName);
     formData.append('lastName', this.formData.lastName);
@@ -36,12 +35,12 @@ export class RegistrationComponent {
     formData.append('phoneNumber', this.formData.phoneNumber);
     formData.append('password', this.formData.password);
     formData.append('above18', String(this.formData.above18));
-    formData.append('createdBy', this.formData.createdBy); // Ensure createdBy is included
+    formData.append('createdBy', this.formData.createdBy);
     if (this.formData.userImage) {
       formData.append('userImage', this.formData.userImage, this.formData.userImage.name);
     }
 
-    this.http.post('http://localhost:8080/api/user/create', formData).subscribe(
+    this.http.post('http://localhost:8081/api/user/create', formData).subscribe(
       (response: any) => {
         console.log('Registration successful', response);
         this.formData = {
@@ -51,7 +50,7 @@ export class RegistrationComponent {
           phoneNumber: '',
           password: '',
           above18: false,
-          createdBy: 'self', // Reset createdBy to default after successful registration
+          createdBy: 'self', 
           userImage: null
         };
         this.error = '';

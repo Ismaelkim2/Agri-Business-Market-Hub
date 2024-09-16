@@ -19,7 +19,8 @@ export class LoginComponent {
     this.dataService.signIn({ phoneNumber: this.phoneNumber, password: this.password })
       .subscribe(success => {
         if (success) {
-          this.router.navigate(['/post-list']); 
+          // this.handleRoleBasedNavigation();
+          this.router.navigate(['/home']) 
         } else {
           this.errorMessage = 'Incorrect Phone Number or Password';
         }
@@ -29,9 +30,18 @@ export class LoginComponent {
       });
   }
 
-  registration() {
-    this.router.navigate(['/registration']);
-  }
+  // private handleRoleBasedNavigation(): void {
+  //   this.dataService.userRole.subscribe(role => {
+  //     if (role === 'ROLE_ADMIN') {
+  //       this.router.navigate(['/dashboard']);
+  //     } else {
+  //       this.router.navigate(['/home']);
+  //     }
+  //   }, error => {
+  //     console.error('An error occurred while determining user role.', error);
+  //     this.errorMessage = 'Unable to determine user role.';
+  //   });
+  // }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -41,3 +51,4 @@ export class LoginComponent {
     this.router.navigate(['/forgot-password']);
   }
 }
+

@@ -1,0 +1,79 @@
+/* Main container styles */
+#chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart card styles */
+.chart-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Chart title */
+apx-chart {
+  display: block;
+}
+
+/* Button container styles */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary button styles */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Primary button styles */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #chart-container {
+    padding: 15px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

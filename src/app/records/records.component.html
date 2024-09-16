@@ -1,0 +1,160 @@
+<app-header></app-header>
+<div class="container">
+  <section class="weekly-summary-cards-navigation">
+    <button class="arrow left-arrow" (click)="scrollLeft()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  
+    <div class="weekly-summary-cards-wrapper">
+      <div class="weekly-summary-cards-section">
+        <div *ngFor="let week of weeklySummary" class="weekly-summary-card">
+          <h3><i class="fa fa-regular fa-circle-check text-success bg-green "></i>{{ week.week }}</h3>
+          <p>Total Flock: {{ week.totalBirds + week.newFlock - week.mortalities }} <i class="fa fa-chart-line" style="color: rgb(65, 243, 65);"></i></p>
+          <div class="summary-details">
+            <p><i class="fas fa-egg"></i> <strong>Egg Production:</strong> {{ week.eggProduction }} Eggs</p>
+            <p><i class="fas fa-seedling"></i> <strong>Feeds Consumption:</strong> {{ week.feedConsumption }} Kg</p>
+            <!-- <p><i class="fas fa-syringe"></i> <strong>Vaccine Records:</strong> {{ week.vaccineRecords }} doses</p> -->
+            <p><i class="fas fa-dove"></i> <strong>New Flock:</strong> {{ week.newFlock }}</p>
+            <p><i class="fas fa-skull-crossbones"></i> <strong>Mortalities:</strong> {{ week.mortalities }}</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <button class="arrow right-arrow" (click)="scrollRight()">
+      <i class="fas fa-arrow-right"></i>
+    </button>
+  </section>
+  
+  
+
+
+  <!-- Weekly Summary Charts Section -->
+  <section class="weekly-summary-charts-section">
+    <div class="charts d-flex">
+      <div class="chart-card">
+        <h3>Egg Production</h3>
+        <app-chart [chartValues]="chartEggProductionValues" [chartLabels]="chartEggProductionLabels" [chartType]="'line'"></app-chart>
+      </div>
+      <div class="chart-card">
+        <h3>Feed Consumption</h3>
+        <app-chart [chartValues]="chartFeedConsumptionValues" [chartLabels]="chartFeedConsumptionLabels" [chartType]="'line'"></app-chart>
+      </div>
+      <div class="chart-card">
+        <h3>Vaccine Records</h3>
+        <app-chart [chartValues]="chartVaccineRecordsValues" [chartLabels]="chartVaccineRecordsLabels" [chartType]="'line'"></app-chart>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Records Table Section -->
+  <section class="daily-records-section">
+    <h2>Daily Records</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Egg Production</th>
+            <th>Feed Consumption</th>
+            <th>Vaccine Records</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of dailyRecords; let i = index">
+            <td>
+              <ng-container *ngIf="selectedRecordIndex === i; else displayDate">
+                <input *ngIf="selectedRecord" type="date" [(ngModel)]="selectedRecord.date" class="form-control">
+              </ng-container>
+              <ng-template #displayDate>{{ record.date }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="selectedRecordIndex === i; else displayEggProduction">
+                <input *ngIf="selectedRecord" type="number" [(ngModel)]="selectedRecord.eggProduction" class="form-control">
+              </ng-container>
+              <ng-template #displayEggProduction>{{ record.eggProduction }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="selectedRecordIndex === i; else displayFeedConsumption">
+                <input *ngIf="selectedRecord" type="number" [(ngModel)]="selectedRecord.feedConsumption" class="form-control">
+              </ng-container>
+              <ng-template #displayFeedConsumption>{{ record.feedConsumption }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="selectedRecordIndex === i; else displayVaccineRecords">
+                <input *ngIf="selectedRecord" type="number" [(ngModel)]="selectedRecord.vaccineRecords" class="form-control">
+              </ng-container>
+              <ng-template #displayVaccineRecords>{{ record.vaccineRecords }}</ng-template>
+            </td>
+            <td>
+              <button *ngIf="selectedRecordIndex === i; else editDeleteButtons" (click)="updateRecord()" class="btn btn-success">Save</button>
+              <ng-template #editDeleteButtons>
+                <button (click)="editRecord(i)" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                <button (click)="deleteRecord(i)" class="btn btn-danger"><i class="fa fa-solid fa-delete-left"></i></button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Daily Records Entry Form Section -->
+  <section class="daily-record-entry-section">
+    <h2>Enter Daily Records</h2>
+    <form #dailyRecordForm="ngForm" (ngSubmit)="saveRecord(dailyRecordForm.value)" class="form-horizontal">
+
+      <div class="form-group row">
+        <label for="totalBirds" class="col-sm-2 col-form-label">Total Birds:</label>
+        <div class="col-sm-10">
+          <input type="number" name="totalBirds" id="totalBirds" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="newFlock" class="col-sm-2 col-form-label">New Flock:</label>
+        <div class="col-sm-10">
+          <input type="number" name="newFlock" id="newFlock" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="mortalities" class="col-sm-2 col-form-label">Mortalities:</label>
+        <div class="col-sm-10">
+          <input type="number" name="mortalities" id="mortalities" ngModel required class="form-control">
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label for="date" class="col-sm-2 col-form-label">Date:</label>
+        <div class="col-sm-10">
+          <input type="date" name="date" id="date" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="eggProduction" class="col-sm-2 col-form-label">Egg Production:</label>
+        <div class="col-sm-10">
+          <input type="number" name="eggProduction" id="eggProduction" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="feedConsumption" class="col-sm-2 col-form-label">Feed Consumption:</label>
+        <div class="col-sm-10">
+          <input type="number" name="feedConsumption" id="feedConsumption" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="vaccineRecords" class="col-sm-2 col-form-label">Vaccine Records:</label>
+        <div class="col-sm-10">
+          <input type="number" name="vaccineRecords" id="vaccineRecords" ngModel required class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+          <button type="submit" class="btn btn-primary">Save Record</button>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+<app-footer></app-footer>

@@ -24,4 +24,5 @@ export class ServiceService {
   getAllServices(): Service[] {
     return this.services;
   }
+  
 }

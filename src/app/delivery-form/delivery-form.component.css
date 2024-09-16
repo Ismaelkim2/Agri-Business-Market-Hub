@@ -1,33 +1,111 @@
-.delivery-form{
-    margin-left: 30%;
-    margin-top: 120px;
-    margin-bottom: 60px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f0f4f8;
+  margin-top: 50px;
 }
 
-h2{
-    margin-left: 18%;
-    margin-top: 15px;
-    font-weight: bold;
+.delivery-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  width: 100%;
 }
 
-input{
-    width: 300px;
-    border-radius: 12px;
-    margin-top: 10px;
-    height: 34px;
-    border: solid;
+
+.delivery-info, .order-summary {
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-label{
-    width: 100px;
-}
-button{
-    margin-top: 10px;
-    margin-left: 18%;
-    border-radius: 12px;
-    border: none;
-    background-color: rgb(30, 30, 248);
-    height: 40px;
-    font-weight: bold;
+.delivery-info {
+  max-width: 500px;
 }
 
+.delivery-info h2, .order-summary h1 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+button:focus {
+  outline: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+.total {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .delivery-container {
+    flex-direction: column;
+  }
+
+  .delivery-info, .order-summary {
+    margin: 10px 0;
+  }
+}

@@ -6,21 +6,18 @@
       <div class="card shadow-sm">
         <div class="card-body">
           <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-            
-            <!-- <div class="form-group">
-              <label for="creatorImage">User Image</label>
-              <input type="file" id="creatorImage" class="form-control" formControlName="userImage" readonly>
-            </div> -->
             <div class="form-group">
               <label for="firstName">First Name</label>
               <input type="text" id="firstName" class="form-control" formControlName="firstName" readonly>
             </div>
 
             <div class="form-group">
-              <label for="title">What would you wish to post (Title):</label>
-              <input type="text" id="title" class="form-control" formControlName="title">
+              <label for="title">What's Your Product Description?</label>
+              <textarea id="title" class="form-control" formControlName="title"></textarea>
             </div>
 
+            <!-- Uncomment and adjust if necessary -->
+            <!--
             <div class="form-group">
               <label for="productType">Product Type</label>
               <select id="productType" class="form-control" formControlName="productType" (change)="onProductTypeChange()">
@@ -29,7 +26,10 @@
                 <option value="Livestock">Livestock</option>
               </select>
             </div>
-            
+            -->
+
+            <!-- Conditionally shown fields based on productType -->
+            <!--
             <div *ngIf="postForm.get('productType')?.value === 'Poultry'">
               <div class="form-group">
                 <label for="poultryType">Poultry Type</label>
@@ -40,7 +40,7 @@
                 <input type="text" id="weight" class="form-control" formControlName="weight">
               </div>
             </div>
-            
+
             <div *ngIf="postForm.get('productType')?.value === 'Livestock'">
               <div class="form-group">
                 <label for="livestockType">Livestock Type</label>
@@ -51,6 +51,7 @@
                 <input type="text" id="livestockDescription" class="form-control" formControlName="livestockDescription">
               </div>
             </div>
+            -->
 
             <div class="form-group">
               <label for="age">Age</label>
@@ -63,8 +64,13 @@
             </div>
 
             <div class="form-group">
-              <label for="image">Image</label>
-              <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
+              <label for="image">Photo/Video</label>
+              <input type="file" id="image" class="form-control" formControlName="image" (change)="onFileSelected($event)">
+            </div>
+
+            <!-- Image Preview -->
+            <div *ngIf="imagePreviewUrl">
+              <img [src]="imagePreviewUrl" alt="Image Preview" class="img-thumbnail mt-2" style="max-width: 200px;">
             </div>
 
             <div class="form-group">

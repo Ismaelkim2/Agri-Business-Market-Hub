@@ -9,6 +9,7 @@ export interface User {
     userImageUrl?: string;
     createdBy: string;
     documentUrls: string[]; 
+    userimageUrl:string;
   }
   
 

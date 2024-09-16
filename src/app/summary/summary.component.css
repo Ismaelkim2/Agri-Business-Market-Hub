@@ -1,0 +1,54 @@
+.dashboard {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin-top: 80px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  thead {
+    background-color: #f4f4f4;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .status-pending {
+    color: #ff9800;
+  }
+  
+  .status-in-progress {
+    color: #2196f3;
+  }
+  
+  .status-completed {
+    color: #4caf50;
+  }
+  
+  @media (max-width: 768px) {
+    table {
+      font-size: 14px;
+    }
+    th, td {
+      padding: 8px;
+    }
+  }
+  

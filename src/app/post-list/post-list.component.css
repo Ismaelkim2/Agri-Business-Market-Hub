@@ -1,6 +1,7 @@
 .card-body {
   position: relative;
   padding: 20px;
+  width: 250px;
 }
 
 .card-title {
