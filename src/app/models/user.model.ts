@@ -23,6 +23,7 @@ export interface User {
     above18: boolean;
     userImageUrl: string;
     createdBy: string;
+    role?:string
     documentUrls: string[];
   }
   

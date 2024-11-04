@@ -1,7 +1,7 @@
+import { Post } from './../models/post.model';
 import { User, UserDTO } from './../models/user.model';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription, interval } from 'rxjs';
-import { Post } from '../models/post.model';
 import { PostService } from '../post.service';
 import { DataServiceService } from '../data-service.service';
 import { ProductService } from '../product-service.service';
@@ -10,6 +10,7 @@ import { Product } from '../models/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { response } from 'express';
 import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -27,13 +28,17 @@ export class PostListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   message:string='Not authorized to delete this post';
   messageVisibility:boolean=false
+  selectedImage:File|null=null
+  iseditting:boolean=false;
+  isedittingpost:Post|null=null;
 
   constructor(
     private postService: PostService,
     private dataService: DataServiceService,
     private cd: ChangeDetectorRef,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -180,12 +185,95 @@ const userId=this.loggedInUser?.id
     alert(`comment section coming soon!`)
   }
 
-  editPost(post: Post): void {
-    console.log('Edit functionality for post:', post);
+ 
+   onImageChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+    }
   }
 
+  // openEditingForm(post:Post){
+  // this.iseditting=true;
+  // this.isedittingpost = { ...post };
+  // }
+
+  // editPost(post: Post, image: File | null): void {
+  //   console.log('Edit functionality for post:', post);
+  
+  //   const postData = {
+  //     ...post, 
+  //     userId: post.userDTO?.id
+  //   };
+  
+  //   this.postService.updatePost(postData, image).subscribe({
+  //     next: (response) => {
+  //       this.posts = this.posts.map(p => p.id === response.id ? response : p);
+  //       this.iseditting=false;
+  //       console.log('Post edited successfully:', response);
+  //     },
+  //     error: (err) => {
+  //       console.error('Error editing post:', err);
+  //     }
+  //   });
+  // }
+  openEditingForm(post: Post): void {
+    this.iseditting = true;
+    this.isedittingpost = { ...post }; 
+
+    if(!this.loggedInUser){
+      this.router.navigate(["/login"])
+      console.log("sign in to edit");
+    }
+    
+    if (!this.isedittingpost.userDTO) {
+      this.isedittingpost.userDTO = {
+        id: post.userDTO?.id ?? 0, 
+        firstName: post.userDTO?.firstName ?? '',
+        role:post.userDTO?.role,
+        lastName: post.userDTO?.lastName ?? '',
+        phoneNumber: post.userDTO?.phoneNumber ?? '',
+        email: post.userDTO?.email ?? '',
+        password: post.userDTO?.password ?? '',
+        above18: post.userDTO?.above18 ?? true,
+        userImageUrl: post.userDTO?.userImageUrl ?? '',
+        createdBy: post.userDTO?.createdBy ?? '',
+        documentUrls: post.userDTO?.documentUrls ?? []
+      };
+    }
+  }
+  
+  saveEditedPost(): void {
+    if (this.isedittingpost) {
+      const postData = {
+        ...this.isedittingpost, 
+        userId: this.isedittingpost.userDTO?.id
+      };
+  
+      this.postService.updatePost(postData, this.selectedImage).subscribe({
+        next: (response) => {
+          this.posts = this.posts.map(p => p.id === response.id ? response : p);
+          this.iseditting = false;
+          this.isedittingpost = null;
+          console.log('Post edited successfully:', response);
+        },
+        error: (err) => {
+          console.error('Error editing post:', err);
+        }
+      });
+    }
+  }
+  
+  
+  cancelEditing(): void {
+    this.iseditting = false;
+    this.isedittingpost = null;
+  }
+  
+  
+
   deletePost(postId: number, userId: number | undefined): void {
-    if (!userId) {
+    if (userId === undefined) {
       console.error('User ID is undefined.');
       this.messageVisibility = true;
       setTimeout(() => {
@@ -193,20 +281,19 @@ const userId=this.loggedInUser?.id
       }, 4000);
       return;
     }
-  
-    this.postService.deletePost(postId, userId).subscribe(
-      () => {
+    this.postService.deletePost(postId, userId).subscribe({
+      next: () => {
+        this.posts = this.posts.filter(post => post.id !== postId);
         console.log('Post deleted successfully.');
-       
       },
-      error => {
-        console.error('Error deleting the post:', error);
-        
+      error: (err) => {
+        console.error('Error deleting post:', err);
+        this.messageVisibility = true;
+        setTimeout(() => {
+          this.messageVisibility = false;
+        }, 4000);
       }
-    );
+    });
   }
-  
-   
-    
   
 }

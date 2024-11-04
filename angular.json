@@ -68,18 +68,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "farm-market:build"
+            "buildTarget": "farm-market:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "farm-market:build:production"
+              "buildTarget": "farm-market:build:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "farm-market",
   "cli": {
     "analytics": "8fe3ab8e-475d-4c93-863b-f9c952205ef5"
   }

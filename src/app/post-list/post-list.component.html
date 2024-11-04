@@ -1,127 +1,153 @@
-<app-header></app-header>
-<div class="container-fluid" style="margin-top: 80px;">
-  <div class="row justify-content-center mt-5">
-    <div class="col-lg-6">
-      <div class="card shadow-sm">
+<app-sidebar></app-sidebar>
+
+<div class="container-fluid mt-5">
+  <!-- Profile and Post Input Section -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm mb-4">
         <div class="card-body">
           <div class="d-flex align-items-center mb-3">
-
-            <!-- <div *ngFor="let user of user">
-              <div>
-              <ng-container *ngIf="user.userImageUrl; else defaultImage">
-                <img [src]="'http://localhost:8081/uploads/' + user.userImageUrl.replace('\\', '/')"
-                     alt="User Photo"
-                     class="user-photo"
-                     style="height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;">
-              </ng-container>
-              </div>
-            
-              <ng-template #defaultImage>
-                <i class="fa fa-image" style="font-size: 50px; color: #ccc; margin-right: 10px;"></i>
-              </ng-template>
-              </div> -->
-           
-              <div *ngIf="loggedInUser">
-                <ng-container *ngIf="loggedInUser.userImageUrl; else defaultImage">
-                  <img [src]="'http://localhost:8081/' + loggedInUser.userImageUrl.replace('\\', '/')"
-                       alt="User Photo"
-                       class="user-photo"
-                       style="height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;">
-                </ng-container>
-              </div>
-              
-              <!-- Default image template -->
-              <ng-template #defaultImage>
-                <i class="fa fa-user" 
-                 style="height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;" ></i>
-              </ng-template>
-              
-
+            <!-- User's profile picture -->
             <div *ngIf="loggedInUser">
-              <strong>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }} <i class="fa fa-regular fa-circle-check text-success bg-green "></i></strong>
-            </div> <br>
+              <ng-container *ngIf="loggedInUser.userImageUrl; else defaultImage">
+                <img [src]="'http://localhost:8081/' + loggedInUser.userImageUrl.replace('\\', '/')"
+                     alt="User Photo"
+                     class="user-photo rounded-circle">
+              </ng-container>
+              <ng-template #defaultImage>
+                <i class="fa fa-user user-photo default-image"></i>
+              </ng-template>
+            </div>
 
-            <form [formGroup]="formpost" class="flex-grow-1 ms-3" style="margin-left: 12px;width: 100px;">
-              <div class="d-flex">
-                <div><input type="text" formControlName="postInput" routerLink="/new-post"  class="form-control " placeholder="Post your products here..." style="width: 200px;"></div>
-                <div> <button class="btn btn-primary ms-2 mt-2 " routerLink="/new-post" >Post</button> </div>
-              </div>
-              
-            </form>
-
+            <div *ngIf="loggedInUser" class="ms-3">
+              <strong>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }} 
+                <i class="fa fa-regular fa-circle-check text-success"></i>
+              </strong>
+            </div>
           </div>
+
+          <form [formGroup]="formpost" class="d-flex align-items-center">
+            <input type="text" formControlName="postInput" class="form-control me-2" placeholder="Post your products here...">
+            <button class="btn btn-primary" routerLink="/new-post">Post</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post List Section -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div *ngIf="posts.length === 0" class="alert alert-info">No posts found.</div>
+
+      <div *ngFor="let post of posts" class="card mb-4 post-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <!-- Post creator's image -->
+            <div *ngIf="post.userDTO">
+              <img [src]="'http://localhost:8081/' + post.userDTO.userImageUrl.replace('\\', '/')"
+                   alt="User Photo"
+                   class="user-photo rounded-circle">
+            </div>
+            <ng-template #defaultImage>
+              <i class="fa fa-user user-photo default-image"></i>
+            </ng-template>
+
+            <div class="ms-2">
+              <strong>{{ post.createdBy }} 
+                <i class="fa fa-regular fa-circle-check text-success"></i>
+              </strong>
+              <p class="text-muted small mb-0">Posted: {{ post.relativeCreatedAt }}</p>
+            </div>
+          </div>
+
+          <p class="post-title"><small>{{ post.title }}</small></p>
+          <!-- <p *ngIf="post.age !== undefined"><strong>Age:</strong> {{ post.age }}</p> -->
+
+          <img *ngIf="post.imageUrl" class="card-img-top mb-3 post-img-top" [src]="'http://localhost:8081' + post.imageUrl" alt="Post Image">
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <p class="text-muted">Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+
+            <div class="btn-group" role="group">
+              <button class="btn btn-outline-primary" (click)="toggleLike(post.id, loggedInUser?.id ?? 0)" title="Like">
+                <i class="fa fa-thumbs-up"></i> <span>{{ post.likes }}</span>
+              </button>
+
+              <button *ngIf="!post.isOwnedByLoggedInUser" (click)="openEditingForm(post)" class="btn btn-outline-warning" title="Edit">
+                <i class="fa fa-pen-to-square"></i>
+              </button>
+
+              <button *ngIf="!post.isOwnedByLoggedInUser" (click)="deletePost(post.id, loggedInUser?.id)" class="btn btn-outline-danger" title="Delete">
+                <i class="fa fa-trash"></i>
+              </button>
+
+              <button class="btn btn-outline-primary" (click)="onComment()" title="Comment">
+                <i class="fa fa-comment"></i>
+              </button>
+            </div>
+          </div>
+
+         <!-- Display edit form in a modal -->
+<div *ngIf="iseditting && isedittingpost?.id === post.id">
+  <div class="modal show d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Post</h5>
+          <button type="button" class="close" (click)="cancelEditing()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Preserve the user's image and name during editing -->
+          <div class="d-flex align-items-center mb-3">
+            <!-- User's profile picture -->
+            <div *ngIf="isedittingpost!.userDTO">
+              <img [src]="'http://localhost:8081/' + isedittingpost!.userDTO.userImageUrl.replace('\\', '/')"
+                   alt="User Photo"
+                   class="user-photo rounded-circle">
+            </div>
+            <ng-template #defaultImage>
+              <i class="fa fa-user user-photo default-image"></i>
+            </ng-template>
+
+            <div class="ms-2">
+              <strong>{{ isedittingpost!.userDTO!.firstName }} {{ isedittingpost!.userDTO!.lastName }}</strong>
+            </div>
+          </div>
+
+          <!-- Your form fields for editing -->
+          <form [formGroup]="formpost">
+            <div class="mb-3">
+              <label for="postTitle" class="form-label">Title:</label>
+              <input type="text" [(ngModel)]="isedittingpost!.title" formControlName="postInput" class="form-control">
+            </div>
+            <!-- <div class="mb-3">
+              <label for="postContent" class="form-label">Age:</label>
+              <textarea [(ngModel)]="isedittingpost!.age" class="form-control"></textarea>
+            </div> -->
+            <div class="mb-3">
+              <label for="postImage" class="form-label">Change Image:</label>
+              <input type="file" (change)="onImageChange($event)" class="form-control">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button (click)="saveEditedPost()" class="btn btn-success">Save</button>
+          <button (click)="cancelEditing()" class="btn btn-secondary">Cancel</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="post-list">
-  <div class="updates">
-    <div *ngIf="posts.length === 0" class="alert alert-info">No posts found.</div>
-  </div>
 
-  <div *ngFor="let post of posts" class="card mb-3">
-    <div class="card-body">
-      <div class="d-flex align-items-center">
-
-
-       <!-- Display post creator's image -->
-       <div *ngIf="post.userDTO">
-        <img [src]="'http://localhost:8081/' + post.userDTO.userImageUrl.replace('\\', '/')"
-             alt="User Photo"
-             class="user-photo"
-             style="height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;">
-      </div>
-
-      <ng-template #defaultImage>
-        <i class="fa fa-user" 
-           style="height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;"></i>
-      </ng-template>
-
-        <div class="strong fw-bold ">{{ post.createdBy }} <i class="fa fa-regular fa-circle-check text-success bg-green "></i>
+          <div *ngIf="!post.isOwnedByLoggedInUser && messageVisibility" class="alert alert-danger mt-2">
+            {{ message }}
+          </div>
         </div>
       </div>
-
-      <p>Posted:{{ post.relativeCreatedAt }}</p>
-      <p class="card-text"><strong>{{ post.title }}</strong></p>
-      <p *ngIf="post.age !== undefined"><strong>Age:</strong> {{ post.age }}</p>
-
-
-
-      <img *ngIf="post.imageUrl" 
-      class="card-img-top" 
-      [src]="'http://localhost:8081' + post.imageUrl" 
-      alt="Post Image" 
-      style="height: 200px; width: 100%;">
-
-      
-      <div class="d-flex justify-content-between">
-        <p>Likes: {{ post.likes }} | Views: {{ post.views }}</p>
-      </div>
-
-      <div class="d-flex justify-content-between w-100">
-        <button class="btn btn-outline-primary" (click)="toggleLike(post.id, loggedInUser?.id ?? 0)" title="like">
-          <i class="fa fa-thumbs-up"></i> <span>{{ post.likes }}</span> 
-        </button>
-
-        <button class="btn btn-outline-danger"  (click)="deletePost(post.id, loggedInUser?.id)" title="delete post">
-          <i class="fa fa-trash"></i>
-        </button>
-   
-        <button class="btn btn-outline-primary" (click)="onComment()" title="Message">
-          <i class="fa fa-comment"></i>
-        </button>
-
-        <button *ngIf="!post.isOwnedByLoggedInUser" 
-        (click)="editPost(post)" class="btn btn-outline-warning"
-         title="edit">
-         <i class="fa fa-pen-to-square"></i></button>
-      </div>
-
-      <div  class="mt-2"
-      *ngIf="!post.isOwnedByLoggedInUser && messageVisibility" class="alert alert-danger mt-2" >{{message}}</div>
-
     </div>
   </div>
 </div>

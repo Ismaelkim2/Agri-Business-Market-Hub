@@ -1,0 +1,73 @@
+<app-sidebar></app-sidebar>
+
+<div class="container">
+  <h1>Mortalities Records</h1>
+
+  <button (click)="showAddMortalityForm()" class="add-mortality-button">
+      Add New Mortality Record
+  </button>
+
+  <div *ngIf="addSuccess" class="alert alert-success">Mortality record added successfully!</div>
+<div *ngIf="addError" class="alert alert-danger">Failed to add mortality record.</div>
+
+
+  <div *ngIf="isAddingNewMortality" class="mortality-form">
+    <h3>Add New Mortality Record</h3>
+    <div class="form-group">
+        <label>Date:</label>
+        <input [(ngModel)]="newMortality.date" type="date" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Number of Mortalities:</label>
+        <input [(ngModel)]="newMortality.numberOfMortalities" type="number" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Reason:</label>
+        <input [(ngModel)]="newMortality.reason" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Recorded By:</label>
+        <input [(ngModel)]="newMortality.recordedBy" type="text" class="form-control">
+    </div>
+    
+    <div class="form-actions">
+      <button (click)="addNewMortality()" class="save-button">Save</button>
+      <button (click)="isAddingNewMortality = false;" class="cancel-button">Cancel</button>
+    </div>
+  </div>
+  
+  <div *ngIf="isEditing && editingMortality" class="mortality-form">
+      <app-edit-mortality
+          [mortality]="editingMortality"
+          (save)="saveEdit($event)"
+          (cancel)="cancelEdit()">
+      </app-edit-mortality>
+  </div>
+
+  <table class="mortalities-table">
+      <thead>
+          <tr>
+              <th>Date</th>
+              <th>Number of Mortalities</th>
+              <th>Reason</th>
+              <th>Recorded By</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let element of mortalities" [ngClass]="{'hidden': !element.visible}">
+              <td *ngIf="element.visible">{{ element.date | date }}</td>
+              <td *ngIf="element.visible">{{ element.numberOfMortalities }}</td>
+              <td *ngIf="element.visible">{{ element.reason }}</td>
+              <td *ngIf="element.visible">{{ element.recordedBy }}</td>
+              <td>
+                  <button (click)="edit(element)" class="action-button edit"><i class="fa fa-pen-to-square"></i></button>
+                  <button (click)="delete(element.id)" class="action-button delete"><i class="fa fa-trash"></i></button>
+                  <button (click)="toggleVisibility(element)" class="action-button toggle">
+                      {{ element.visible ? 'Hide' : 'Show' }}
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

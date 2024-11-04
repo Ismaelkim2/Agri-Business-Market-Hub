@@ -1,160 +1,72 @@
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f3f4f6; /* Light background for contrast */
-  border-radius: 10px;
-  margin-bottom: 40px;
+body {
+  background-color: #f7fafc;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Container to hold the cards and arrows */
-.weekly-summary-cards-navigation {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-bottom: 40px;
-  margin-bottom: 40px; 
+.container-fluid {
+  margin-top: 60px;
 }
 
-.arrow {
-  background-color: #4caf50; /* Green color for farm-related theme */
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  padding: 10px;
-  border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
-  z-index: 1;
-}
-
-.arrow:hover {
-  background-color: #45a049;
-  transform: scale(1.1); /* Slight zoom effect */
-}
-
-.left-arrow {
-  position: absolute;
-  left: -50px;
-}
-
-.right-arrow {
-  position: absolute;
-  right: -50px;
-}
-
-/* Wrapper for scrolling */
-.weekly-summary-cards-wrapper {
-  overflow-x: hidden;
-  width: 100%;
-  flex: 1;
-}
-
-.weekly-summary-cards-section {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  white-space: nowrap;
-}
-
-/* Card Styling */
-.weekly-summary-card {
-  background: linear-gradient(135deg, #fff, #e0f7fa); 
-  padding: 20px;
+.summary-card {
+  width: 260px;
+  height: 200px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0 10px;
-  flex: 0 0 250px;
-  display: inline-block;
-  position: relative;
-  transition: transform 0.3s; 
-}
-.weekly-summary-card h3{
-  margin-top: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
-.weekly-summary-card:hover {
-  transform: translateY(-10px); 
+.summary-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.summary-details p {
-  font-size: 1rem;
-  color: #333;
-  margin: 10px 0;
-}
-
-/* Chart Card Styling */
-.chart-card {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  flex: 1 1 30%;
-  text-align: center;
-  transition: box-shadow 0.3s; /* Add hover effect */
-}
-
-.chart-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.chart-card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-/* Button Styles */
-.btn {
-  padding: 7px 15px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-edit {
-  background-color: #2196f3;
-  color: #fff;
-}
-
-.btn-delete {
-  background-color: #f44336;
-  color: #fff;
-}
-
-.btn-save {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-/* Entry Form Section */
-.daily-record-entry-section {
-  padding: 20px;
-  background-color: #e8f5e9; /* Light green background */
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.daily-record-entry-section h2 {
-  font-size: 2rem;
-  color: #333;
-  text-align: center;
+h3 {
+  font-size: 1.5rem;
   margin-bottom: 20px;
 }
 
-/* Responsive Styles */
+.table-responsive {
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+.form-select {
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.btn-success {
+  padding: 10px 20px;
+}
+
+.pagination-controls .btn-outline-success {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.pagination-controls .btn-outline-success:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
 @media (max-width: 768px) {
-  .weekly-summary-cards-section,
-  .charts {
-    flex-direction: column;
+  .summary-card {
+    width: 100%;
+    margin-bottom: 20px;
   }
 
-  .weekly-summary-card,
-  .chart-card {
-    flex: 1 1 100%;
-    margin-bottom: 20px;
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
   }
 }

@@ -1,0 +1,98 @@
+<app-sidebar></app-sidebar>
+<div class="main-container">
+  <div class="expenses-table">
+    <div class="header">
+
+      <div class="d-flex">
+        <div (click)="goBack()"><i class="fa fa-arrow-left mt-3" title="back" style="cursor: pointer;"></i></div>
+        <div class="ms-4"> <h2 class="text-success">  Farm Expenses Records</h2></div>
+      </div>
+     
+
+      <div class="filter-container d-flex">
+        <label for="filterInput">Filter by Expense Type:</label>
+        <input type="text" id="filterInput" [(ngModel)]="filterText" (ngModelChange)="filterExpenses()" placeholder="Enter expense type to filter...">
+      </div> 
+
+      <button class="btn-open-modal text-light" (click)="openExpenseModal(expenseModal)">Record Expenses</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type of Expense</th>
+          <th>Expense Amount (Ksh)</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expense of currentExpensesPage">
+          <td>{{ expense.date | date: 'longDate'}}</td>
+          <td>{{ expense.expenseType }}</td>
+          <td>{{ expense.amount | currency: 'KES' }}</td>
+          <td>{{ expense.notes }}</td>
+          <td>
+            
+            <button (click)="onEdit(expense, expenseModal)" style="border: none;">
+              <i class="fa fa-edit text-secondary"></i>
+            </button>
+            
+              <button class="ms-2"  (click)="onDeleteExpense(expense)" style="border: none;"> 
+              <i class="fa fa-trash text-danger"></i> </button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success" style="margin-left: 40%;">Previous</button>
+      <span>Page {{currentPage}} of {{totalPages}}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn bg-success">Next</button>
+    </div>
+
+    <div class="total-expenses">
+      <strong>Total Expenses: <span class="text-danger">{{ getTotalExpenses() | currency: 'KES' }}</span></strong>
+    </div>
+  </div>
+
+  <!-- Record Expense Modal -->
+  <ng-template #expenseModal let-modal>
+    <div class="modal-header bg-success">
+      <h4 class="modal-title">Record Farm Expenses</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form (ngSubmit)="saveExpense()">
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" id="date" [(ngModel)]="newExpense.date" name="date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="birdType">Type of Expense:</label>
+          <input type="text" id="birdType" [(ngModel)]="newExpense.expenseType" name="birdType" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Reason:</label>
+          <input type="text" id="notes" [(ngModel)]="newExpense.notes" name="notes" required>
+        </div>
+
+        <div class="form-group">
+          <label for="expenses">Expense Amount (Ksh):</label>
+          <input type="number" id="expenses" [(ngModel)]="newExpense.amount" name="expenses" required>
+        </div>
+
+        <button type="submit" class="btn-submit bg-success">Record Expense</button>
+      </form>
+    </div>
+  </ng-template>
+
+
+</div>

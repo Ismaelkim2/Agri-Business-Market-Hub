@@ -1,35 +1,28 @@
-// import { ChartsModule } from 'ng2-charts';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-// import { SidebarComponent } from './sidebar/sidebar.component';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CartComponent } from './cart/cart.component';
-import { ProductService } from './product-service.service';
 import { RegistrationComponent } from './registration/registration.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
 import { PoultryListComponent } from './poultry-list/poultry-list.component';
 import { DeliveryFormComponent } from './delivery-form/delivery-form.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
-import { DataServiceService } from './data-service.service';
-import { CartService } from './cart.service';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { NewPostComponent } from './new-post/new-post.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -37,17 +30,43 @@ import { FaqComponent } from './faq/faq.component';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { SummaryComponent } from './summary/summary.component';
 import { RecordsComponent } from './records/records.component';
-
 import { ChartComponent } from './chart/chart.component';
-import { NgApexchartsModule } from 'ng-apexcharts';
+import { FarmDataComponent } from './farm-data/farm-data.component';
+
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card'; 
+import { ProductService } from './product-service.service';
+import { DataServiceService } from './data-service.service';
+import { CartService } from './cart.service';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { MatTableModule } from '@angular/material/table';
+import { NgxChartsModule } from 'ngx-charts';
+import { WorkersComponent } from './workers/workers.component';
+import { WorkersFormComponent } from './workers-form/workers-form.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { SalesComponent } from './sales/sales.component';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PreloadAllModules, RouterModule } from '@angular/router';
+import { CustomersComponent } from './customers/customers.component';
+import { AddCustomerComponent } from './customers/add-customer/add-customer.component';
+import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
+import { MortalitiesComponent } from './mortalities/mortalities.component';
+import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortality.component';
+
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    // SidebarComponent,
-    HeaderComponent,
     HomeComponent,
     DashboardComponent,
     ProductListComponent,
@@ -68,7 +87,23 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     FaqComponent,
     TimeAgoPipe,
     RecordsComponent,
-    ChartComponent
+    ChartComponent,
+    FarmDataComponent,
+    WorkersComponent,
+    WorkersFormComponent,
+    SidebarComponent,
+    SettingsComponent,
+    ExpensesComponent,
+    SalesComponent,
+    CustomersComponent,
+    AddCustomerComponent,
+    EditCustomerComponent,
+    MortalitiesComponent,
+    EditMortalityComponent
+    
+    
+
+   
   ],
   imports: [
     BrowserModule,
@@ -76,15 +111,19 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatIconModule,
     ReactiveFormsModule,
+    NgApexchartsModule,
+    MatIconModule,
     MatSnackBarModule,
-    NgApexchartsModule
+    MatCardModule ,
+    MatTableModule,
+    NgbModule,
+  
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
    
-    
-  
   ],
-  
+ 
+
   providers: [
     provideClientHydration(),
     ProductService,

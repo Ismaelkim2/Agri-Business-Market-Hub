@@ -1,41 +1,40 @@
-<app-header></app-header>
-
 <div class="container">
   <div class="image-wrapper">
     <img src="assets/images/farmer.png" alt="Login Image">
-    
+
     <div class="formdiv">
       <form (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="phoneNumber" class="form-label">Phone number</label>
+        
+        <div class="welcome-message">
+          <h3>Welcome to Brishkim Eco-Eggs</h3>
+          <p>Manage your poultry farm with ease</p>
+        </div>
+
+        <div class="mb-3" style="margin-top: 20px;">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
           <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" required>
         </div>
-      
+
         <div class="mb-3">
-          <label for="password" class="form-label">password</label>
+          <label for="password" class="form-label">Password</label>
           <div class="input-group">
-            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" [(ngModel)]="password" required>
             <div class="input-group-append">
-              <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+              <button type="button" class="btn btn-outline-secondary toggle-password-btn" (click)="togglePasswordVisibility()">
                 <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </div>
           </div>
         </div>
 
-        <div *ngIf="errorMessage" class="alert alert-danger" style="width: 200px; color: red;" >{{ errorMessage }}</div>
-      
-        <button type="submit" class="btn btn-primary">Login</button><br><br>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
+        <button type="submit" class="btn btn-primary w-100">Login</button><br><br>
 
-      <h4 style="color: blue;cursor: pointer;" (click)="navigateToForgotPassword()">Forgot password?</h4>
+        <h4 class="text-center text-info cursor-pointer" (click)="navigateToForgotPassword()">Forgot Password?</h4>
 
-        <button routerLink="/registration" style="color: green;font-weight: bold;background-color: yellow;border: none;">Create Account</button>
+        <button routerLink="/registration" class="btn btn-success w-100 mt-2">Create Account</button>
       </form>
-      
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>
-

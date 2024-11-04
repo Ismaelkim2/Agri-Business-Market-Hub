@@ -1,59 +1,160 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #228B22; /* Adjusted color for consistency */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.navbar-brand, .navbar-text, .nav-link {
+    color: #ffffff;
+    font-weight: 400;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.logo {
+    display: flex; /* Align items horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.logo-image {
+    width: 50px; /* Adjust the width to your preference */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: add rounded corners */
+    margin-right: 10px; /* Space between the logo and text */
+    transition: transform 0.3s; /* Animation effect on hover */
+}
+
+.logo-image:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover for a nice effect */
+}
+
+.text-white {
+    color: white; /* Ensure the text is white for visibility */
+    font-size: 1.5em; /* Adjust font size as needed */
+    font-weight: bold; /* Bold text for emphasis */
+}
+
+
+/* Search Box */
+.search-box {
+    max-width: 650px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.search-box input {
+    border-radius: 25px;
+    padding-left: 40px; /* Adjusted padding for the search icon */
+}
+
+.search-box i {
+    color: #888; /* Search icon color */
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* User Photo and Dropdown */
+.user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.user-photo:hover {
+    transform: scale(1.1);
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    min-width: 160px;
+    background-color: #228B22; /* Sidebar background color for dropdown */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-container:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    color: #ffffff;
+    padding: 10px 15px;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #1e7e34; /* Darker green on hover */
+}
+
+/* Sidebar */
 .sidebar {
-  background-color: rgb(10, 187, 10);
-  height: 100%;
-  width: 200px;
-  height: 100vh;
-  top: 0;
-  position: fixed;
-  overflow-y: auto;
-  transition: width 0.3s;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    height: calc(100% - 60px);
+    background-color: #228B22; /* Consistent sidebar color */
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
 }
 
-.nav-link {
-  color: #fff !important;
-  margin-top: 20px;
-  padding-top: 10px;
+.sidebar .nav {
+    flex-direction: column;
 }
 
-.nav-link.active {
-  background-color: #212529;
+.sidebar .nav-link {
+    color: #ffffff;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+    border-radius: 5px; /* Rounded link edges */
 }
 
-.nav {
-  margin-top: 20px;
+.sidebar .nav-link:hover {
+    background-color: #1e7e34; /* Consistent hover effect */
 }
 
-.nav-item {
-  
-  font-weight: bold;
-  font-size: 22px;
-  margin-bottom: 10px;
-  
+/* Online Status */
+.online-status {
+    color: rgb(13, 224, 13); 
+    font-size: 14px;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-  }
-
-  .navbar-toggler {
-      display: block;
-  }
-
-  .collapse {
-      display: none;
-  }
-
-  .collapse.show {
-      display: block;
-  }
+/* Body Padding for Navbar and Sidebar */
+body {
+    padding-top: 70px;
+    padding-left: 250px;
 }
 
-@media (max-width: 576px) {
-  .nav-item {
-      font-size: 20px;
-      padding-top: 10px;
-  }
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        display: none;
+    }
+
+    .sidebar.show {
+        display: block;
+    }
 }

@@ -1,7 +1,7 @@
+import { MortalitiesComponent } from './mortalities/mortalities.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -21,39 +21,53 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { FaqComponent } from './faq/faq.component';
 import { SummaryComponent } from './summary/summary.component';
 import { RecordsComponent } from './records/records.component';
+import { FarmDataComponent } from './farm-data/farm-data.component';
+import { WorkersComponent } from './workers/workers.component';
+import { WorkersFormComponent } from './workers-form/workers-form.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { SalesComponent } from './sales/sales.component';
+import { AuthGuard } from './auth.guard';
+import { CustomersComponent } from './customers/customers.component';
+import { AddCustomerComponent } from './customers/add-customer/add-customer.component';
+import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'header', component: HeaderComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'product-list', component: ProductListComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'product-list', component: ProductListComponent, canActivate: [AuthGuard] },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'poultry-list', component: PoultryListComponent },
-  { path: 'payment-method', component: PaymentMethodComponent },
-  { path: 'delivery-form', component: DeliveryFormComponent },
-  { path: 'order-confirmation', component: OrderConfirmationComponent },
+  { path: 'poultry-list', component: PoultryListComponent, canActivate: [AuthGuard] },
+  { path: 'payment-method', component: PaymentMethodComponent, canActivate: [AuthGuard] },
+  { path: 'delivery-form', component: DeliveryFormComponent, canActivate: [AuthGuard] },
+  { path: 'order-confirmation', component: OrderConfirmationComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent },
   { path: 'footer', component: FooterComponent },
-  { path: 'post-list', component: PostListComponent },
-  { path: 'new-post', component: NewPostComponent },
-  { path: 'edit-post/:id', component: EditPostComponent },
-  {path: 'our-services',component:OurServicesComponent},
-  {path:'about-us',component:AboutUsComponent},
-  {path:'faq',component:FaqComponent},
-  {path:'summary',component:SummaryComponent},
-  {path:'records',component:RecordsComponent}
-
+  { path: 'post-list', component: PostListComponent, canActivate: [AuthGuard] },
+  { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
+  { path: 'edit-post/:id', component: EditPostComponent, canActivate: [AuthGuard] },
+  { path: 'our-services', component: OurServicesComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard] },
+  { path: 'records', component: RecordsComponent, canActivate: [AuthGuard] },
+  { path: 'farm-data', component: FarmDataComponent, canActivate: [AuthGuard] },
+  { path: 'workers', component: WorkersComponent, canActivate: [AuthGuard] },
+  { path: 'workers-form', component: WorkersFormComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
+  { path: 'sales', component: SalesComponent, canActivate: [AuthGuard] },
+  { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard] },
+  { path: 'add-customer', component: AddCustomerComponent },
+  { path: 'edit-customer/:id', component: EditCustomerComponent },
+  { path: 'mortalities', component: MortalitiesComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{preloadingStrategy:PreloadAllModules})],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

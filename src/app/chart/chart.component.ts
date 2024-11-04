@@ -9,7 +9,7 @@ import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexTitleSubtitle, ApexYAxis
 export class ChartComponent implements OnChanges {
   @Input() chartValues: number[] = [];
   @Input() chartLabels: string[] = [];
-  @Input() chartType: 'line' | 'bar' = 'line'; // Removed 'combination' from type
+  @Input() chartType: 'line' | 'bar' = 'line';
 
   public chartOptions: {
     series: ApexAxisChartSeries;
@@ -32,7 +32,7 @@ export class ChartComponent implements OnChanges {
       ],
       chart: {
         height: 350,
-        type: 'line' // Default type, can be changed dynamically
+        type: 'bar'
       },
       title: {
         text: "Data Overview"
@@ -50,7 +50,7 @@ export class ChartComponent implements OnChanges {
       },
       stroke: {
         curve: 'smooth',
-        width: [2] // Width for line only
+        width: [2]
       }
     };
   }
@@ -79,7 +79,6 @@ export class ChartComponent implements OnChanges {
       ];
 
     this.chartOptions.chart.type = this.chartType;
-    this.chartOptions.stroke = { curve: 'smooth', width: [2] };
     this.chartOptions.xaxis.categories = this.chartLabels;
   }
 
@@ -92,6 +91,4 @@ export class ChartComponent implements OnChanges {
     this.chartType = 'line';
     this.updateChartOptions();
   }
-
-  // 'Combination' option removed; use 'line' and 'bar' types only
 }

@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataServiceService } from './../data-service.service';
 
+
+export interface AuthResponse {
+  token: string;
+}
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,35 +19,31 @@ export class LoginComponent {
   showPassword: boolean = false;
   errorMessage: string = '';
 
-  constructor(private dataService: DataServiceService, private router: Router) { }
+  constructor(private dataService: DataServiceService, private router: Router) {}
 
   onSubmit() {
+    console.log('Submitting login with phone number:', this.phoneNumber);
     this.dataService.signIn({ phoneNumber: this.phoneNumber, password: this.password })
-      .subscribe(success => {
-        if (success) {
-          // this.handleRoleBasedNavigation();
-          this.router.navigate(['/home']) 
-        } else {
-          this.errorMessage = 'Incorrect Phone Number or Password';
+      .subscribe(
+        success => {
+          if (success) {
+            console.log('Login successful, navigating to /records');
+            this.router.navigate(['/records']);
+          } else {
+            console.warn('Login failed, showing error message');
+            this.errorMessage = 'Incorrect Phone Number or Password';
+          }
+        },
+        error => {
+          console.error('An error occurred during login:', error);
+          if (error.status === 401) {
+            this.errorMessage = 'Unauthorized: Incorrect credentials';
+          } else {
+            this.errorMessage = 'An error occurred during login.';
+          }
         }
-      }, error => {
-        console.error('An error occurred during login.', error);
-        this.errorMessage = 'An error occurred during login.';
-      });
+      );
   }
-
-  // private handleRoleBasedNavigation(): void {
-  //   this.dataService.userRole.subscribe(role => {
-  //     if (role === 'ROLE_ADMIN') {
-  //       this.router.navigate(['/dashboard']);
-  //     } else {
-  //       this.router.navigate(['/home']);
-  //     }
-  //   }, error => {
-  //     console.error('An error occurred while determining user role.', error);
-  //     this.errorMessage = 'Unable to determine user role.';
-  //   });
-  // }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -50,5 +52,10 @@ export class LoginComponent {
   navigateToForgotPassword() {
     this.router.navigate(['/forgot-password']);
   }
-}
 
+  logout() {
+    console.log('Logging out and navigating to login page');
+    this.dataService.signOut();
+    this.router.navigate(['/login']);
+  }
+}

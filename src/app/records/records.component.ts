@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { RecordsService } from '../services/records.service';
+import { ExpenseService, ExpenseRecord } from '../services/expense.service';
+import { BirdRecord, SalesService } from '../services/sales.service';
+import { MortalitiesService, Mortality } from '../services/mortalities.service';
 
 @Component({
   selector: 'app-records',
@@ -6,197 +10,150 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./records.component.css']
 })
 export class RecordsComponent implements OnInit {
+  monthlySales: { [month: number]: number } = {};
+  monthlyExpenses: { [month: number]: number } = {};
+  totalSalesAmount = 0;
+  totalExpensesAmount = 0;
+  salesList: BirdRecord[] = [];
+  totalBirds = 0;
+  totalMortalities = 0;
+  mortalityRecords: Mortality[] = [];
+  birdRecords: BirdRecord[] = [];
+  expenseRecords: ExpenseRecord[] = [];
+  selectedYear = new Date().getFullYear();
+  years: number[] = [];
+  selectedMonth = '';
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  currentPage = 1;
+  itemsPerPage = 5;
+  noDataForYear = false;
 
-  dailyRecords: { 
-    date: string, 
-    eggProduction: number, 
-    feedConsumption: number, 
-    vaccineRecords: number,
-    totalBirds: number, 
-    newFlock: number, 
-    mortalities: number 
-  }[] = [];
-  
-  weeklySummary: { 
-    week: string, 
-    eggProduction: number, 
-    feedConsumption: number, 
-    vaccineRecords: number,
-    totalBirds: number, 
-    newFlock: number, 
-    mortalities: number 
-  }[] = [];
-
-  selectedRecordIndex: number | null = null;
-  selectedRecord: { 
-    date: string, eggProduction: number, feedConsumption: number, vaccineRecords: number, 
-    index: number,totalBirds:number,newFlock:number,mortalities:number } | null = null;
-  chartEggProductionLabels: string[] = [];
-  chartFeedConsumptionLabels: string[] = [];
-  chartVaccineRecordsLabels: string[] = [];
-  chartEggProductionValues: number[] = [];
-  chartFeedConsumptionValues: number[] = [];
-  chartVaccineRecordsValues: number[] = [];
-  chartTotalBirdsLabels: string[] = [];
-chartNewFlockLabels: string[] = [];
-chartMortalitiesLabels: string[] = [];
-chartTotalBirdsValues: number[] = [];
-chartNewFlockValues: number[] = [];
-chartMortalitiesValues: number[] = [];
-
-  constructor() {}
+  constructor(
+    private recordsService: RecordsService,
+    private expenseService: ExpenseService,
+    private salesService: SalesService,
+    private mortalitiesService: MortalitiesService
+  ) {}
 
   ngOnInit(): void {
-    this.loadRecords();
-    this.calculateWeeklySummary();
-    this.prepareChartData();
-  }
-  loadRecords(): void {
-    const storedRecords = localStorage.getItem('poultryRecords');
-    if (storedRecords) {
-      this.dailyRecords = JSON.parse(storedRecords).map((record: any) => ({
-        ...record,
-        eggProduction: Number(record.eggProduction),
-        feedConsumption: Number(record.feedConsumption),
-        vaccineRecords: Number(record.vaccineRecords),
-        totalBirds: Number(record.totalBirds),
-        newFlock: Number(record.newFlock),
-        mortalities: Number(record.mortalities)
-      }));
-    }
-  }
-  
-
-  saveRecord(formValues: any): void {
-    const record = {
-      date: formValues.date,
-      eggProduction: formValues.eggProduction,
-      feedConsumption: formValues.feedConsumption,
-      vaccineRecords: formValues.vaccineRecords,
-      totalBirds: formValues.totalBirds,
-      newFlock: formValues.newFlock,
-      mortalities: formValues.mortalities
-    };
-    this.dailyRecords.push(record);
-    localStorage.setItem('poultryRecords', JSON.stringify(this.dailyRecords));
-    this.calculateWeeklySummary();
-    this.prepareChartData();
-  }
-  
-  editRecord(index: number): void {
-    this.selectedRecordIndex = index;
-    this.selectedRecord = { ...this.dailyRecords[index], index };
+    this.loadYears();
+    this.fetchSalesRecords();
+    this.fetchExpenseRecords();
+    this.fetchTotalBirds();
+    this.fetchMortalities();
   }
 
-  updateRecord(): void {
-    if (this.selectedRecord?.index !== undefined) {
-      // Ensure all required properties are present in the updated record
-      this.dailyRecords[this.selectedRecord.index] = {
-        ...this.dailyRecords[this.selectedRecord.index], // Preserve other properties if they exist
-        date: this.selectedRecord.date,
-        eggProduction: this.selectedRecord.eggProduction,
-        feedConsumption: this.selectedRecord.feedConsumption,
-        vaccineRecords: this.selectedRecord.vaccineRecords,
-        totalBirds: this.selectedRecord.totalBirds, // Ensure this property is set
-        newFlock: this.selectedRecord.newFlock, // Ensure this property is set
-        mortalities: this.selectedRecord.mortalities // Ensure this property is set
-      };
-      localStorage.setItem('poultryRecords', JSON.stringify(this.dailyRecords));
-      this.calculateWeeklySummary();
-      this.prepareChartData();
-      this.selectedRecordIndex = null;
-      this.selectedRecord = null;
-    }
-  }
-  
-
-  deleteRecord(index: number): void {
-    this.dailyRecords.splice(index, 1);
-    localStorage.setItem('poultryRecords', JSON.stringify(this.dailyRecords));
-    this.calculateWeeklySummary();
-    this.prepareChartData();
+  loadYears(): void {
+    const currentYear = new Date().getFullYear();
+    this.years = Array.from({ length: 5 }, (_, i) => currentYear - i);
   }
 
-  calculateWeeklySummary(): void {
-    const weeklyData: { 
-      [key: string]: { 
-        eggProduction: number, 
-        feedConsumption: number, 
-        vaccineRecords: number,
-        totalBirds: number,
-        newFlock: number,
-        mortalities: number 
-      } 
-    } = {};
-    
-    let currentWeek = 1;
-    let currentWeekStartDate: Date | null = null;
-  
-    this.dailyRecords.forEach((record) => {
-      const recordDate = new Date(record.date);
-      if (!currentWeekStartDate) {
-        currentWeekStartDate = recordDate;
+  fetchTotalBirds(): void {
+    this.recordsService.birdRecords$.subscribe(
+      (records) => {
+        this.birdRecords = records;
+        this.totalBirds = this.birdRecords.reduce((sum, record) => sum + (record.count || 0), 0);
+      },
+      (error) => console.error('Error fetching bird records:', error)
+    );
+  }
+
+  fetchMortalities(): void { 
+    this.mortalitiesService.getMortalities().subscribe(
+      (records) => {
+        this.mortalityRecords = records;
+        this.totalMortalities = this.mortalityRecords.reduce((sum, record) => sum + (record.numberOfMortalities || 0), 0);
+      },
+      (error) => console.error('Error fetching mortality records:', error)
+    );
+  }
+
+  fetchSalesRecords(): void {
+    this.salesService.birdRecords$.subscribe(
+      (records) => {
+        this.salesList = records;
+        this.calculateMonthlySales(); 
+      },
+      (error) => console.error('Error fetching sales records:', error)
+    );
+  }
+
+  fetchExpenseRecords(): void {
+    this.expenseService.expenseRecords$.subscribe(
+      (records) => {
+        this.expenseRecords = records;
+        this.calculateMonthlyExpenses();
+      },
+      (error) => console.error('Error fetching expense records:', error)
+    );
+  }
+
+  onYearChange(): void {
+    this.calculateMonthlySales();
+    this.calculateMonthlyExpenses();
+  }
+
+  calculateMonthlySales(): void {
+    this.monthlySales = {};
+    this.totalSalesAmount = 0; // Reset total sales
+    this.salesList.forEach(record => {
+      const date = new Date(record.date);
+      if (date.getFullYear() === this.selectedYear) {
+        const month = date.getMonth() + 1;
+        this.monthlySales[month] = (this.monthlySales[month] || 0) + record.sales;
+        this.totalSalesAmount += record.sales; 
       }
-  
-      const dayDifference = Math.floor((recordDate.getTime() - currentWeekStartDate.getTime()) / (1000 * 60 * 60 * 24));
-  
-      if (dayDifference >= 7) {
-        currentWeek++;
-        currentWeekStartDate = recordDate;
-      }
-  
-      const weekKey = `Week ${currentWeek}`;
-  
-      if (!weeklyData[weekKey]) {
-        weeklyData[weekKey] = { 
-          eggProduction: 0, 
-          feedConsumption: 0, 
-          vaccineRecords: 0,
-          totalBirds: 0,
-          newFlock: 0,
-          mortalities: 0
-        };
-      }
-  
-      weeklyData[weekKey].eggProduction += record.eggProduction;
-      weeklyData[weekKey].feedConsumption += record.feedConsumption;
-      weeklyData[weekKey].vaccineRecords += record.vaccineRecords;
-      weeklyData[weekKey].totalBirds += record.totalBirds;
-      weeklyData[weekKey].newFlock += record.newFlock;
-      weeklyData[weekKey].mortalities += record.mortalities;
     });
-  
-    this.weeklySummary = Object.keys(weeklyData).map(week => ({
-      week,
-      ...weeklyData[week]
-    }));
-  }
-  
-
-  prepareChartData(): void {
-    this.chartEggProductionLabels = this.weeklySummary.map(record => record.week);
-    this.chartFeedConsumptionLabels = this.weeklySummary.map(record => record.week);
-    this.chartVaccineRecordsLabels = this.weeklySummary.map(record => record.week);
-    this.chartTotalBirdsLabels = this.weeklySummary.map(record => record.week);
-    this.chartNewFlockLabels = this.weeklySummary.map(record => record.week);
-    this.chartMortalitiesLabels = this.weeklySummary.map(record => record.week);
-  
-    this.chartEggProductionValues = this.weeklySummary.map(record => record.eggProduction);
-    this.chartFeedConsumptionValues = this.weeklySummary.map(record => record.feedConsumption);
-    this.chartVaccineRecordsValues = this.weeklySummary.map(record => record.vaccineRecords);
-    this.chartTotalBirdsValues = this.weeklySummary.map(record => record.totalBirds);
-    this.chartNewFlockValues = this.weeklySummary.map(record => record.newFlock);
-    this.chartMortalitiesValues = this.weeklySummary.map(record => record.mortalities);
   }
 
-  scrollLeft() {
-    const container = document.querySelector('.weekly-summary-cards-section');
-    container?.scrollBy({ left: -200, behavior: 'smooth' });
+  calculateMonthlyExpenses(): void {
+    this.monthlyExpenses = {};
+    this.totalExpensesAmount = 0; 
+    this.expenseRecords.forEach(record => {
+      const date = new Date(record.date);
+      if (date.getFullYear() === this.selectedYear) {
+        const month = date.getMonth() + 1;
+        this.monthlyExpenses[month] = (this.monthlyExpenses[month] || 0) + record.amount;
+        this.totalExpensesAmount += record.amount; 
+      }
+    });
   }
-  
-   scrollRight() {
-    const container = document.querySelector('.weekly-summary-cards-section');
-    container?.scrollBy({ left: 200, behavior: 'smooth' });
+
+  getFilteredMonthlyRecords(): string[] {
+    const filteredMonths = this.months.filter(month => {
+      const monthIndex = this.getMonthIndex(month) + 1;
+      return (this.monthlySales[monthIndex] || 0) > 0 || (this.monthlyExpenses[monthIndex] || 0) > 0;
+    });
+
+    this.noDataForYear = filteredMonths.length === 0;
+    return filteredMonths;
   }
-  
+
+  getMonthIndex(month: string): number {
+    return this.months.indexOf(month);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.getFilteredMonthlyRecords().length / this.itemsPerPage);
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  printMonthlyRecords(): void {
+    window.print();
+  }
+
+   get effectiveTotalBirds(): number {
+    return this.totalBirds - this.totalMortalities;
+  }
 }

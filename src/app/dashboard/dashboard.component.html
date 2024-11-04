@@ -1,23 +1,42 @@
-<app-header></app-header>
+<div class="layout">
 
-<div class="container-fluid py-5">
-  <div class="container my-5">
-    <div class="row align-items-center">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content container-fluid py-5">
+    <div class="container my-5">
+     
+      <div class="row align-items-center mb-4">
+
+        <div class="col-12 text-center d-flex  ">
+          <div style="max-width: 1200px;margin-left: 120px;">
+          <h1 class="text-success font-weight-bold">Poultry Management Dashboard</h1>
+          <h6 class="text-muted">Welcome, {{ username }}! Here's an overview of your poultry farm's performance today.</h6>
+        </div>
+
+      <div class="collumn align-items-center mt-0 ms-5 mb-3" style="width: 200px;float: right;margin-left: 150px;">
+          <button type="button" class="btn btn-success btn-md w-100 mt-0 mb-2" (click)="products()">View Products</button>
+          <button type="button" class="btn btn-success btn-md w-100 mt-1 mb-2" (click)="poultry()">View Birds</button>
+      </div>
+        </div>
       
-      <div class="col-md-6">
-        <h1 class="text-white text-center mb-3">Cereals & Legumes</h1>
-        <img src="assets/images/farmer.png" class="img-fluid rounded shadow-sm mb-3" alt="A farmer with a fork Jembe">
-        <button type="button" class="btn btn-success btn-lg w-100 mt-3" (click)="products()">View Products</button>
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <h2 class="text-success mb-3">Recent Activities</h2>
+          <ul class="list-group shadow-sm">
+            <li class="list-group-item" *ngFor="let activity of recentActivities">
+              <i class="fa fa-check-circle text-success mr-2"></i> {{ activity }}
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h2 class="text-success mb-3">Notifications & Alerts</h2>
+          <div *ngFor="let alert of alerts" class="alert alert-warning shadow-sm">
+            <i class="fa fa-exclamation-circle mr-2"></i> {{ alert }}
+          </div>
+        </div>
       </div>
 
-      <div class="col-md-6">
-        <h1 class="text-white text-center mb-3">Poultry Farm</h1>
-        <img src="assets/images/poultry.jpg" class="img-fluid rounded shadow-sm mb-3" alt="Poultry farm">
-        <button type="button" class="btn btn-success btn-lg w-100 mt-3" (click)="poultry()">View Products</button>
-      </div>
-      
     </div>
   </div>
-</div>
 
-<app-footer></app-footer>
+</div>

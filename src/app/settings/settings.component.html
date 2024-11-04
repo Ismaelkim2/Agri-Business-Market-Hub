@@ -1,0 +1,52 @@
+<app-sidebar></app-sidebar>
+<div class="card">
+
+    <div> <h4 class="card-title text-center"><i class="fa fa-gear"></i>  Settings</h4></div>
+
+    <!-- <div class="logo d-flex align-items-center">
+        <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo">
+        <span class="ms-2">Eco-Eggs Poultry</span>
+      </div> -->
+    
+    <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+        
+        <div *ngIf="loggedInUser?.userImageUrl" class="text-center d-flex">
+            <div class="ms-4"><img [src]="'http://localhost:8081/' + loggedInUser.userImageUrl.replace('\\','/')"
+                 alt="User Image"
+                 class="user-photo rounded-circle mb-3"></div>
+                 <div><button style="color: white;border-radius: 4px;background-color: rgb(15, 119, 15);border: none;">
+                    <a href="" class="dropdown-item" (click)="SignOut()">Sign Out</a></button>
+                </div>
+        </div>
+
+     
+        <div class="mb-3 d-flex align-items-center">
+            <label for="name" class="form-label flex-grow-1">Name:</label>
+            <input type="text" formControlName="name" class="form-control flex-grow-2" id="name" placeholder="Enter your name">
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+            <label for="role" class="form-label flex-grow-1">Role:</label>
+            <input type="text" formControlName="role" class="form-control flex-grow-2" id="role" placeholder="Enter your role">
+            <div *ngIf="settingsForm.get('role')?.value === 'N/A' && settingsForm.get('role')?.touched" class="text-danger">N/A</div>
+        </div>
+
+       
+        <div class="mb-3 d-flex align-items-center">
+            <label for="contacts" class="form-label flex-grow-1">Tel:</label>
+            <input type="text" formControlName="contacts" class="form-control flex-grow-2" id="contacts" placeholder="Enter your contacts">
+        </div>
+
+      
+        <div class="mb-3 d-flex align-items-center">
+            <label for="email" class="form-label flex-grow-1">Email:</label>
+            <input type="email" formControlName="email" class="form-control flex-grow-2" id="email" placeholder="Enter your email">
+        </div>
+
+      
+        <div class="d-flex justify-content-between">
+            <button type="button" routerLink="/records" class="btn btn-secondary"><i class="fa fa-backward"></i> Back</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-edit"></i>  Edit</button>
+        </div>
+    </form>
+</div>

@@ -4,6 +4,8 @@ import { CartService } from '../cart.service';
 import { Product } from '../models/product.model';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Locale } from 'date-fns';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
@@ -18,7 +20,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private cdr: ChangeDetectorRef 
+    private cdr: ChangeDetectorRef ,
+    private location:Location
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +37,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  goBack(): void {
+    this.location.back();
+  } 
 
   ngOnDestroy(): void {
     if (this.cartUpdateSubscription) {

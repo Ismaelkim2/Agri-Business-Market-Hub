@@ -1,14 +1,20 @@
-<app-header></app-header>
+<div class="layout">
 
-<!-- Add a debug element to check the notification binding -->
+
+<app-sidebar></app-sidebar>
+
+<div class="main-content container-fluid">
+
+  <div (click)="goBack()"><i class="fa fa-arrow-left mt-3" title="back" style="cursor: pointer;"></i></div>
+
+
 <div *ngIf="notification" class="notification">
   {{ notification }}
 </div>
-
+<!-- 
 <div class="debug">
-  <!-- Display the notification value for debugging -->
   Notification Debug: {{ notification }}
-</div>
+</div> -->
 
 <div class="product-list">
   <div *ngFor="let product of products" class="product-card">
@@ -24,3 +30,7 @@
 </div>
 
 <app-footer></app-footer>
+</div>
+
+
+</div>

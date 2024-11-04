@@ -1,0 +1,116 @@
+ <div class="layout">
+    <app-sidebar></app-sidebar>
+  
+    <div class="main-content container-fluid" style="margin-top: 65px;">
+      <div class="d-flex justify-content-between align-items-center mb-3 mt-0" style="max-width: 1200px;">
+        <div (click)="goBack()" style="cursor: pointer;">
+          <i class="fa fa-arrow-left mt-2" title="Back"></i>
+        </div>
+        <button class="btn btn-success add-worker-btn" data-bs-toggle="collapse" data-bs-target="#addWorkerForm">
+          <i class="fa fa-plus"></i> Add Worker
+        </button>
+      </div>
+  
+      <h5 *ngIf="saveSuccess" class="alert alert-success text-success save-message">
+        <i class="fa fa-check"></i> Worker details saved successfully!
+      </h5>
+      
+
+      <div class="d-flex justify-content-start mb-2 button-group" #contentToCopy>
+        <button class="btn action-btn copy-btn me-3" title="Copy" (click)="copyToClipboard()">
+          <i class="fa fa-copy"></i> Copy
+        </button>
+        <button class="btn action-btn print-btn me-3" title="Print" (click)="onPrint()">
+          <i class="fa fa-print"></i> Print
+        </button>
+        <button class="btn action-btn share-btn" title="Share" (click)="shareContent()">
+          <i class="fa fa-share"></i> Share
+        </button>
+      </div>
+  
+      <h5 *ngIf="saveSuccess" class="alert alert-success text-success save-message">
+        <i class="fa fa-check"></i> Worker details saved successfully!
+      </h5>
+  
+      <div id="addWorkerForm" class="collapse">
+        <app-workers-form (workerAdded)="onWorkerAdded($event)"></app-workers-form>
+      </div>
+  
+      <div *ngIf="isEditFormVisible">
+        <label for="name">Name:</label>
+        <input id="name" [(ngModel)]="editableWorker.name" name="name" class="form-control" required />
+  
+        <label for="role">Role:</label>
+        <input id="role" [(ngModel)]="editableWorker.role" name="role" class="form-control" required />
+  
+        <label for="salary">Salary:</label>
+        <input id="salary" type="number" [(ngModel)]="editableWorker.salary" name="salary" class="form-control" required />
+  
+        <label for="email">Email:</label>
+        <input id="email" type="email" [(ngModel)]="editableWorker.email" name="email" class="form-control" required />
+  
+        <label for="phone">Phone:</label>
+        <input id="phone" type="text" [(ngModel)]="editableWorker.phone" name="phone" class="form-control" required />
+  
+        <label for="status">Status:</label>
+        <select id="status" [(ngModel)]="editableWorker.status" name="status" class="form-control">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+  
+        <label for="image">Worker Image:</label>
+        <input type="file" (change)="onImageFileSelected($event)" name="image" class="form-control" />
+  
+        <div *ngIf="editableWorker.image">
+          <img [src]="'http://localhost:8081/' + editableWorker.image" alt="Current Worker Image" class="worker-image" />
+        </div>
+  
+        <button (click)="onSaveWorkerChanges()" class="btn btn-primary">Save Changes</button>
+      </div>
+  
+      <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover worker-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Salary</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let worker of workers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <img [src]="'http://localhost:8081/' + worker.image" alt="Worker Image" class="worker-image" />
+              </td>
+              <td>{{ worker.name }}</td>
+              <td>{{ worker.role }}</td>
+              <td>{{ worker.salary | currency: "Kes." }}</td>
+              <td>{{ worker.email }}</td>
+              <td>{{ worker.phone }}</td>
+              <td>
+                <span [ngClass]="{'text-success': worker.status === 'Active', 'text-danger': worker.status === 'Inactive'}">
+                  {{ worker.status || 'Active' }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-warning" (click)="onEditWorker(worker)" title="Edit">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger ms-2" (click)="onDeleteWorker(worker.id)" title="Delete">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

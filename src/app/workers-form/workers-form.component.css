@@ -1,0 +1,82 @@
+.container-fluid {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.table {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table .btn {
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+input, select {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #6c757d;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.alert .fa-check-circle {
+  margin-right: 10px;
+}

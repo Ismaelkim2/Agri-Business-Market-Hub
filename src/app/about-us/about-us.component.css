@@ -1,5 +1,7 @@
 .container {
     margin-top: 50px;
+    margin-left: 250px;
+    position: relative;
   }
   
   .text-center h1 {

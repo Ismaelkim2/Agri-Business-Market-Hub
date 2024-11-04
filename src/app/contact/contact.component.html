@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-sidebar></app-sidebar>
 <div class="container">
     <div *ngIf="notification" class="mt-3 alert" [ngClass]="{'alert-success': notification.type === 'success', 'alert-danger': notification.type === 'error'}">
         {{ notification.message }}

@@ -1,3 +1,8 @@
+.container{
+  margin-left: 250px;
+  margin-top:80px ;
+}
+
 
 .card {
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

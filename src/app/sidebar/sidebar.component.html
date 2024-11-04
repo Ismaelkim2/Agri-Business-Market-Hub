@@ -1,39 +1,96 @@
-<!-- <nav class="sidebar">
+<nav class="navbar navbar-expand-lg navbar-fixed-top">
+  <div class="container-fluid" style="height: 60px;">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="logo d-flex align-items-center">
+          <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo" class="logo-image">
+          <span class="ms-2 text-white">Eco-Eggs Poultry</span>
+        </div>
+        
+        <div class="position-relative search-box ms-auto d-flex">
+          <input type="text" class="form-control ps-5 ms-1" placeholder="Search .." style="border-radius: 25px;">
+          <i class="fa fa-search position-absolute mt-3 ms-4"></i>
+        </div>
+      </div>
+      
+      <ul class="navbar-nav">
+        <div class="d-flex align-items-center">
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <button (click)="SignIn()" class="btn btn-primary">Sign In</button>
+          </li>
+          <li class="nav-item" *ngIf="!isLoggedIn" style="margin-left: 4px;">
+            <button (click)="SignUp()" class="btn btn-primary">Sign Up</button>
+          </li>
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <span class="navbar-text fs-5 fw-bold text-muted">Welcome, {{ userFirstName }}!</span>
+          </li>
+        
+          <div *ngIf="loggedInUser?.userImageUrl" class="dropdown-container">
+            <img [src]="'http://localhost:8081/' + loggedInUser?.userImageUrl?.replace('\\','/')" alt="User Image" class="user-photo rounded-circle" routerLink="/settings">
+          </div>
 
-  <div style="width: 100px;">
-    <img src="assets/images/maizeMain.png" alt="main farm" style="width: 150px;height: 150px;border-radius: 100px;">
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <button (click)="SignOut()" class="btn btn-primary" style="margin-left: 4px;">Sign Out</button>
+          </li>
+
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <button (click)="SignOut()" class="btn btn-primary" style="margin-left: 4px;">Sign In</button>
+          </li>
+
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="sidebar">
+  <div class="user-info d-flex align-items-center">
+    <div *ngIf="loggedInUser?.userImageUrl" class="dropdown-container">
+      <img [src]="'http://localhost:8081/' + loggedInUser?.userImageUrl?.replace('\\','/')" alt="User Image" class="user-photo rounded-circle">
+      <p class="online-status">👤 Online</p>
+    </div>
   </div>
 
-  <button class="navbar-toggler" type="button" (click)="toggleCollapse()" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-
-  <div [ngClass]="{'collapse': isCollapsed, 'collapse show': !isCollapsed}" id="navbarNav">
-    <ul class="nav flex-column">
-
-      <li class="nav-item">
-        <a class="nav-link"> Home</a>
-      </li>
-
-   
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/products"> <i class="fa fa-sitemap"></i> Products</a>
-      </li>
-
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/deliveries"> <i class="fa fa-truck"></i> Deliveries</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"> Portfolio</a>
-      </li>
-
-
-      <li class="nav-item">
-        <a class="nav-link"> <i class="fa fa-envelope"></i> Inbox</a>
-      </li>
-    </ul>
-  </div>
-</nav> 
+  <ul class="nav flex-column">
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/dashboard"><i class="fa fa-home"></i> Home</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line"></i> Dashboard</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book"></i> Records</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill"></i> Sales</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/expenses"><i class="fa fa-book"></i> Expenses</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group"></i> Workers</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping"></i> Customers</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones"></i> Mortalities</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="isLoggedIn">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" (click)="navigateTo('/about-us')">About Us</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('contact')">Contact Us</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" (click)="navigateTo('/faq')">FAQ</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>

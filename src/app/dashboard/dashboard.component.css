@@ -1,48 +1,108 @@
-.container-fluid {
-    background-color: #f8f9fa;
-  }
-  
-  .container {
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .text-white {
-    color: #14f144 !important;
-  }
-  
-  img {
-    height: auto;
-    max-width: 100%;
-    transition: transform 0.3s ease;
-  }
-  
-  img:hover {
-    transform: scale(1.05);
-  }
-  
-  .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .btn-success:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-  }
-  
-  h1 {
-    font-weight: bold;
-    font-size: 1.75rem;
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  position: relative;
+}
 
+app-sidebar {
+  width: 250px;
+  background-color: #2d2f33;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 60px;
+  color: #fff;
+  z-index: 2;
+}
+
+.main-content {
+  margin-left: 250px;
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-width: 0;
+  position: relative;
+}
+
+.container-fluid {
+  background-color: #f8f9fa;
+}
+
+.container {
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-white {
+  color: #14f144 !important;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* Adjusts the layout of the button row to align buttons on the right */
+.collumn.align-items-center.mt-2 {
+  justify-content: flex-end; /* Aligns items to the right */
+}
+
+.collumn.align-items-center.mt-2 .col-md-6 {
+  flex: 0 0 auto; /* Prevents the columns from expanding */
+  width: 45%; /* Reduces the width of each button container */
+  max-width: 300px; /* Limits the max width for larger screens */
+  padding-left: 10px; /* Adds a slight space between buttons */
+  float: right;
+}
+
+.btn-success {
+  width: 100%; /* Ensures buttons take up full width of their container */
+  max-width: 150px; /* Limits the max width of the button */
+  margin-left: auto; /* Pushes buttons to the far right within their container */
+}
+
+
+h1 {
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+.stat-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.3s;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.alert-warning {
+  border-left: 5px solid #ffc107;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-left: 0;
+    margin-right: 0;
   }
-  
-  @media (max-width: 768px) {
-    .container {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-  
+}
