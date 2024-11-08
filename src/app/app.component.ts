@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SessionTimeoutService } from './services/session-timeout.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'farm-market';
+  title = 'Brishkim Eco_Eggs';
+  showTimeoutAlert = false;
+
+  constructor(private sessionTimeoutService: SessionTimeoutService) {
+    this.sessionTimeoutService.showTimeoutNotification.subscribe(show => {
+      this.showTimeoutAlert = show;
+    });
+  }
 }

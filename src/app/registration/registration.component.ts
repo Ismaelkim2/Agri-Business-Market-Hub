@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-registration',
@@ -40,7 +42,9 @@ export class RegistrationComponent {
       formData.append('userImage', this.formData.userImage, this.formData.userImage.name);
     }
 
-    this.http.post('http://localhost:8081/api/user/create', formData).subscribe(
+    const apiUrl = environment.apiUrl
+
+    this.http.post(`${apiUrl}/api/user/create`, formData).subscribe(
       (response: any) => {
         console.log('Registration successful', response);
         this.formData = {
@@ -50,7 +54,7 @@ export class RegistrationComponent {
           phoneNumber: '',
           password: '',
           above18: false,
-          createdBy: 'self', 
+          createdBy: 'self',
           userImage: null
         };
         this.error = '';

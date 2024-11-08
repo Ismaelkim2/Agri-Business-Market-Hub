@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { CartService } from '../cart.service';
 import { DataServiceService } from '../data-service.service';
 import { Product } from '../models/product.model';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,6 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   userFirstName: string | null = null;
   userImageUrl: string = '';
   loggedInUser: UserDTO | null | undefined;
+  environment=environment;
 
   constructor(
     private dataService: DataServiceService,

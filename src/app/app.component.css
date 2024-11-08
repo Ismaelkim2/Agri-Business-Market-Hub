@@ -1,0 +1,15 @@
+.timeout-alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  

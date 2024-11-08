@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 export interface BirdRecord {
   id?: number;
@@ -29,7 +30,7 @@ export class SalesService {
   private birdRecordsSubject = new BehaviorSubject<BirdRecord[]>([]);
   birdRecords$ = this.birdRecordsSubject.asObservable();
 
-  private apiUrl = 'http://localhost:8081/api/sales'; 
+  private apiUrl = `${environment.apiUrl}/api/sales`; 
 
   constructor(private http: HttpClient) {
     this.loadBirdRecords();

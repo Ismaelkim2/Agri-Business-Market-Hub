@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 export interface Worker {
   id: number;
@@ -19,7 +20,7 @@ export interface Worker {
 export class WorkersService {
   private workersSubject = new BehaviorSubject<Worker[]>([]);
   workers$ = this.workersSubject.asObservable();
-  private apiUrl = 'http://localhost:8081/api/workers';
+  private apiUrl = `${environment.apiUrl}/api/workers`;
 
   constructor(private http: HttpClient) {
     this.loadWorkers();

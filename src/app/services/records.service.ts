@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment.prod';
 
 export interface BirdRecord {
   date: string;
@@ -74,7 +75,7 @@ export class RecordsService {
   private weeklySummarySubject = new BehaviorSubject<WeeklySummary[]>([]);
   weeklySummary$ = this.weeklySummarySubject.asObservable();
 
-  private apiUrl = 'http://localhost:8081/api/records';
+  private apiUrl = `${environment.apiUrl}/api/records`;
 
   constructor(private http: HttpClient) {
     this.fetchBirdRecords();

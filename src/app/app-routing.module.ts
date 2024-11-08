@@ -64,6 +64,7 @@ const routes: Routes = [
   { path: 'add-customer', component: AddCustomerComponent },
   { path: 'edit-customer/:id', component: EditCustomerComponent },
   { path: 'mortalities', component: MortalitiesComponent},
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

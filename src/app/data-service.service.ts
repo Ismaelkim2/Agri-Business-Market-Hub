@@ -3,20 +3,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { AuthResponse } from './login/login.component';
+import { environment } from '../environments/environment.prod';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataServiceService {
-  private apiUrl = 'http://localhost:8081/api';
+  private apiUrl = `${environment.apiUrl}/api`;
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkInitialLoginStatus());
   private loggedInUserSubject = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) {
     
   }
-
 
   private checkInitialLoginStatus(): boolean {
     const token = localStorage.getItem('authToken'); 
@@ -30,6 +30,7 @@ export class DataServiceService {
     });
   }
 
+  
   signIn(credentials: { phoneNumber: string, password: string }): Observable<boolean> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/user/login`, credentials).pipe(
       map(response => {

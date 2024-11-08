@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 export interface ExpenseRecord {
   id?: number;
@@ -16,7 +17,7 @@ export class ExpenseService {
   private expenseRecordsSubject = new BehaviorSubject<ExpenseRecord[]>([]);
   expenseRecords$ = this.expenseRecordsSubject.asObservable();
 
-  private apiUrl = 'http://localhost:8081/api/expenses';
+  private apiUrl = `${environment.apiUrl}/api/expenses`;
 
   constructor(private http: HttpClient) {
     this.fetchExpenseRecords();

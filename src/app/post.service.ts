@@ -4,12 +4,13 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Post } from './models/post.model';
 import { DataServiceService } from './data-service.service';
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = 'http://localhost:8081/api/posts';
+  private apiUrl = `${environment.apiUrl}/api/posts`;
   postsChanged = new Subject<Post[]>();
   loggedInUser: any;
 

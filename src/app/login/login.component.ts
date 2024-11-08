@@ -28,7 +28,7 @@ export class LoginComponent {
         success => {
           if (success) {
             console.log('Login successful, navigating to /records');
-            this.router.navigate(['/records']);
+            this.router.navigate(['/dashboard']);
           } else {
             console.warn('Login failed, showing error message');
             this.errorMessage = 'Incorrect Phone Number or Password';
