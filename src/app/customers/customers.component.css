@@ -5,8 +5,27 @@
     max-width: 1110px;
     position: fixed;
 }
+
 .customer-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+.float-right {
+    float: right;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ml-1 {
+    margin-left: 0.25rem;
 }

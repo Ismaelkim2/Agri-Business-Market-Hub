@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'; 
-import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexFill, ApexTitleSubtitle, ChartType } from 'ng-apexcharts';
 import { Observable, Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { BirdRecord, DailyRecord, RecordsService, WeeklySummary } from '../services/records.service';
@@ -48,18 +47,6 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   poultryTypes: BirdRecord[] = [];
   subscriptions: Subscription[] = [];
 
-  growthData: ApexAxisChartSeries = [];
-  chartOptions: any;
-  pieChartData = {
-    series: [] as number[],
-  };
-  pieChartOptions = {
-    chart: {
-      type: 'pie' as ChartType,
-    },
-    labels: [] as string[],
-  };
-
   constructor(private recordsService: RecordsService,
     private cd:ChangeDetectorRef,
     private dataservice:DataServiceService,
@@ -67,26 +54,6 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   private router :Router
    ) {
 
-    this.chartOptions = {
-      chart: {
-        type: 'line' as ChartType,
-        height: 350,
-      },
-      xaxis: {
-        categories: [],
-      },
-      yaxis: {
-        title: {
-          text: 'Growth Rate',
-        },
-      },
-      fill: {
-        type: 'solid',
-      },
-      title: {
-        text: 'Growth Rate Over Time',
-      },
-    };
   }
 
   goBack(){

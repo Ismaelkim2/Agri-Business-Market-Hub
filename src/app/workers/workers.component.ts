@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Worker, WorkersService } from '../services/workers.service';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-workers',
@@ -22,6 +23,7 @@ export class WorkersComponent implements OnInit {
   isEditFormVisible: boolean = false;
   saveSuccess: boolean = false;
   selectedImageFile: File | null = null;
+  baseUrl: string = environment.apiUrl; 
 
   @ViewChild('contentToCopy', { static: false }) contentToCopy!: ElementRef;
 
@@ -75,7 +77,7 @@ export class WorkersComponent implements OnInit {
   onDeleteWorker(workerId: number) {
     if (confirm('Are you sure you want to delete this worker?')) {
       this.workersService.deleteWorker(workerId).subscribe(() => {
-        this.loadWorkers(); // Refresh worker list after deletion
+        this.loadWorkers(); 
       });
     }
   }

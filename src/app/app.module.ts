@@ -5,8 +5,6 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { NgApexchartsModule } from 'ng-apexcharts';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -30,7 +28,6 @@ import { FaqComponent } from './faq/faq.component';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { SummaryComponent } from './summary/summary.component';
 import { RecordsComponent } from './records/records.component';
-import { ChartComponent } from './chart/chart.component';
 import { FarmDataComponent } from './farm-data/farm-data.component';
 
 
@@ -43,8 +40,6 @@ import { CartService } from './cart.service';
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { MatTableModule } from '@angular/material/table';
-import { NgxChartsModule } from 'ngx-charts';
 import { WorkersComponent } from './workers/workers.component';
 import { WorkersFormComponent } from './workers-form/workers-form.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -87,7 +82,6 @@ import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortal
     FaqComponent,
     TimeAgoPipe,
     RecordsComponent,
-    ChartComponent,
     FarmDataComponent,
     WorkersComponent,
     WorkersFormComponent,
@@ -112,11 +106,9 @@ import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortal
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgApexchartsModule,
     MatIconModule,
     MatSnackBarModule,
     MatCardModule ,
-    MatTableModule,
     NgbModule,
   
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),

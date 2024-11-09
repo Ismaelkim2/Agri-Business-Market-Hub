@@ -1,50 +1,44 @@
 <app-sidebar></app-sidebar>
 
-<div class="container"> 
+<div class="container">
     <h2>Customers</h2>
-    <button (click)="addCustomer()" class="btn btn-success mb-1" style="float: right;">Add New Customer</button>
-    <table mat-table [dataSource]="customers" class="mat-elevation-z8">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let customer"> {{customer.id}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef> Image </th>
-            <td mat-cell *matCellDef="let customer">
-                <img 
-                    [src]="'http://localhost:8081/' + customer.image.replace('/\\/g', '/')" 
-                    alt="Customer Image" 
-                    class="customer-image"/>
-            </td>
-        </ng-container>
-        
-
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let customer"> {{customer.email}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="phone">
-            <th mat-header-cell *matHeaderCellDef> Phone </th>
-            <td mat-cell *matCellDef="let customer"> {{customer.phone}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
-            <td mat-cell *matCellDef="let customer">
-                <button (click)="editCustomer(customer.id)" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>
-                <button (click)="deleteCustomer(customer.id)" class="btn btn-danger ms-1"><i class="fa fa-trash"></i></button>
-                <button (click)="viewCustomer(customer.id)" class="btn btn-info ms-1"><i class="fa fa-eye"></i></button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <button (click)="addCustomer()" class="btn btn-success mb-3 float-right">Add New Customer</button>
+    
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customer of customers">
+                <td>{{ customer.id }}</td>
+                <td>
+                    <img 
+                        [src]="customer.image" 
+                        alt="Customer Image" 
+                        class="customer-image"/>
+                </td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>
+                    <button (click)="editCustomer(customer.id)" class="btn btn-warning btn-sm">
+                        <i class="fa fa-pen"></i>
+                    </button>
+                    <button (click)="deleteCustomer(customer.id)" class="btn btn-danger btn-sm ml-1">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button (click)="viewCustomer(customer.id)" class="btn btn-info btn-sm ml-1">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>

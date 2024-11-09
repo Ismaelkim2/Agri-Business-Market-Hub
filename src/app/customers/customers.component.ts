@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
     selector: 'app-customers',
@@ -10,8 +11,9 @@ import { Router } from '@angular/router';
 export class CustomersComponent implements OnInit {
     customers: any[] = [];
     displayedColumns: string[] = ['id', 'image', 'name', 'email', 'phone', 'action'];
+    baseUrl: string = environment.apiUrl;
 
-    constructor(private customerService: CustomerService, private router: Router) {} 
+    constructor(private customerService: CustomerService, private router: Router) {}
 
     ngOnInit() {
         this.loadCustomers();
@@ -19,14 +21,13 @@ export class CustomersComponent implements OnInit {
 
     loadCustomers() {
         this.customerService.getCustomers().subscribe(data => {
-            this.customers = data;
-            this.customers.forEach(customer => {
-                console.log("Image URL:", `http://localhost:8081/${customer.image}`);
-            });
+            this.customers = data.map(customer => ({
+                ...customer,
+                image: `${this.baseUrl}/${customer.image.replace(/\\/g, '/')}` 
+            }));
         });
     }
-    
-    
+
 
     addCustomer() {
         this.router.navigate(['/add-customer']); 
@@ -43,6 +44,7 @@ export class CustomersComponent implements OnInit {
     }
 
     viewCustomer(id: number) {
-        this.router.navigate(['/view-customer', id]); // Navigate to ViewCustomerComponent
+        this.router.navigate(['/view-customer', id]); 
     }
 }
+

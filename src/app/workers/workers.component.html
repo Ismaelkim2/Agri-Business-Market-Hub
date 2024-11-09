@@ -62,7 +62,7 @@
         <input type="file" (change)="onImageFileSelected($event)" name="image" class="form-control" />
   
         <div *ngIf="editableWorker.image">
-          <img [src]="'http://localhost:8081/' + editableWorker.image" alt="Current Worker Image" class="worker-image" />
+          <img [src]="baseUrl + '/' + editableWorker.image" alt="Current Worker Image" class="worker-image" />
         </div>
   
         <button (click)="onSaveWorkerChanges()" class="btn btn-primary">Save Changes</button>
@@ -87,7 +87,7 @@
             <tr *ngFor="let worker of workers; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-                <img [src]="'http://localhost:8081/' + worker.image" alt="Worker Image" class="worker-image" />
+                <img [src]="baseUrl + '/' + worker.image" alt="Worker Image" class="worker-image" />
               </td>
               <td>{{ worker.name }}</td>
               <td>{{ worker.role }}</td>
