@@ -1,7 +1,6 @@
 /* Navbar Styles */
 .navbar {
     background-color: #228B22; /* Adjusted color for consistency */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     padding: 10px;
     position: fixed;
     top: 0;
@@ -77,24 +76,6 @@
     transform: scale(1.1);
 }
 
-.dropdown-container {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 55px;
-    right: 0;
-    min-width: 160px;
-    background-color: #228B22; /* Sidebar background color for dropdown */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.dropdown-container:hover .dropdown-menu {
-    display: block;
-}
-
 .dropdown-item {
     color: #ffffff;
     padding: 10px 15px;
@@ -112,9 +93,9 @@
     left: 0;
     width: 250px;
     height: calc(100% - 60px);
-    background-color: #228B22; /* Consistent sidebar color */
+    background-color: #228B22; 
     padding: 15px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
     z-index: 1000;
 }
 
@@ -122,11 +103,15 @@
     flex-direction: column;
 }
 
+.sidebar .nav-item {
+    margin: 3px 0;
+  }
+
 .sidebar .nav-link {
     color: #ffffff;
     padding: 10px 15px;
     transition: background-color 0.3s;
-    border-radius: 5px; /* Rounded link edges */
+    border-radius: 5px; 
 }
 
 .sidebar .nav-link:hover {
@@ -141,20 +126,62 @@
 
 /* Body Padding for Navbar and Sidebar */
 body {
-    padding-top: 70px;
+    padding-top: 20px;
     padding-left: 250px;
 }
 
-/* Responsive */
-@media (max-width: 767.98px) {
+/* Mobile Styles: Sidebar hidden by default */
+@media (max-width: 991px) {
     .sidebar {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        display: none;
+      transform: translateX(-100%);
+      display: none;
     }
-
-    .sidebar.show {
-        display: block;
+  
+    .sidebar.open {
+      transform: translateX(0);
+      display: block;
     }
-}
+  
+    .sidebar .nav-item {
+      text-align: center;
+    }
+  }
+  
+  /* Styles for Sidebar on Larger Screens */
+  @media (min-width: 768px) {
+    .sidebar {
+      transform: translateX(0);
+      display: block;
+    }
+    
+    .sidebar .nav-item {
+      text-align: left;
+    }
+  }
+  
+  /* Button for Toggling Sidebar */
+  .sidebar-toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 5px;
+    z-index: 1050;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on small screens */
+  }
+  
+  .sidebar-toggle-btn:hover {
+    background-color: #495057;
+  }
+  
+  /* Show the sidebar toggle button on small screens */
+  @media (max-width: 991px) {
+    .sidebar-toggle-btn {
+      display: block;
+    }
+  }

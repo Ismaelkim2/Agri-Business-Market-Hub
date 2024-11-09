@@ -8,6 +8,8 @@ import { DataServiceService } from '../data-service.service';
 import { Product } from '../models/product.model';
 import { environment } from '../../environments/environment.prod';
 
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -25,6 +27,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   userImageUrl: string = '';
   loggedInUser: UserDTO | null | undefined;
   environment=environment;
+  isSidebarOpen = false;
 
   constructor(
     private dataService: DataServiceService,
@@ -36,31 +39,38 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.cartSubscription = this.cartService.getCart().subscribe((cart: Product[]) => {
       this.cart = cart;
     });
-
+  
     this.cartUpdatedSubscription = this.cartService.getCartUpdated().subscribe((message: string) => {
       this.notification = message;
       setTimeout(() => {
         this.notification = null;
       }, 3000); 
     });
-
+  
     this.isLoggedInSubscription = this.dataService.isLoggedIn.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
         this.loggedInUserSubscription = this.dataService.loggedInUser.subscribe((user: UserDTO | null) => {
-          console.log("User Details:", user);
+          console.log("User Details:", user); 
           this.userFirstName = user ? user.firstName : null;
           this.userImageUrl = user ? user.userImageUrl : '';
+          
+            // Log the image URL to ensure it's correct
+        if (user && user.userImageUrl) {
+          console.log("User Image URL:", this.environment.apiUrl + '/' + user.userImageUrl.replace('\\', '/'));
+        }
+
         });
       } else {
         this.userFirstName = null;
       }
     });
-
+  
     this.dataService.loggedInUser.subscribe((user: UserDTO | null) => {
       this.loggedInUser = user;
     });
   }
+  
 
   ngOnDestroy(): void {
     this.cartSubscription.unsubscribe();
@@ -78,6 +88,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   removeFromCart(index: number): void {
     this.cartService.removeFromCart(index);
@@ -103,4 +114,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.dataService.signOut();
     this.router.navigate(['/login']);
   }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
 }
