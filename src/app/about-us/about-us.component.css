@@ -1,26 +1,121 @@
 .container {
-    margin-top: 50px;
-    margin-left: 250px;
-    position: relative;
+  margin: auto;
+  padding: 20px;
+  max-width: 1110px;
+  margin-left: 250px;
+  height: 100%;
+}
+
+.hero-section {
+  background: #4CAF50;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 60px 0;
+  margin-top: 20px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+}
+
+.card-deck .card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.card-deck .card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body h3 {
+  font-size: 1.5rem;
+  color: #4CAF50;
+  margin-bottom: 15px;
+}
+
+.card-body p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-center h2, .text-center h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+  .container {
+    padding: 15px;
+    margin-left: 0;
   }
-  
-  .text-center h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .text-center p {
-    font-size: 1.25rem;
-    color: #6c757d;
-  }
-  
-  .card-body h2 {
+
+  .hero-section h1 {
     font-size: 2rem;
-    margin-bottom: 15px;
   }
-  
+
+  .card-body h3 {
+    font-size: 1.3rem;
+  }
+
   .card-body p {
-    font-size: 1.1rem;
-    color: #343a40;
+    font-size: 0.95rem;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0;
+  }
+
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .card-body h3 {
+    font-size: 1.2rem;
+  }
+
+  .card-body p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 30px 0;
+  }
+
+  .hero-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-section p {
+    font-size: 0.9rem;
+  }
+
+  .card-body h3 {
+    font-size: 1rem;
+  }
+
+  .card-body p {
+    font-size: 0.85rem;
+  }
+}
