@@ -1,44 +1,48 @@
-<app-sidebar></app-sidebar>
+<div class="layout">
+    <app-sidebar></app-sidebar>
 
-<div class="container">
-    <h2>Customers</h2>
-    <button (click)="addCustomer()" class="btn btn-success mb-3 float-right">Add New Customer</button>
-    
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let customer of customers">
-                <td>{{ customer.id }}</td>
-                <td>
-                    <img 
-                        [src]="customer.image" 
-                        alt="Customer Image" 
-                        class="customer-image"/>
-                </td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.email }}</td>
-                <td>{{ customer.phone }}</td>
-                <td>
-                    <button (click)="editCustomer(customer.id)" class="btn btn-warning btn-sm">
-                        <i class="fa fa-pen"></i>
-                    </button>
-                    <button (click)="deleteCustomer(customer.id)" class="btn btn-danger btn-sm ml-1">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                    <button (click)="viewCustomer(customer.id)" class="btn btn-info btn-sm ml-1">
-                        <i class="fa fa-eye"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="main-content">
+        <div class="container">
+            <h2>Customers</h2>
+            <button (click)="addCustomer()" class="btn btn-success mb-3 float-right">Add New Customer</button>
+            
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of customers">
+                        <td>{{ customer.id }}</td>
+                        <td>
+                            <img 
+                                [src]="customer.image" 
+                                alt="Customer Image" 
+                                class="customer-image"/>
+                        </td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>
+                            <button (click)="editCustomer(customer.id)" class="btn btn-warning btn-sm">
+                                <i class="fa fa-pen"></i>
+                            </button>
+                            <button (click)="deleteCustomer(customer.id)" class="btn btn-danger btn-sm ml-1">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <button (click)="viewCustomer(customer.id)" class="btn btn-info btn-sm ml-1">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

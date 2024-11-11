@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   notification: string | null = null;
   private cartUpdateSubscription!: Subscription; 
+  isSidebarOpen = false;
 
   constructor(
     private productService: ProductService,

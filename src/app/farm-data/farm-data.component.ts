@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'; 
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core'; 
 import { Observable, Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { BirdRecord, DailyRecord, RecordsService, WeeklySummary } from '../services/records.service';
@@ -24,6 +24,9 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   isLoggedInSubscription: Subscription = new Subscription();
   isLoggedIn:boolean=false;
 
+
+  isLargeScreen = window.innerWidth >= 992;
+  isSidebarOpen = false;
 
   filterTerm: string = '';
   currentPage: number = 1;
@@ -289,4 +292,13 @@ export class FarmDataComponent implements OnInit, OnDestroy {
       this.currentPage--;
     }
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isLargeScreen = event.target.innerWidth >= 992;
+    if (!this.isLargeScreen) {
+      this.isSidebarOpen = false; 
+    }
+  } 
+
 }

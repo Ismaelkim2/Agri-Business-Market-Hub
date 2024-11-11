@@ -27,6 +27,7 @@ export class RecordsComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   noDataForYear = false;
+ 
 
   constructor(
     private recordsService: RecordsService,

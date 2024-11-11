@@ -20,8 +20,8 @@
           <div class="input-group">
             <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" [(ngModel)]="password" required>
             <div class="input-group-append">
-              <button type="button" class="btn btn-outline-secondary toggle-password-btn" (click)="togglePasswordVisibility()">
-                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              <button type="button" class="btn btn-outline-secondary toggle-password-btn bg-light  " (click)="togglePasswordVisibility()">
+              <i class="fa fa-eye-slash " ></i>
               </button>
             </div>
           </div>
@@ -31,7 +31,7 @@
 
         <button type="submit" class="btn btn-primary w-100">Login</button><br><br>
 
-        <h4 class="text-center text-info cursor-pointer" (click)="navigateToForgotPassword()">Forgot Password?</h4>
+        <h4 class="text-center text-info  forgot-password " (click)="navigateToForgotPassword()" style="cursor: pointer;text-decoration: underline;">Forgot Password?</h4>
 
         <button routerLink="/registration" class="btn btn-success w-100 mt-2">Create Account</button>
       </form>

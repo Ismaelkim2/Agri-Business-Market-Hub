@@ -12,13 +12,17 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     max-width: 1110px;
+    transition: margin-left 0.3s ease;
+    margin-top: 45px;
 }
 
 h1 {
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 45px;
 }
 
+/* Button Styles */
 .add-mortality-button,
 .save-button,
 .cancel-button,
@@ -33,7 +37,6 @@ h1 {
 }
 
 .add-mortality-button {
-    margin-top: 30px;
     background-color: #28a745; 
     float: right;
 }
@@ -97,7 +100,6 @@ input[type="text"] {
     border-radius: 4px;
 }
 
-/* Table Styles */
 .mortalities-table {
     width: 100%;
     border-collapse: collapse;
@@ -123,4 +125,57 @@ input[type="text"] {
 
 .mortalities-table tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.1); 
+}
+
+@media screen and (max-width: 992px) {
+    .container {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .add-mortality-button {
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .mortality-form {
+        padding: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .action-button {
+        padding: 6px 8px;
+    }
+
+    .mortalities-table th,
+    .mortalities-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .action-button {
+        padding: 4px 6px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .add-mortality-button {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .mortalities-table th,
+    .mortalities-table td {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    .container {
+        padding: 10px;
+    }
 }

@@ -1,36 +1,30 @@
-<div class="layout">
+<div class="layout" >
+ 
+  <app-sidebar></app-sidebar>
 
-
-<app-sidebar></app-sidebar>
-
-<div class="main-content container-fluid">
-
-  <div (click)="goBack()"><i class="fa fa-arrow-left mt-3" title="back" style="cursor: pointer;"></i></div>
-
-
-<div *ngIf="notification" class="notification">
-  {{ notification }}
-</div>
-<!-- 
-<div class="debug">
-  Notification Debug: {{ notification }}
-</div> -->
-
-<div class="product-list">
-  <div *ngFor="let product of products" class="product-card">
-    <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
-    <div class="product-info">
-      <h3>{{ product.name }}</h3>
-      <p>{{ product.description }}</p>
-      <p class="price">${{ product.price }}</p>
-      <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
-      <button (click)="quickView(product)" class="btn btn-secondary">Quick View</button>
+  <div class="main-content container-fluid">
+    <div (click)="goBack()">
+      <i class="fa fa-arrow-left mt-3" title="back" style="cursor: pointer;"></i>
     </div>
+
+    <div *ngIf="notification" class="notification">
+      {{ notification }}
+    </div>
+
+    <div class="product-list">
+      <div *ngFor="let product of products" class="product-card">
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p class="price">${{ product.price }}</p>
+          <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+          <button (click)="quickView(product)" class="btn btn-secondary">Quick View</button>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
   </div>
 </div>
 
-<app-footer></app-footer>
-</div>
-
-
-</div>

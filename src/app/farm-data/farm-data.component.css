@@ -1,18 +1,8 @@
 .layout {
   display: flex;
+  flex-direction: row;
   min-height: 100vh;
   background-color: #f8f9fa;
-}
-
-app-sidebar {
-  width: 250px;
-  background-color: #2d2f33;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-top: 60px;
-  z-index: 2;
 }
 
 .main-content {
@@ -21,6 +11,10 @@ app-sidebar {
   padding: 20px;
   background-color: #f8f9fa;
   margin-top: 80px;
+}
+
+.main-content.collapsed {
+  margin-left: 0;
 }
 
 .dashboard-container {
@@ -44,13 +38,15 @@ app-sidebar {
 .card-header {
   font-size: 1.25rem;
   padding: 15px;
-  background-color:rgba(255, 255, 255, 0.884);
+  background-color: rgba(255, 255, 255, 0.884);
   color: #22c922;
   height: 60px;
+
 }
 
 .table-responsive {
   overflow-x: auto;
+ 
 }
 
 .table {
@@ -113,23 +109,70 @@ app-sidebar {
   color: #fff;
 }
 
-.d-flex {
-  display: flex;
-  align-items: center;
-}
-
-.d-flex .btn {
-  margin-right: 5px;
-}
-
 .notification {
   position: fixed;
   top: 20px;
- margin-left: 250px;
-  background-color: green; 
-  color:black;
+  margin-left: 250px;
+  background-color: green;
+  color: black;
   padding: 10px;
   border-radius: 5px;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
+@media (max-width: 991px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .card-header, .pagination-controls span {
+    font-size: 1rem;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination-controls .btn {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .layout {
+    padding: 0;
+  }
+
+  .card-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card-header h5 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .pagination-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination-controls .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

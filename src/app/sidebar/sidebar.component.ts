@@ -1,5 +1,5 @@
 import { UserDTO } from './../models/user.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -28,6 +28,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   loggedInUser: UserDTO | null | undefined;
   environment=environment;
   isSidebarOpen = false;
+  imageError = false;
+  isLargeScreen = window.innerWidth >= 992;
 
   constructor(
     private dataService: DataServiceService,
@@ -36,6 +38,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isSidebarOpen = this.isLargeScreen;
+
     this.cartSubscription = this.cartService.getCart().subscribe((cart: Product[]) => {
       this.cart = cart;
     });
@@ -115,8 +119,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
+ 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+ 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isLargeScreen = window.innerWidth >= 992;
+    this.isSidebarOpen = this.isLargeScreen; 
+  }
+
+  onImageError(event: Event): void {
+    this.imageError = true;
+    (event.target as HTMLImageElement).style.display = 'none'; 
   }
 
 }

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SessionTimeoutService {
   private timeoutId: any;
-  private readonly timeoutDuration = 1 * 60 * 1000; // 1 minute for demonstration
+  private readonly timeoutDuration = 5 * 60 * 1000;
   public showTimeoutNotification = new BehaviorSubject<boolean>(false);
 
   constructor(private router: Router, private ngZone: NgZone) {

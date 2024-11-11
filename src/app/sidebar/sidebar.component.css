@@ -1,187 +1,145 @@
-/* Navbar Styles */
 .navbar {
-    background-color: #228B22; /* Adjusted color for consistency */
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1030;
-    transition: background-color 0.3s; /* Smooth transition for background color */
+  background-color: #228B22;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
+  transition: background-color 0.3s;
 }
 
-.navbar-brand, .navbar-text, .nav-link {
-    color: #ffffff;
-    font-weight: 400;
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
-.navbar-brand {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.logo {
-    display: flex; /* Align items horizontally */
-    align-items: center; /* Center vertically */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .logo-image {
-    width: 50px; /* Adjust the width to your preference */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 8px; /* Optional: add rounded corners */
-    margin-right: 10px; /* Space between the logo and text */
-    transition: transform 0.3s; /* Animation effect on hover */
+  width: 50px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 10px;
+  transition: transform 0.3s;
 }
 
 .logo-image:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover for a nice effect */
+  transform: scale(1.1);
 }
 
 .text-white {
-    color: white; /* Ensure the text is white for visibility */
-    font-size: 1.5em; /* Adjust font size as needed */
-    font-weight: bold; /* Bold text for emphasis */
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-
-/* Search Box */
-.search-box {
-    max-width: 650px;
-    margin-left: 20px;
-    position: relative;
-}
-
-.search-box input {
-    border-radius: 25px;
-    padding-left: 40px; /* Adjusted padding for the search icon */
-}
-
-.search-box i {
-    color: #888; /* Search icon color */
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* User Photo and Dropdown */
 .user-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.3s;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
 .user-photo:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .dropdown-item {
-    color: #ffffff;
-    padding: 10px 15px;
-    transition: background-color 0.2s;
+  color: #ffffff;
+  padding: 10px 15px;
+  transition: background-color 0.2s;
 }
 
 .dropdown-item:hover {
-    background-color: #1e7e34; /* Darker green on hover */
+  background-color: #1e7e34;
 }
 
-/* Sidebar */
 .sidebar {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 250px;
-    height: calc(100% - 60px);
-    background-color: #228B22; 
-    padding: 15px;
-    transition: transform 0.3s ease;
-    z-index: 1000;
+  left: -250px;
+  width: 250px;
+  height: calc(100% - 60px);
+  background-color: #228B22;
+  padding: 15px;
+  transition: transform 0.3s ease;
+  position: fixed;
+  top: 60px;
+  z-index: 1029;
+  overflow-y: auto;
 }
 
-.sidebar .nav {
-    flex-direction: column;
+.sidebar.open {
+  transform: translateX(0);
 }
-
-.sidebar .nav-item {
-    margin: 3px 0;
-  }
 
 .sidebar .nav-link {
-    color: #ffffff;
-    padding: 10px 15px;
-    transition: background-color 0.3s;
-    border-radius: 5px; 
+  color: #ffffff;
+  padding: 10px 15px;
+  transition: background-color 0.3s;
+  border-radius: 5px;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #1e7e34; /* Consistent hover effect */
+  background-color: #1e7e34;
 }
 
-/* Online Status */
 .online-status {
-    color: rgb(13, 224, 13); 
-    font-size: 14px;
+  color: rgb(13, 224, 13);
+  font-size: 14px;
 }
 
-/* Body Padding for Navbar and Sidebar */
-body {
-    padding-top: 20px;
-    padding-left: 250px;
-}
-
-/* Mobile Styles: Sidebar hidden by default */
 @media (max-width: 991px) {
-    .sidebar {
-      transform: translateX(-100%);
-      display: none;
-    }
-  
-    .sidebar.open {
-      transform: translateX(0);
-      display: block;
-    }
-  
-    .sidebar .nav-item {
-      text-align: center;
-    }
+  .sidebar {
+      left: -250px; 
   }
-  
-  /* Styles for Sidebar on Larger Screens */
-  @media (min-width: 768px) {
-    .sidebar {
-      transform: translateX(0);
-      display: block;
-    }
-    
-    .sidebar .nav-item {
-      text-align: left;
-    }
+
+  .sidebar.open {
+      left: 0; 
   }
-  
-  /* Button for Toggling Sidebar */
+
   .sidebar-toggle-btn {
-    position: fixed;
-    top: 15px;
-    left: 5px;
-    z-index: 1050;
-    background-color: #343a40;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: none; /* Hidden by default, shown on small screens */
+      display: block; 
   }
-  
-  .sidebar-toggle-btn:hover {
-    background-color: #495057;
+
+  body {
+      padding-left: 0;
   }
-  
-  /* Show the sidebar toggle button on small screens */
-  @media (max-width: 991px) {
-    .sidebar-toggle-btn {
-      display: block;
-    }
+}
+
+@media (min-width: 992px) {
+  .sidebar {
+      left: 0; 
+      transform: translateX(0);
   }
+
+  .sidebar-toggle-btn {
+      display: none;
+  }
+
+  body {
+      padding-left: 250px;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: #228B22;
+    color: white;            
+    text-align: left;          
+    position: absolute;     
+    left: 0;                  
+    top: 60px;               
+    width: 100%;           
+    padding: 15px;           
+  }
+
+  .navbar-collapse .nav-link {
+    color: white;         
+  }
+
+  .navbar-collapse .nav-link:hover {
+    background-color: #1e7e34;
+  }
+}
+

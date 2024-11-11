@@ -1,36 +1,28 @@
 .layout {
   display: flex;
+  flex-direction: row;
   min-height: 100vh;
-}
-
-app-sidebar {
-  width: 250px;
-  background-color: #343a40;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-top: 60px;
 }
 
 .main-content {
   margin-left: 250px;
   flex: 1;
   padding: 30px;
+  transition: margin 0.3s ease-in-out;
 }
 
 .container-fluid {
   background-color: #f8f9fa;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 40px;
-  max-width: 1200px;
+  padding: 20px;
+  max-width: 100%;
 }
 
 .table-responsive {
   border-radius: 10px;
   overflow-x: auto;
-  max-width: 1110px;
+  max-width: 100%;
 }
 
 .worker-table th {
@@ -117,4 +109,59 @@ app-sidebar {
 
 .btn-danger:hover {
   background-color: #dc3545;
+}
+
+@media (max-width: 992px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .action-btn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-worker-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .worker-table th,
+  .worker-table td {
+    font-size: 13px;
+  }
+
+  .save-message {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .worker-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .add-worker-btn,
+  .action-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .save-message {
+    font-size: 12px;
+  }
 }

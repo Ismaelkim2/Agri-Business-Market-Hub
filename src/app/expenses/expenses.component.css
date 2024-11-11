@@ -1,12 +1,19 @@
 .main-container {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 40px 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-left: 250px;
   background-color: #f4f6f8;
   min-height: 100vh;
-  margin-left: 250px;
-  margin-top: 25px;
+  margin-top: 45px;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    margin-left: 0;
+    padding: 10px;
+  }
 }
 
 .expenses-table {
@@ -15,37 +22,47 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
+  max-width: 1000px;
   margin: 20px 0;
+  overflow-x: auto; 
 }
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin-bottom: 20px;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
 }
 
 .btn-open-modal {
   background-color: #28a745;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: background-color 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .btn-open-modal:hover {
   background-color: #218838;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 thead th {
@@ -53,11 +70,10 @@ thead th {
   color: white;
   padding: 12px;
   text-align: left;
-  border-bottom: 2px solid #218838;
 }
 
 tbody td {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ddd;
 }
 
@@ -66,29 +82,34 @@ tbody tr:nth-child(even) {
 }
 
 .action-icons i {
-  margin-right: 10px;
   cursor: pointer;
+  padding: 5px;
 }
 
 .pagination-controls {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 20px;
   margin-top: 20px;
+  font-size: 0.9rem;
 }
 
 .total-expenses {
-  text-align: right;
-  font-size: 1.25rem;
+  text-align: center;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-top: 20px;
   color: #333;
 }
+
 
 .modal-header {
   background-color: #28a745;
   color: white;
   padding: 10px;
 }
+
 
 .modal-body {
   padding: 20px;
@@ -98,11 +119,14 @@ tbody tr:nth-child(even) {
   margin-bottom: 15px;
 }
 
-input {
+input[type="text"],
+input[type="number"],
+input[type="date"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-top: 5px;
 }
 
 .btn-submit {
@@ -118,4 +142,37 @@ input {
 
 .btn-submit:hover {
   background-color: #218838;
+}
+
+@media (max-width: 992px) {
+  .main-container {
+    margin-left: 0;
+  }
+  .expenses-table {
+    padding: 15px;
+  }
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pagination-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .btn-open-modal,
+  .btn-submit {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+  .filter-container label {
+    font-size: 0.85rem;
+  }
 }

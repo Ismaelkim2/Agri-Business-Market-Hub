@@ -1,9 +1,7 @@
-<app-sidebar></app-sidebar> 
+<app-sidebar></app-sidebar>
 
-<div class="container-fluid" style="margin-left: 250px; max-width: 1100px;">
-  
-  <div class="d-flex flex-wrap justify-content-start mb-2" style="max-width: 1080px;">
-
+<div class="container-fluid main-content">
+  <div class="d-flex flex-wrap justify-content-start mb-2">
     <div class="card summary-card ms-2 me-2">
       <div class="card-header bg-success text-center">
         <strong class="fs-4"><i class="fa fa-money-bill"></i> Sales</strong>
@@ -11,7 +9,6 @@
       <div class="card-body bg-light text-center">
         <h5>Amount: <br><br> <strong class="text-success">{{ totalSalesAmount | currency:'Kes.' }}</strong></h5>
       </div>
-      
     </div>
 
     <div class="card summary-card me-2">
@@ -43,14 +40,14 @@
     </div>
   </div>
 
-  <div class="text-success" style="max-width: 1075px;">
+  <div class="text-success" style="max-width:1110px;" >
     <hr>
   </div>
 
   <div class="container-fluid mt-4">
-    <div class="d-flex align-items-center mb-2" style="max-width: 1080px;height: 34px;">
+    <div class="d-flex align-items-center mb-2" style="max-width: 1110px;">
       <h3 class="text-success fw-bold mt-2">Financial Overview</h3>
-  
+
       <div class="d-flex ms-auto">
         <select [(ngModel)]="selectedYear" (change)="onYearChange()" class="form-select me-2">
           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
@@ -64,8 +61,8 @@
         </button>
       </div>
     </div>
-  
-    <div class="table-responsive shadow-sm rounded" style="max-width: 1075px;">
+
+    <div class="table-responsive shadow-sm rounded">
       <table class="table table-hover table-bordered">
         <thead class="bg-success text-light">
           <tr>
@@ -92,17 +89,20 @@
         
         <ng-template #noDataTemplate>
           <tr>
-            <td colspan="4" class="text-center text-muted">No data record for this year</td>
+            <td colspan="4" class="text-center text-danger fw-bold">No records available for this year</td>
           </tr>
         </ng-template>
-        
       </table>
     </div>
-  
-    <div class="pagination-controls mt-3 d-flex align-items-center">
-      <button class="btn btn-outline-success bg-success text-light" (click)="previousPage()" [disabled]="currentPage === 1" style="margin-left: 40%;">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button class="btn btn-outline-success bg-success text-light" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+
+
+    <div class="pagination-controls d-flex justify-content-center mt-4">
+      <button (click)="previousPage()" class="btn btn-outline-success me-2" [disabled]="currentPage === 1">
+        <i class="fa fa-arrow-left"></i>
+      </button>
+      <button (click)="nextPage()" class="btn btn-outline-success" [disabled]="currentPage === totalPages">
+        <i class="fa fa-arrow-right"></i>
+      </button>
     </div>
   </div>
 </div>

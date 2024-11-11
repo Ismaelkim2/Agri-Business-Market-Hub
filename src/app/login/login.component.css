@@ -108,7 +108,6 @@ input[type="tel"]:focus, input[type="password"]:focus {
   box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .formdiv {
     width: 90%;

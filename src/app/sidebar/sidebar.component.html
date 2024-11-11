@@ -1,22 +1,60 @@
 <nav class="navbar navbar-expand-lg navbar-fixed-top">
   <div class="container-fluid" style="height: 60px;">
     <div class="d-flex justify-content-between align-items-center w-100">
+      <!-- Logo and Sidebar Toggle -->
       <div class="d-flex align-items-center">
-
-        <button class="sidebar-toggle-btn" (click)="toggleSidebar()">☰</button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         
-        <div class="logo d-flex align-items-center">
+        <div class="logo d-flex align-items-center ms-2">
           <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo" class="logo-image">
-          <span class="ms-2 text-white">Eco-Eggs Poultry</span>
-        </div>
-        
-        <div class="position-relative search-box ms-auto d-flex">
-          <input type="text" class="form-control ps-5 ms-1" placeholder="Search .." style="border-radius: 25px;">
-          <i class="fa fa-search position-absolute mt-3 ms-4"></i>
+          <span class="ms-1 text-white">BrishkimEcoEggs</span>
         </div>
       </div>
-      
-      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+      <!-- Navbar Links for Toggler on Small Screens -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard"><i class="fa fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line"></i> Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book"></i> Records</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill"></i> Sales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/expenses"><i class="fa fa-book"></i> Expenses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group"></i> Workers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping"></i> Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones"></i> Mortalities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
+          </li>
+          <!-- Additional Dropdown for More Links -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" (click)="navigateTo('/about-us')">About Us</a></li>
+              <li><a class="dropdown-item" (click)="navigateTo('contact')">Contact Us</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="navigateTo('/faq')">FAQ</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- User Authentication Links -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item" *ngIf="!loggedInUser">
             <button (click)="SignIn()" class="btn btn-primary">Sign In</button>
@@ -27,13 +65,15 @@
           <li class="nav-item" *ngIf="loggedInUser">
             <span class="navbar-text fs-5 fw-bold text-muted">Welcome, {{ userFirstName }}!</span>
           </li>
-        
-          <li *ngIf="loggedInUser?.userImageUrl" class="nav-item d-flex align-items-center">
-            <img [src]="environment + '/' + loggedInUser?.userImageUrl?.replace('\\', '/')" alt="User Image" class="user-photo rounded-circle" routerLink="/settings">
+          <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
+            <img 
+              [src]="loggedInUser?.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
+              alt="User Image" 
+              class="user-photo rounded-circle" 
+              (error)="onImageError($event)" 
+              routerLink="/settings"
+            >
           </li>
-          
-          
-          
           <li class="nav-item" *ngIf="loggedInUser">
             <button (click)="SignOut()" class="btn btn-primary" style="margin-left: 4px;">Sign Out</button>
           </li>
@@ -43,14 +83,25 @@
   </div>
 </nav>
 
-<div class="sidebar"  [ngClass]="{'open': isSidebarOpen}" >
+<!-- Sidebar for Large Screens Only -->
+<div class="sidebar" [ngClass]="{'open': isSidebarOpen}" *ngIf="isLargeScreen || isSidebarOpen">
   <div class="user-info d-flex align-items-center">
-    <div *ngIf="loggedInUser?.userImageUrl">
-      <img [src]="environment.apiUrl + '/' + loggedInUser?.userImageUrl?.replace('\\', '/')" alt="User Image" class="user-photo rounded-circle">
+    <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
+      <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
+        <img 
+          [src]="loggedInUser?.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
+          alt="User Image" 
+          class="user-photo rounded-circle mt-5" 
+          (error)="onImageError($event)" 
+          routerLink="/settings"
+        >
+      </ng-container>
+      <ng-template #defaultIcon>
+        <i class="fa fa-user user-photo rounded-circle" style="font-size: 1.2em;color: rgb(102, 98, 98);" routerLink="/settings"></i>
+      </ng-template>
       <p class="online-status">👤 Online</p>
-    </div>
+    </li>
   </div>
-
   <ul class="nav flex-column">
     <li class="nav-item">
       <a class="nav-link" routerLink="/dashboard"><i class="fa fa-home"></i> Home</a>
@@ -90,3 +141,4 @@
     </li>
   </ul>
 </div>
+
