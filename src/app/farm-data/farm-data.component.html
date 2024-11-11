@@ -1,27 +1,25 @@
-<div class="layout" *ngIf="isLoggedIn"  >
-
-  <div>
-    <app-sidebar></app-sidebar>
-  </div>
-
+<app-sidebar></app-sidebar>
+<div class="layout" *ngIf="isLoggedIn">
   <div class="main-content container-fluid dashboard-container">
-   
-
     <div class="row">
       <div class="col-lg-12">
         <section class="poultry-dashboard card shadow-sm mb-4">
-         
-          <div class="card-header  text-white d-flex justify-content-between align-items-center">
-
-            <div class="d-flex">
-              <div (click)="goBack()"><i class="fa fa-arrow-left mt-1 text-dark" title="back" style="cursor: pointer;"></i></div>
-              <div class="ms-4">  <h5 style="color: rgb(20, 161, 20);"><i class="fa fa-info-circle"></i> Poultry Records Data</h5></div>
-            </div>
-           
+          <div class="card-header text-white d-flex justify-content-between align-items-center flex-wrap">
             <div class="d-flex align-items-center">
-              <input type="text" class="form-control ms-3" style="width: auto;" placeholder="Filter by bird type..." [(ngModel)]="filterTerm" (ngModelChange)="applyFilter()" />
-
-              <button class="btn btn-success ms-3" (click)="toggleModal()" style="width: auto;"><i class="fa fa-plus"></i> Add New Record</button>
+              <div (click)="goBack()" class="back-icon">
+                <i class="fa fa-arrow-left text-dark" title="back"></i>
+              </div>
+              <div class="ms-4">
+                <h5 style="color: rgb(20, 161, 20);">
+                  <i class="fa fa-info-circle"></i> Poultry Records Data
+                </h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="text" class="form-control ms-1 me-1 filter-input" placeholder="Filter by bird type..." [(ngModel)]="filterTerm" (ngModelChange)="applyFilter()" />
+              <button class="btn btn-success ms-1 add-record-btn" (click)="toggleModal()">
+                <i class="fa fa-plus"></i>New Record
+              </button>
             </div>
           </div>
 
@@ -43,17 +41,14 @@
                 <tbody>
                   <tr *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index">
                     <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
-                      <td>{{ record.date | date:'yyyy-MM-dd' | date: 'longDate' }}</td>
+                      <td>{{ record.date | date:'yyyy-MM-dd' }}</td>
                       <td>{{ record.count }}</td>
                       <td>{{ calculateDescriptiveAge(record.date) }}</td>
                       <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
                       <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
                       <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
                       <td>
-                        
-                       
-                        <span *ngIf="!record.sold" style="color:green;">No</span>
-                        <span *ngIf="record.sold" style="color:rgb(238, 85, 85);">Yes &#10003;</span>
+                        <span [ngClass]="{ 'text-success': !record.sold, 'text-danger': record.sold }">{{ record.sold ? 'Yes ✓' : 'No' }}</span>
                       </td>
                       <td>
                         <div class="d-flex">
@@ -71,46 +66,33 @@
                       <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
                       <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
                       <td><input [(ngModel)]="record.mortalities" type="number" class="form-control" /></td>
-
                       <td>
                         <button class="btn btn-primary btn-sm" (click)="onSaveChanges(i)" *ngIf="!isSavedArray[i]">Save</button>
                         <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
-                        <div *ngIf="showNotification" class="notification">
-                          Changes saved successfully!
-                        </div>
-                        
+                        <div *ngIf="showNotification" class="notification">Changes saved successfully!</div>
                       </td>
                     </ng-template>
                   </tr>
                 </tbody>
-                
               </table>
             </div>
 
-            <div class="pagination-controls mt-3 d-flex align-items-center">
-              <button class="btn btn-outline-success bg-success text-light" (click)="previousPage()" [disabled]="currentPage === 1" style="margin-left: 40%;">Previous</button>
-              <span>Page {{ currentPage }} of {{ totalPages }}</span>
-              <button class="btn btn-outline-success bg-success text-light" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+            <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
+              <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+              <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+              <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
             </div>
           </div>
 
           <div *ngIf="!filteredPoultryRecords || filteredPoultryRecords.length === 0">
             No records available to display.
           </div>
-          
-
         </section>
       </div>
     </div>
   </div>
 
-
-  <div
-    class="modal"
-    [ngClass]="{ 'show': isModalOpen }"
-    [style.display]="isModalOpen ? 'block' : 'none'"
-    tabindex="-1"
-  >
+  <div class="modal fade" [ngClass]="{ 'show': isModalOpen }" [style.display]="isModalOpen ? 'block' : 'none'" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -119,45 +101,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <div class="modal-body">
           <form (ngSubmit)="onSubmit()">
             <div class="form-group">
               <label for="hatchDate">Hatch Date:</label>
-              <input
-                id="hatchDate"
-                type="date"
-                class="form-control"
-                [(ngModel)]="newHatchData.hatchDate"
-                name="hatchDate"
-                required
-              />
+              <input id="hatchDate" type="date" class="form-control" [(ngModel)]="newHatchData.hatchDate" name="hatchDate" required />
             </div>
-
             <div class="form-group">
               <label for="birdType">Bird Type:</label>
-              <input
-                id="birdType"
-                type="text"
-                class="form-control"
-                [(ngModel)]="newHatchData.birdType"
-                name="birdType"
-                required
-              />
+              <input id="birdType" type="text" class="form-control" [(ngModel)]="newHatchData.birdType" name="birdType" required />
             </div>
-
             <div class="form-group">
               <label for="birdCount">Bird Count:</label>
-              <input
-                id="birdCount"
-                type="number"
-                class="form-control"
-                [(ngModel)]="newHatchData.birdCount"
-                name="birdCount"
-                required
-              />
+              <input id="birdCount" type="number" class="form-control" [(ngModel)]="newHatchData.birdCount" name="birdCount" required />
             </div>
-
             <button type="submit" class="btn btn-primary">Add Record</button>
           </form>
         </div>

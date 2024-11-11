@@ -13,10 +13,6 @@
   margin-top: 80px;
 }
 
-.main-content.collapsed {
-  margin-left: 0;
-}
-
 .dashboard-container {
   padding: 20px;
   background-color: #f9f9f9;
@@ -27,12 +23,6 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
@@ -40,84 +30,18 @@
   padding: 15px;
   background-color: rgba(255, 255, 255, 0.884);
   color: #22c922;
-  height: 60px;
+}
 
+.filter-input {
+  max-width: 200px;
 }
 
 .table-responsive {
   overflow-x: auto;
- 
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table thead th {
-  background-color: #28a745;
-  color: #fff;
-  padding: 10px;
-  text-align: left;
-}
-
-.table tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
-}
-
-.table tbody td {
-  padding: 10px;
-}
-
-.btn-light {
-  color: #007bff;
-  background-color: #fff;
-  border: 1px solid #007bff;
-}
-
-.btn-light:hover {
-  background-color: #e2e6ea;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: #fff;
-}
-
-.form-control {
-  border-radius: 5px;
-  border: 1px solid #ced4da;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.pagination-controls .btn-outline-success {
-  border-color: #28a745;
-  color: #28a745;
-}
-
-.pagination-controls .btn-outline-success:hover {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.notification {
-  position: fixed;
-  top: 20px;
-  margin-left: 250px;
-  background-color: green;
-  color: black;
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 1000;
+.pagination-controls .btn {
+  padding: 5px 20px;
 }
 
 @media (max-width: 991px) {
@@ -128,11 +52,6 @@
   .main-content {
     margin-left: 0;
     padding: 10px;
-    margin-top: 20px;
-  }
-
-  .card-header, .pagination-controls span {
-    font-size: 1rem;
   }
 
   .pagination-controls {
@@ -143,36 +62,5 @@
   .pagination-controls .btn {
     width: 100%;
     margin-top: 5px;
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-  }
-}
-
-@media (max-width: 576px) {
-  .layout {
-    padding: 0;
-  }
-
-  .card-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .card-header h5 {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .pagination-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .pagination-controls .btn {
-    width: 100%;
-    margin-bottom: 5px;
   }
 }

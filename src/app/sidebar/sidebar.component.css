@@ -49,6 +49,7 @@
 .dropdown-item {
   color: #ffffff;
   padding: 10px 15px;
+  background-color: #228B22;
   transition: background-color 0.2s;
 }
 

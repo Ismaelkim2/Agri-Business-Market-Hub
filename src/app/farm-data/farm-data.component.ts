@@ -53,6 +53,7 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   constructor(private recordsService: RecordsService,
     private cd:ChangeDetectorRef,
     private dataservice:DataServiceService,
+    private recordService:RecordsService,
   private location:Location,
   private router :Router
    ) {
@@ -95,6 +96,20 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+ this.subscriptions.push(
+    this.recordsService.getBirdRecords().subscribe(
+      (records) => {
+        this.birdRecords = records;
+        this.poultryTypes = records;
+        this.applyFilter();
+      },
+      (error) => {
+        console.error('Error fetching bird records:', error);
+      }
+    )
+  );
+
     this.subscriptions.push(
       this.recordsService.getTotalBirds().subscribe((total) => {
         console.log('total bird',total)
@@ -136,11 +151,28 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   
   
   onDeleteBird(index: number): void {
-    this.filteredPoultryRecords.splice(index, 1);
+    const confirmDelete = confirm('Are you sure you want to delete this bird record?');
+    if (confirmDelete) {
+      const recordId = this.filteredPoultryRecords[index].id; 
+      if (recordId !== undefined) {
+        this.recordsService.deleteBirdRecord(recordId).subscribe(
+          () => {
+            this.filteredPoultryRecords.splice(index, 1);
+            this.applyFilter();
+            alert('Bird record deleted successfully');
+          },
+          (error) => {
+            console.error('Error deleting bird record:', error);
+            alert('Failed to delete bird record');
+          }
+        );
+      } else {
+        console.error('Record ID is undefined');
+        alert('Cannot delete bird record: ID is missing');
+      }
+    }
   }
-
-
-
+  
   openAddModal() {
     this.isEditMode = false;
     this.formData = {}; 

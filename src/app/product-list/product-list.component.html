@@ -1,9 +1,10 @@
-<app-sidebar class="sidebar"></app-sidebar>
+<app-sidebar></app-sidebar>
 
 <div class="layout">
   <div class="main-content container-fluid">
+    
     <div (click)="goBack()">
-      <i class="fa fa-arrow-left mt-3 back-icon" title="back"></i>
+      <i class="fa fa-arrow-left mt-2 back-icon" title="back"></i>
     </div>
 
     <div *ngIf="notification" class="notification">

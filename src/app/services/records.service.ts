@@ -81,6 +81,16 @@ export class RecordsService {
     this.fetchBirdRecords();
   }
 
+
+  getBirdRecords(): Observable<BirdRecord[]> {
+    return this.http.get<BirdRecord[]>(`${environment.apiUrl}/birds`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Get Bird Records Error:', error);
+        return throwError(error);
+      })
+    );
+  }
+
   fetchBirdRecords(): void {
     this.http.get<BirdRecord[]>(`${this.apiUrl}/birds`)
       .pipe(catchError(this.handleError))
@@ -127,6 +137,7 @@ export class RecordsService {
       })
     );
   }
+  
 
   getTotalBirds(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/birds`)
