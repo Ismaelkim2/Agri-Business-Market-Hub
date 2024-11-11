@@ -4,50 +4,85 @@
   min-height: 100vh;
   background-color: #f8f9fa;
   position: relative;
-}
-
-app-sidebar {
-  width: 250px; 
-  background-color: #2d2f33;
-  height: 100vh;
-  position: fixed; 
-  top: 0;
-  left: 0;
-  padding-top: 60px;
-  color: #fff;
-  z-index: 2;
+  flex-direction: column; /* Make layout flexible for small screens */
 }
 
 .main-content {
-  margin-left: 250px; 
+  margin-left: 250px;
   flex: 1;
   padding: 20px;
-  margin-top: 68px;
   background-color: #f8f9fa;
-  z-index: 1;
-  min-width: 0; 
-  position: relative;
+  margin-top: 80px;
 }
+
 .container {
-    margin-top: 50px;
+  margin-top: 50px;
+}
+
+.text-center h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.accordion-button {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: rgb(63, 216, 63);
+  transition: background-color 0.3s ease;
+}
+
+.accordion-button:hover {
+  background-color: #e9ecef;
+}
+
+.accordion-body p {
+  font-size: 1.1rem;
+  color: #343a40;
+  line-height: 1.6;
+}
+
+.modal-body p {
+  font-size: 1.1rem;
+  color: #343a40;
+  line-height: 1.6;
+}
+
+.accordion-item {
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #007bff;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
   }
-  
+
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
   .text-center h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
-  
+
   .accordion-button {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
-  
+
   .accordion-body p {
-    font-size: 1.1rem;
-    color: #343a40;
+    font-size: 1rem;
   }
-  
-  .modal-body p {
-    font-size: 1.1rem;
-    color: #343a40;
+}
+
+@media (max-width: 576px) {
+  .modal-dialog {
+    max-width: 90%;
   }
-  
+}
