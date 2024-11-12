@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataServiceService } from './../data-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 export interface AuthResponse {
@@ -19,9 +20,18 @@ export class LoginComponent {
   showPassword: boolean = false;
   errorMessage: string = '';
 
-  constructor(private dataService: DataServiceService, private router: Router) {}
+  loading = false;
+
+  constructor(
+    private dataService: DataServiceService, 
+    private router: Router,
+    private toastr: ToastrService,
+  ) {}
 
   onSubmit() {
+
+    this.loading = true;
+
     console.log('Submitting login with phone number:', this.phoneNumber);
     this.dataService.signIn({ phoneNumber: this.phoneNumber, password: this.password })
       .subscribe(
@@ -43,6 +53,13 @@ export class LoginComponent {
           }
         }
       );
+
+      setTimeout(() => {
+        this.loading = false; 
+        this.toastr.success('Logged in successfully'); 
+        this.router.navigate(['/dashboard']);
+      }, 2000);
+
   }
 
   togglePasswordVisibility() {

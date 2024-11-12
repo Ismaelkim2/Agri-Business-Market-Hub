@@ -53,6 +53,7 @@ import { AddCustomerComponent } from './customers/add-customer/add-customer.comp
 import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
 import { MortalitiesComponent } from './mortalities/mortalities.component';
 import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortality.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -110,6 +111,7 @@ import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortal
     MatSnackBarModule,
     MatCardModule ,
     NgbModule,
+    ToastrModule.forRoot(),
   
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
    

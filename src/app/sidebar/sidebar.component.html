@@ -43,7 +43,8 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
           </li>
-          <!-- Additional Dropdown for More Links -->
+      
+          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -53,7 +54,8 @@
             </ul>
           </li>
         </ul>
-        <!-- User Authentication Links -->
+      
+
         <ul class="navbar-nav ms-auto">
           <li class="nav-item" *ngIf="!loggedInUser">
             <button (click)="SignIn()" class="btn btn-primary">Sign In</button>
@@ -82,7 +84,6 @@
   </div>
 </nav>
 
-<!-- Sidebar for Large Screens Only -->
 <div class="sidebar" [ngClass]="{'open': isSidebarOpen}" *ngIf="isLargeScreen || isSidebarOpen">
   <div class="user-info d-flex align-items-center">
     <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
