@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-fixed-top">
   <div class="container-fluid" style="height: 60px;">
     <div class="d-flex justify-content-between align-items-center w-100">
-      <!-- Logo and Sidebar Toggle -->
+
       <div class="d-flex align-items-center">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -12,8 +12,7 @@
           <span class="ms-1 text-white">BrishkimEcoEggs</span>
         </div>
       </div>
-
-      <!-- Navbar Links for Toggler on Small Screens -->
+         
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -44,7 +43,6 @@
             <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
           </li>
       
-          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -55,7 +53,6 @@
           </li>
         </ul>
       
-
         <ul class="navbar-nav ms-auto">
           <li class="nav-item" *ngIf="!loggedInUser">
             <button (click)="SignIn()" class="btn btn-primary">Sign In</button>

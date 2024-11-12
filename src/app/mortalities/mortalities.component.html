@@ -47,7 +47,7 @@
       <thead>
           <tr>
               <th>Date</th>
-              <th>Number of Mortalities</th>
+              <th>No.</th>
               <th>Reason</th>
               <th>Recorded By</th>
               <th>Actions</th>
@@ -62,9 +62,6 @@
               <td>
                   <button (click)="edit(element)" class="action-button edit"><i class="fa fa-pen-to-square"></i></button>
                   <button (click)="delete(element.id)" class="action-button delete"><i class="fa fa-trash"></i></button>
-                  <button (click)="toggleVisibility(element)" class="action-button toggle">
-                      {{ element.visible ? 'Hide' : 'Show' }}
-                  </button>
               </td>
           </tr>
       </tbody>
