@@ -55,6 +55,25 @@ h1 {
   border-left: 5px solid #ffc107;
 }
 
+.list-group-item {
+  background-color: #f8f9fa;
+  border: none;
+  border-left: 4px solid #28a745;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.list-group-item i {
+  font-size: 1.2em;
+  color: #28a745;
+}
+
+.list-group-item:hover {
+  background-color: #e9ecef;
+  transition: background-color 0.2s;
+}
+
+
 @media (max-width: 992px) {
   .main-content {
     margin-left: 0;

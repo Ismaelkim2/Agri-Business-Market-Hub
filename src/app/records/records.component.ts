@@ -97,6 +97,9 @@ export class RecordsComponent implements OnInit {
   calculateMonthlySales(): void {
     this.monthlySales = {};
     this.totalSalesAmount = 0; // Reset total sales
+    // Sort the sales list by date descending
+    this.salesList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
     this.salesList.forEach(record => {
       const date = new Date(record.date);
       if (date.getFullYear() === this.selectedYear) {
@@ -106,10 +109,12 @@ export class RecordsComponent implements OnInit {
       }
     });
   }
-
+  
   calculateMonthlyExpenses(): void {
     this.monthlyExpenses = {};
     this.totalExpensesAmount = 0; 
+    this.expenseRecords.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
     this.expenseRecords.forEach(record => {
       const date = new Date(record.date);
       if (date.getFullYear() === this.selectedYear) {
@@ -119,16 +124,16 @@ export class RecordsComponent implements OnInit {
       }
     });
   }
-
+  
   getFilteredMonthlyRecords(): string[] {
     const filteredMonths = this.months.filter(month => {
       const monthIndex = this.getMonthIndex(month) + 1;
       return (this.monthlySales[monthIndex] || 0) > 0 || (this.monthlyExpenses[monthIndex] || 0) > 0;
     });
-
     this.noDataForYear = filteredMonths.length === 0;
-    return filteredMonths;
+    return filteredMonths.reverse();
   }
+  
 
   getMonthIndex(month: string): number {
     return this.months.indexOf(month);

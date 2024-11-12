@@ -41,7 +41,8 @@
                 <tbody>
                   <tr *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index">
                     <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
-                      <td>{{ record.date | date:'yyyy-MM-dd' }}</td>
+                      <!-- <td>{{ record.date | date:'yyyy-MM-dd' }}</td> -->
+                      <td>{{ formatDate(record.date) }}</td>
                       <td>{{ record.count }}</td>
                       <td>{{ calculateDescriptiveAge(record.date) }}</td>
                       <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
@@ -82,6 +83,7 @@
               <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
               <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
             </div>
+            
           </div>
 
           <div *ngIf="!filteredPoultryRecords || filteredPoultryRecords.length === 0">

@@ -59,11 +59,15 @@ export class DashboardComponent implements OnInit {
   }
 
   updateRecentActivities(records: BirdRecord[]): void {
-    this.recentActivities = records.map(record => {
-      return `Recorded ${record.count} birds on ${record.date}, ${record.eggProduction} eggs produced`;
-    }).slice(0, 4);  
+    this.recentActivities = records
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map(record => {
+        const formatDate=new Date(record.date).toLocaleString();
+        return `Recorded ${record.count} birds on ${formatDate}, ${record.eggProduction} eggs produced`;
+      })
+      .slice(0, 4); 
   }
-
+  
   poultry() {
     this.router.navigate(['/product-list']);
   }

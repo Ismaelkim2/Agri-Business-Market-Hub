@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { BirdRecord, DailyRecord, RecordsService, WeeklySummary } from '../services/records.service';
 import { DataServiceService } from '../data-service.service';
 import { Router } from '@angular/router';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-farm-data',
@@ -137,6 +138,10 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isLoggedInSubscription.unsubscribe();
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  formatDate(date: string): string {
+    return format(new Date(date), 'MMM dd, yyyy hh:mm a'); 
   }
 
 
@@ -298,32 +303,38 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(): void {
-    if (this.filterTerm.trim()) {
-        this.filteredPoultryRecords = this.poultryTypes.filter(record =>
-            record.birdType.toLowerCase().includes(this.filterTerm.toLowerCase())
-        );
+    if (this.filterTerm) {
+      this.filteredPoultryRecords = this.birdRecords.filter((record) =>
+        record.birdType.toLowerCase().includes(this.filterTerm.toLowerCase())
+      );
     } else {
-        this.filteredPoultryRecords = [...this.poultryTypes]; 
+      this.filteredPoultryRecords = [...this.birdRecords];
     }
-    this.calculateTotalPages();
-}
-
+  
+    this.filteredPoultryRecords.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
+    this.totalPages = Math.ceil(this.filteredPoultryRecords.length / this.itemsPerPage);
+    this.currentPage = Math.min(this.currentPage, this.totalPages);
+  }
+  
 
   calculateTotalPages(): void {
     this.totalPages = Math.ceil(this.filteredPoultryRecords.length / this.itemsPerPage);
   }
+
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
   }
-
+  
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
+  
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
