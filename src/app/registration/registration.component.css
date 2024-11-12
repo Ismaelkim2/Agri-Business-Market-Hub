@@ -1,50 +1,42 @@
-
 .container-fluid {
-  padding: 30px 4px;
-  margin-top: 0px;
-  background-color: #f9f9f9;
-  position: fixed;
-  height: 100%;
-}
-
-
-.row {
+  padding: 30px 20px;
+  background-color: #f7fafc;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
-
 
 .card {
   background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  width: 100%;
-  max-width: 520px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 25px;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
 }
 
-.card-body {
-  padding: 2px;
+.card:hover {
+  transform: translateY(-5px);
 }
 
 h2.text {
+  font-size: 1.8rem;
   font-weight: bold;
   color: #28a745;
 }
 
-/* Form Label */
 .form-label {
-  font-weight: bold;
-  color: #333;
+  font-weight: 500;
+  color: #4a4a4a;
 }
 
-/* Form Input */
-input.form-control {
-  padding: 8px;
-  border-radius: 5px;
+input.form-control, 
+input.form-control:focus {
+  padding: 10px;
+  border-radius: 6px;
   border: 1px solid #ced4da;
-  margin-bottom: 5px;
+  transition: border-color 0.2s;
 }
 
 input.form-control:focus {
@@ -52,7 +44,6 @@ input.form-control:focus {
   box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
-/* Button */
 .btn-block {
   display: block;
   width: 100%;
@@ -63,21 +54,25 @@ input.form-control:focus {
   border: none;
   padding: 12px;
   font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-success:hover {
   background-color: #218838;
 }
 
+.alert {
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
 
 @media (max-width: 768px) {
-  .row {
-    flex-direction: column;
+  .card {
+    padding: 20px;
   }
 
-  .col-md-6 {
-    width: 100%;
-    margin-bottom: 20px;
+  h2.text {
+    font-size: 1.6rem;
   }
 }

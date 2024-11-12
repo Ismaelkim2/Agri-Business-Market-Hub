@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -22,6 +21,7 @@ export class RegistrationComponent {
   };
   error: string = '';
   success: string = '';
+  loading = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -30,6 +30,7 @@ export class RegistrationComponent {
       return;
     }
 
+    this.loading = true;
     const formData = new FormData();
     formData.append('firstName', this.formData.firstName);
     formData.append('lastName', this.formData.lastName);
@@ -42,44 +43,24 @@ export class RegistrationComponent {
       formData.append('userImage', this.formData.userImage, this.formData.userImage.name);
     }
 
-    const apiUrl = environment.apiUrl
+    const apiUrl = environment.apiUrl;
 
     this.http.post(`${apiUrl}/api/user/create`, formData).subscribe(
       (response: any) => {
-        console.log('Registration successful', response);
-        this.formData = {
-          firstName: '',
-          lastName: '',
-          email: '',
-          phoneNumber: '',
-          password: '',
-          above18: false,
-          createdBy: 'self',
-          userImage: null
-        };
+        this.formData = { firstName: '', lastName: '', email: '', phoneNumber: '', password: '', above18: false, createdBy: 'self', userImage: null };
         this.error = '';
         this.success = 'Registration successful. Redirecting to login...';
-
         setTimeout(() => {
           this.success = '';
           this.router.navigate(['/login']);
         }, 3000);
       },
       (error) => {
-        console.error('Registration failed', error);
-        if (error.status === 409) {
-          this.error = 'Phone number is already registered. Redirecting to login...';
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 3000);
-        } else if (error.status === 400) {
-          this.error = error.error.message; 
-        } else {
-          this.error = 'Registration failed. Please check your credentials and try again.';
-        }
-        this.success = '';
+        this.error = error.status === 409 ? 'Phone number is already registered. Redirecting to login...' : 'Registration failed. Please try again.';
+        setTimeout(() => { this.error = ''; }, 2000);
+        setTimeout(() => { this.router.navigate(['/login']); }, 3000);
       }
-    );
+    ).add(() => this.loading = false);
   }
 
   onFileChange(event: any) {
@@ -92,14 +73,23 @@ export class RegistrationComponent {
   private isFormValid(): boolean {
     const phoneNumberPattern = /^[0-9]{10,}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /(?=.*\d)(?=.*[a-zA-Z]).{6,}/;
 
     if (!phoneNumberPattern.test(this.formData.phoneNumber)) {
       this.error = 'Please enter a valid phone number with at least 10 digits.';
+      setTimeout(() => { this.error = ''; }, 2000);
       return false;
     }
 
     if (!emailPattern.test(this.formData.email)) {
       this.error = 'Please enter a valid email address.';
+      setTimeout(() => { this.error = ''; }, 2000);
+      return false;
+    }
+
+    if (!passwordPattern.test(this.formData.password)) {
+      this.error = 'Password must contain both letters and numbers and be at least 6 characters long.';
+      setTimeout(() => { this.error = ''; }, 2000); 
       return false;
     }
 

@@ -3,14 +3,12 @@
     <img src="assets/images/farmer.png" alt="Login Image">
 
     <div class="formdiv">
-      <form (ngSubmit)="onSubmit()">
-        
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <div class="welcome-message">
           <h3>Welcome to Brishkim Eco-Eggs</h3>
           <p>Manage your poultry farm with ease</p>
         </div>
 
-    
         <div *ngIf="loading" class="spinner-overlay">
           <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
@@ -19,24 +17,52 @@
 
         <div class="mb-3" style="margin-top: 20px;">
           <label for="phoneNumber" class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" required>
+          <input
+            type="tel"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            [(ngModel)]="phoneNumber"
+            #phoneNumberInput="ngModel"
+            required
+            minlength="10"
+            placeholder="e.g. 0712345678"
+          >
+          <div *ngIf="phoneNumberInput.errors && (phoneNumberInput.dirty || phoneNumberInput.touched)" class="text-danger">
+            <small *ngIf="phoneNumberInput.errors['required']">Phone number is required.</small>
+            <small *ngIf="phoneNumberInput.errors['minlength']">Phone number must be at least 10 digits.</small>
+          </div>
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <div class="input-group">
-            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              #passwordInput="ngModel"
+              required
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+              placeholder="Enter password"
+            >
             <div class="input-group-append">
               <button type="button" class="btn btn-outline-secondary toggle-password-btn bg-light" (click)="togglePasswordVisibility()">
                 <i class="fa fa-eye-slash"></i>
               </button>
             </div>
           </div>
+          <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)" class="text-danger">
+            <small *ngIf="passwordInput.errors['required']">Password is required.</small>
+            <small *ngIf="passwordInput.errors['pattern']">Password must contain letters and numbers.</small>
+          </div>
         </div>
 
         <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-        <button type="submit" class="btn btn-primary w-100" [disabled]="loading">Login</button><br><br>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loading || !loginForm.valid">Login</button><br><br>
 
         <h4 class="text-center text-info forgot-password" (click)="navigateToForgotPassword()" style="cursor: pointer; text-decoration: underline;">
           Forgot Password?

@@ -1,74 +1,62 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <!-- <div class="col-md-6 d-flex align-items-center">
-      <img src="assets/images/registration.jpg" alt="Farmers Registration" class="img-fluid">
-    </div> -->
-    <div class="col-md-6">
-      <div class="card shadow-lg p-2">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <div class="card shadow-lg p-4">
         <div class="card-body">
-          <h2 class="text mb-2 text-success">Glad to have you here</h2>
+          <h2 class="text mb-3 text-success text-center">Welcome to Brishkim Poultry</h2>
           <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+            <div *ngIf="loading" class="spinner-overlay">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="firstName" class="form-label">First Name</label>
               <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="formData.firstName" required>
-              <div class="invalid-feedback">
-                Please enter your first name.
-              </div>
+              <div class="invalid-feedback">Please enter your first name.</div>
             </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="lastName" class="form-label">Last Name</label>
               <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="formData.lastName" required>
-              <div class="invalid-feedback">
-                Please enter your last name.
-              </div>
+              <div class="invalid-feedback">Please enter your last name.</div>
             </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="phoneNumber" class="form-label">Phone Number</label>
               <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="formData.phoneNumber" pattern="[0-9]{10,}" required>
-              <div class="invalid-feedback">
-                Please enter a valid phone number (at least 10 digits).
-              </div>
+              <div class="invalid-feedback">Please enter a valid phone number (at least 10 digits).</div>
             </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
-              <div class="invalid-feedback">
-                Please enter a valid email address.
-              </div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
             </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="formData.password" required>
-              <div class="invalid-feedback">
-                Please enter a password.
-              </div>
+              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="formData.password" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{6,}">
+              <div class="invalid-feedback">Password must contain letters and numbers, and be at least 6 characters.</div>
             </div>
 
-            <div class="mb-1">
+            <div class="mb-3">
               <label for="userImage" class="form-label">Upload User Image</label>
               <input type="file" class="form-control" id="userImage" name="userImage" (change)="onFileChange($event)" accept="image/*" required>
-              <div class="invalid-feedback">
-                Please upload an image for your profile.
-              </div>
+              <div class="invalid-feedback">Please upload an image for your profile.</div>
             </div>
 
-            <div class="form-check mb-1">
+            <div class="form-check mb-3">
               <input type="checkbox" class="form-check-input" id="above18" name="above18" [(ngModel)]="formData.above18" required>
               <label class="form-check-label" for="above18">Are you above 18 years?</label>
-              <div class="invalid-feedback">
-                You must confirm you are above 18 years.
-              </div>
+              <div class="invalid-feedback">You must confirm you are above 18 years.</div>
             </div>
 
             <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
             <div *ngIf="success" class="alert alert-success">{{ success }}</div>
 
-            <button type="submit" class="btn btn-success btn-block">Register</button>
+            <button type="submit" class="btn btn-success btn-block" [disabled]="loading">Register</button>
           </form>
         </div>
       </div>
