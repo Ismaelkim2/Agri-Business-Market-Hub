@@ -5,7 +5,7 @@
   background-color: #f4f6f8;
   min-height: 100vh;
   margin-left: 250px;
-  margin-top: 25px;
+  margin-top: 48px;
   transition: margin-left 0.3s ease;
 }
 
@@ -16,8 +16,7 @@
 }
 
 app-sidebar {
-  width: 100%;
-  max-width: 250px;
+  width: 250px;
   position: fixed;
   top: 0;
   left: 0;
@@ -28,7 +27,6 @@ app-sidebar {
 @media (max-width: 768px) {
   app-sidebar {
     width: 100%;
-    position: static;
   }
 }
 
@@ -51,6 +49,12 @@ app-sidebar {
   flex-wrap: wrap;
 }
 
+.back-icon i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
 .filter-container {
   display: flex;
   align-items: center;
@@ -58,7 +62,6 @@ app-sidebar {
   margin-top: 10px;
 }
 
-/* Button */
 .btn-open-modal, .btn-submit, .btn.bg-success {
   background-color: #28a745;
   color: white;
@@ -76,7 +79,6 @@ app-sidebar {
   background-color: #218838;
 }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -101,6 +103,16 @@ tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
+.actions-cell {
+  display: flex;
+}
+
+.action-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .pagination-controls {
   display: flex;
   justify-content: center;
@@ -117,7 +129,6 @@ tbody tr:nth-child(even) {
   color: #333;
 }
 
-/* Modal */
 .modal-header {
   background-color: #28a745;
   color: white;
@@ -140,7 +151,6 @@ input, .filter-container input {
   box-sizing: border-box;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .header {
     flex-direction: column;

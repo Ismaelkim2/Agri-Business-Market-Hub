@@ -2,14 +2,21 @@
 <div class="main-container">
   <div class="expenses-table">
     <div class="header">
-      <div class="d-flex">
-        <div (click)="goBack()"><i class="fa fa-arrow-left mt-3" title="back" style="cursor: pointer;"></i></div>
-        <div class="ms-4"><h2 class="text-success">Farm Sales Records</h2></div>
+      <div class="d-flex align-items-center">
+        <div (click)="goBack()" title="Back" class="back-icon">
+          <i class="fa fa-arrow-left"></i>
+        </div>
+        <h2 class="text-success ms-4">Farm Sales Records</h2>
       </div>
-
       <div class="filter-container">
         <label for="filterInput">Filter by Item Sold:</label>
-        <input type="text" id="filterInput" [(ngModel)]="filterText" (ngModelChange)="filterSales()" placeholder="Enter item name to filter...">
+        <input
+          type="text"
+          id="filterInput"
+          [(ngModel)]="filterText"
+          (ngModelChange)="filterSales()"
+          placeholder="Enter item name to filter..."
+        />
       </div>
       <button class="btn-open-modal" (click)="openSalesModal(expenseModal)">+ Record Sales</button>
     </div>
@@ -19,32 +26,29 @@
         <tr>
           <th>Date</th>
           <th>Item Sold</th>
-          <th>Sales Amount (Ksh)</th>
+          <th>Amount</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let sale of currentSalesPage; let i=index">
+        <tr *ngFor="let sale of currentSalesPage; let i = index">
           <td>{{ sale.date | date: 'longDate' }}</td>
           <td>{{ sale.birdType }}</td>
           <td>{{ sale.sales | currency: 'KES' }}</td>
-         
-          <td>
-            <button (click)="onEdit(i, expenseModal)" style="border: none;"><i class="fa fa-edit text-secondary"  style="cursor: pointer;"></i></button>
-            <button class="ms-3"  (click)="onDeleteClick(sale)" style="border: none;"><i class="fa fa-trash text-danger "></i></button>
+          <td class="actions-cell">
+            <button (click)="onEdit(i, expenseModal)" class="action-button">
+              <i class="fa fa-edit text-secondary"></i>
+            </button>
+            <button (click)="onDeleteClick(sale)" class="action-button ms-1">
+              <i class="fa fa-trash text-danger"></i>
+            </button>
           </td>
         </tr>
-
-        
-
       </tbody>
-
     </table>
 
- 
-
     <div class="pagination-controls">
-      <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success" style="margin-left: 40%;">Previous</button>
+      <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success">Previous</button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn bg-success">Next</button>
     </div>
@@ -55,7 +59,7 @@
   </div>
 
   <ng-template #expenseModal let-modal>
-    <div class="modal-header bg-success">
+    <div class="modal-header">
       <h4 class="modal-title">Record Farm Sales</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
@@ -66,26 +70,22 @@
       <form (ngSubmit)="saveSale()">
         <div class="form-group">
           <label for="date">Date:</label>
-          <input type="date" id="date" [(ngModel)]="newSale.date" name="date" required>
+          <input type="date" id="date" [(ngModel)]="newSale.date" name="date" required />
         </div>
 
         <div class="form-group">
           <label for="birdType">Item Sold:</label>
-          <input type="text" id="birdType" [(ngModel)]="newSale.birdType" name="birdType" required>
+          <input type="text" id="birdType" [(ngModel)]="newSale.birdType" name="birdType" required />
         </div>
 
         <div class="form-group">
           <label for="sales">Sales Amount (Ksh):</label>
-          <input type="number" id="sales" [(ngModel)]="newSale.sales" name="sales" required>
+          <input type="number" id="sales" [(ngModel)]="newSale.sales" name="sales" required />
         </div>
 
         <button type="submit" class="btn-submit">Record</button>
       </form>
     </div>
   </ng-template>
-
-
-
 </div>
-
 

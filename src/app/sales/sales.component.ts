@@ -150,7 +150,6 @@ export class SalesComponent implements OnInit {
   }
 
   filterSales() {
-    console.log('Filtering sales by:', this.filterText);
     this.filteredSalesList = this.salesList.filter(sale =>
       sale.birdType.toLowerCase().includes(this.filterText.toLowerCase())
     );
@@ -159,33 +158,29 @@ export class SalesComponent implements OnInit {
   }
 
   updatePagination() {
-    console.log('Updating pagination...');
     this.totalPages = Math.ceil(this.filteredSalesList.length / this.pageSize);
     this.currentPage = Math.min(this.currentPage, this.totalPages);
   }
 
   get currentSalesPage() {
-    const start = (this.currentPage - 1) * this.pageSize;
+    const start = (this.currentPage  - 1) * this.pageSize;
     const end = start + this.pageSize;
     return this.filteredSalesList.slice(start, end);
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
-      console.log('Navigating to next page...');
       this.currentPage++;
     }
   }
 
   previousPage() {
     if (this.currentPage > 1) {
-      console.log('Navigating to previous page...');
       this.currentPage--;
     }
   }
 
   getTotalSales(): number {
-    console.log('Calculating total sales...');
     return this.salesList.reduce((total, sale) => total + sale.sales, 0);
   }
 
