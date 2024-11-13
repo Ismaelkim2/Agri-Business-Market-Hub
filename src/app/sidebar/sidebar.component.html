@@ -65,7 +65,7 @@
           </li>
           <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
             <img 
-              [src]="loggedInUser?.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
+              [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
               alt="User Image" 
               class="user-photo rounded-circle" 
               (error)="onImageError($event)" 
@@ -86,7 +86,7 @@
     <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
       <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
         <img 
-          [src]="loggedInUser?.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
+          [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
           alt="User Image" 
           class="user-photo rounded-circle mt-5" 
           (error)="onImageError($event)" 
