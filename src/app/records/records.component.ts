@@ -10,6 +10,12 @@ import { MortalitiesService, Mortality } from '../services/mortalities.service';
   styleUrls: ['./records.component.css']
 })
 export class RecordsComponent implements OnInit {
+  showSales = true;
+  showExpenses = true;
+  showProfit = true;
+  showTotalBirds = true;
+
+
   monthlySales: { [month: number]: number } = {};
   monthlyExpenses: { [month: number]: number } = {};
   totalSalesAmount = 0;
@@ -27,7 +33,6 @@ export class RecordsComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   noDataForYear = false;
- 
 
   constructor(
     private recordsService: RecordsService,
@@ -43,7 +48,26 @@ export class RecordsComponent implements OnInit {
     this.fetchTotalBirds();
     this.fetchMortalities();
   }
-
+  toggleVisibility(card: string) {
+    switch (card) {
+      case 'sales':
+        this.showSales = !this.showSales;
+        break;
+      case 'expenses':
+        this.showExpenses = !this.showExpenses;
+        break;
+      case 'profit':
+        this.showProfit = !this.showProfit;
+        break;
+      case 'totalBirds':
+        this.showTotalBirds = !this.showTotalBirds;
+        break;
+      default:
+        console.warn('Unknown card:', card);
+    }
+  }
+  
+  
   loadYears(): void {
     const currentYear = new Date().getFullYear();
     this.years = Array.from({ length: 5 }, (_, i) => currentYear - i);

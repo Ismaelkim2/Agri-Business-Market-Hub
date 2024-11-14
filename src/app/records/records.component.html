@@ -1,59 +1,95 @@
 <app-sidebar></app-sidebar>
 
 <div class="container-fluid main-content">
-  <div class="d-flex flex-wrap justify-content-start mb-2">
-    <div class="card summary-card ms-2 me-2">
-      <div class="card-header bg-success text-center">
+  <div class="d-flex flex-wrap justify-content-start mb-4">
+
+    <div class="card summary-card mx-2 mt-4 mb-1">
+      <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-money-bill"></i> Sales</strong>
       </div>
       <div class="card-body bg-light text-center">
-        <h5>Amount: <br><br> <strong class="text-success">{{ totalSalesAmount | currency:'Kes.' }}</strong></h5>
+        <h5 class="my-2">
+          Amount:
+          <button (click)="toggleVisibility('sales')" class="toggle-btn">
+            <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
+          </button>
+          <br><br>
+          <strong *ngIf="showSales" class="text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
+          <strong *ngIf="!showSales" class="text-muted">Hidden</strong>
+        </h5>
       </div>
     </div>
+    
 
-    <div class="card summary-card me-2">
-      <div class="card-header bg-success text-center">
+    <div class="card summary-card mx-2  mt-4 mb-1">
+      <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-bomb"></i> Expenses</strong>
       </div>
       <div class="card-body bg-light text-center">
-        <h5>Amount: <br> <br> <strong class="text-danger">{{ totalExpensesAmount | currency:'Kes.' }}</strong></h5>
+        <h5 class="my-2">
+          Amount:
+          <button (click)="toggleVisibility('expenses')" class="toggle-btn">
+            <i class="fa" [ngClass]="{ 'fa-eye': showExpenses, 'fa-eye-slash': !showExpenses }"></i>
+          </button>
+          <br><br>
+          <strong *ngIf="showExpenses" class="text-danger">{{ totalExpensesAmount | currency: 'Kes.' }}</strong>
+          <strong *ngIf="!showExpenses" class="text-muted">Hidden</strong>
+        </h5>
       </div>
     </div>
-
-    <div class="card summary-card me-2">
-      <div class="card-header bg-success text-center">
+    
+    <div class="card summary-card mx-2  mt-4 mb-1">
+      <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-list"></i> Profit</strong>
       </div>
       <div class="card-body bg-light text-center">
-        <h5>Profit Accumulated: <br><br> <strong class="text-success">{{ totalSalesAmount - totalExpensesAmount | currency:'Kes.' }}</strong></h5>
+        <h5 class="my-2">
+          Profit Accumulated:
+          <button (click)="toggleVisibility('profit')" class="toggle-btn">
+            <i class="fa" [ngClass]="{ 'fa-eye': showProfit, 'fa-eye-slash': !showProfit }"></i>
+          </button>
+          <br><br>
+          <strong *ngIf="showProfit" class="text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
+          <strong *ngIf="!showProfit" class="text-muted">Hidden</strong>
+        </h5>
       </div>
     </div>
-
-    <div class="card summary-card">
-      <div class="card-header bg-success text-center">
+    
+    <div class="card summary-card ms-2  mt-4 mb-1">
+      <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
       </div>
       <div class="card-body bg-light text-center">
-        <h5>Breed/Type: Sasso</h5>
-        <h5 class="mt-4"><strong>No: {{ effectiveTotalBirds }} <i class="fa fa-check-to-slot text-success"></i></strong></h5>
+
+       <div class="d-flex">
+      <div><h5>Breed/Type: Sasso</h5></div> 
+      <div> <button (click)="toggleVisibility('totalBirds')" class="toggle-btn mb-1">
+          <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
+        </button>
+      </div> 
+    </div>
+        <h5 class="mt-4">
+          <strong *ngIf="showTotalBirds">No: {{ effectiveTotalBirds }} <i class="fa fa-check-to-slot text-success"></i></strong>
+          <strong *ngIf="!showTotalBirds">No: Hidden</strong>
+        </h5>
       </div>
     </div>
   </div>
-
-  <div class="text-success" style="max-width:1110px;" >
+  
+  <div class="text-success" style="max-width: 1110px;">
     <hr>
   </div>
 
   <div class="container-fluid mt-4">
     <div class="d-flex align-items-center mb-2" style="max-width: 1110px;">
       <h3 class="text-success fw-bold mt-2">Financial Overview</h3>
-
+      
       <div class="d-flex ms-auto">
         <select [(ngModel)]="selectedYear" (change)="onYearChange()" class="form-select me-2">
           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>        
         <select [(ngModel)]="selectedMonth" class="form-select me-5">
-          <option value="" style="background-color:green;">All Months</option>
+          <option value="">All Months</option>
           <option *ngFor="let month of months" [value]="month">{{ month }}</option>
         </select>
         <button (click)="printMonthlyRecords()" class="btn btn-success me-3" style="width: 100px;height: 40px;">
@@ -72,7 +108,7 @@
             <th>Profit (Kes.)</th>
           </tr>
         </thead>
-
+        
         <tbody *ngIf="!noDataForYear; else noDataTemplate">
           <tr *ngFor="let month of getFilteredMonthlyRecords() | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage; let i = index">
             <td>{{ month }} {{ selectedYear }}</td>
@@ -94,7 +130,6 @@
         </ng-template>
       </table>
     </div>
-
 
     <div class="pagination-controls d-flex justify-content-center mt-4">
       <button (click)="previousPage()" class="btn btn-outline-success me-2" [disabled]="currentPage === 1">

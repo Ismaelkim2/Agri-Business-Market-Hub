@@ -12,7 +12,7 @@ body {
 }
 
 .summary-card {
-  width: 260px;
+  width: 255px;
   height: 200px;
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -24,6 +24,22 @@ body {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: #6c757d;
+  cursor: pointer;
+  float: right;
+  margin-top: -5px;
+  outline: none;
+}
+
+.toggle-btn:hover {
+  color: #343a40;
+}
+
 
 h3 {
   font-size: 1.5rem;
