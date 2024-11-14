@@ -35,8 +35,8 @@
           <td>{{ sale.date | date: 'longDate' }}</td>
           <td>{{ sale.birdType }}</td>
           <td>{{ sale.sales | currency: 'KES' }}</td>
-          <td class="actions-cell">
-            <button (click)="onEdit(i, expenseModal)" class="action-button">
+          <td >
+            <button (click)="onEdit(i, expenseModal)" class="action-button ms-1">
               <i class="fa fa-edit text-secondary"></i>
             </button>
             <button (click)="onDeleteClick(sale)" class="action-button ms-1">
@@ -88,4 +88,3 @@
     </div>
   </ng-template>
 </div>
-

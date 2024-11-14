@@ -94,18 +94,17 @@ export class SalesComponent implements OnInit {
       error: (err) => console.error('Error saving record:', err)
     });
   }
-
+  
   loadSales() {
-    console.log('Loading sales data...');
     this.salesService.birdRecords$.subscribe(records => {
       this.salesList = records.filter(record => record.sales > 0);
       this.filteredSalesList = [...this.salesList];
       this.updatePagination();
     });
   }
+  
 
   onEdit(index: number, content: any): void {
-    console.log('Editing sale at index:', index);
     this.newSale = { ...this.salesList[index] };
     this.editMode = true;
     this.editIndex = index;
@@ -185,9 +184,10 @@ export class SalesComponent implements OnInit {
   }
 
   private refreshSalesList() {
-    this.filteredSalesList = [...this.salesList];
+    this.salesService.loadBirdRecords(); 
     this.updatePagination();
     this.resetForm();
     this.modalService.dismissAll();
   }
+
 }

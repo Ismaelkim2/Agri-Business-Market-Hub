@@ -46,16 +46,14 @@ export class SalesService {
   }
 
   saveBirdRecord(record: BirdRecord): Observable<BirdRecord> {
-    const currentRecords = this.birdRecordsSubject.getValue();
-    this.birdRecordsSubject.next([...currentRecords, record]);
-
     return this.http.post<BirdRecord>(this.apiUrl, record).pipe(
       catchError((error) => {
-        this.birdRecordsSubject.next(currentRecords);
+        console.error('Failed to save bird record', error);
         return throwError(() => new Error('Failed to save bird record.'));
       })
     );
   }
+  
 
   updateBirdRecord(record: BirdRecord): Observable<BirdRecord> {
     return this.http.put<BirdRecord>(`${this.apiUrl}/${record.id}`, record);

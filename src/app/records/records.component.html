@@ -15,7 +15,15 @@
           </button>
           <br><br>
           <strong *ngIf="showSales" class="text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showSales" class="text-muted">Hidden</strong>
+          <strong *ngIf="!showSales" class="text-muted ">
+            <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;">
+            </button>
+          </strong>
+
+          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+            View more
+          </button>
+
         </h5>
       </div>
     </div>
@@ -33,7 +41,12 @@
           </button>
           <br><br>
           <strong *ngIf="showExpenses" class="text-danger">{{ totalExpensesAmount | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showExpenses" class="text-muted">Hidden</strong>
+          <strong *ngIf="!showExpenses" class="text-muted">
+            <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
+          </strong>
+          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+            View more
+          </button>
         </h5>
       </div>
     </div>
@@ -50,7 +63,12 @@
           </button>
           <br><br>
           <strong *ngIf="showProfit" class="text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showProfit" class="text-muted">Hidden</strong>
+          <strong *ngIf="!showProfit" class="text-muted">
+            <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
+          </strong>
+          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+            View more
+          </button>
         </h5>
       </div>
     </div>
@@ -70,7 +88,12 @@
     </div>
         <h5 class="mt-4">
           <strong *ngIf="showTotalBirds">No: {{ effectiveTotalBirds }} <i class="fa fa-check-to-slot text-success"></i></strong>
-          <strong *ngIf="!showTotalBirds">No: Hidden</strong>
+          <strong *ngIf="!showTotalBirds">
+            <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
+          </strong>
+          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+            View more
+          </button>
         </h5>
       </div>
     </div>

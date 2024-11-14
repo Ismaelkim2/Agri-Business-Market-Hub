@@ -16,6 +16,22 @@
   }
 }
 
+.btn-open-modal {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.btn-open-modal:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
 .expenses-table {
   background-color: #ffffff;
   padding: 20px;
@@ -24,7 +40,7 @@
   width: 100%;
   max-width: 1000px;
   margin: 20px 0;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .header {
@@ -43,26 +59,13 @@
   flex: 1;
 }
 
-.btn-open-modal {
-  background-color: #28a745;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+.table-responsive {
+  width: 100%;
 }
 
-.btn-open-modal:hover {
-  background-color: #218838;
-  transform: scale(1.05);
-}
-
-table {
+.table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
 }
 
 thead th {
@@ -79,11 +82,6 @@ tbody td {
 
 tbody tr:nth-child(even) {
   background-color: #f9f9f9;
-}
-
-.action-icons i {
-  cursor: pointer;
-  padding: 5px;
 }
 
 .pagination-controls {
@@ -103,13 +101,11 @@ tbody tr:nth-child(even) {
   color: #333;
 }
 
-
 .modal-header {
   background-color: #28a745;
   color: white;
   padding: 10px;
 }
-
 
 .modal-body {
   padding: 20px;
@@ -158,6 +154,22 @@ input[type="date"] {
   .pagination-controls {
     flex-direction: column;
     gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .btn-open-modal,
+  .btn-submit {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+  .filter-container label {
+    font-size: 0.85rem;
   }
 }
 

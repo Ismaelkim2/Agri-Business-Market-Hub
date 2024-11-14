@@ -192,34 +192,46 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   }
 
   onEditFarm(index: number): void {
-    this.isEditing = true; 
-    this.poultryIndex = index; 
     const recordIndex = (this.currentPage - 1) * this.itemsPerPage + index;
     this.formData = { ...this.filteredPoultryRecords[recordIndex] };
+    this.isEditing = true;
+    this.poultryIndex = index;
+    this.recordService.updateBirdRecord(this.formData).subscribe(
+      (updatedRecord) => {
+        const currentRecords = [...this.filteredPoultryRecords];
+        currentRecords[recordIndex] = updatedRecord;  
+        this.filteredPoultryRecords = currentRecords; 
+      },
+      (error) => {
+        console.error('Failed to update bird record', error);
+      }
+    );
   }
-
+  
   onSaveChanges(index: number) {
-    console.log('Saving changes for record:', this.filteredPoultryRecords[index]);
+    const updatedRecord = { ...this.filteredPoultryRecords[index] };
   
-    const updatedRecord = JSON.parse(JSON.stringify(this.filteredPoultryRecords[index]));
+    this.recordService.updateBirdRecord(updatedRecord).subscribe(
+      (updatedRecordResponse) => {
+        this.recordService.birdRecords$.subscribe(records => {
+          this.filteredPoultryRecords = [...records]; 
+        });
   
-    this.recordsService.updateBirdRecord(updatedRecord).subscribe(() => {
-      console.log('Record updated successfully');
-
-      this.isEditing = false;
-      this.poultryIndex = null;
-      this.isSavedArray[index] = true;
-
-
-      this.showNotification = true;
-      this.cd.detectChanges();
-
-      setTimeout(() => {
-        this.showNotification = false;
-      }, 2000); 
-    }, error => {
-      console.error('Error updating record:', error);
-    });
+        this.isEditing = false;
+        this.poultryIndex = null;
+        this.isSavedArray[index] = true;
+        this.showNotification = true;
+  
+        this.cd.detectChanges();
+  
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 2000); 
+      },
+      (error) => {
+        console.error('Error updating record:', error);
+      }
+    );
   }
   
   
@@ -265,7 +277,7 @@ export class FarmDataComponent implements OnInit, OnDestroy {
     if (ageInMonths >= 1 && ageInMonths < 2) return 'Starter Crumbles';
     if (ageInMonths >= 2 && ageInMonths < 4) return 'Growers Mash'; 
     if (ageInMonths >= 4) return 'Layers Mash'; 
-    return 'The bird is old enough to sell out!';
+    return 'These birds are old enough to sell out!';
   }
 
   addDays(date: string, days: number): string {
@@ -279,12 +291,12 @@ export class FarmDataComponent implements OnInit, OnDestroy {
     if (age > 7 && age <= 14) return { vaccine: 'Newcastle 2nd Dose', date: this.addDays(hatchedDate, 14) };
     if (age > 14 && age <= 21) return { vaccine: 'Gumboro 1st Dose', date: this.addDays(hatchedDate, 21) };
     if (age > 21 && age <= 28) return { vaccine: 'Gumboro 2nd Dose', date: this.addDays(hatchedDate, 28) };
-    if (age === 42) return { vaccine: 'Fowl Pox', date: this.addDays(hatchedDate, 42) };
-    if (age === 56) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 56) };
-    if (age === 112) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 112) };
+    if (age === 42 && age <= 50 ) return { vaccine: 'Fowl Box', date: this.addDays(hatchedDate, 42) };
+    if (age === 56 && age <= 60) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 56) };
+    if (age === 112 && age <= 119) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 112) };
+    if (age > 120) return { vaccine: 'Dewormer', date: this.addDays(hatchedDate, 120) };
     return { vaccine: 'Next dose coming soon', date: 'N/A' };
   }
- 
   
   cancelEdit() {
     this.isEditing = false;

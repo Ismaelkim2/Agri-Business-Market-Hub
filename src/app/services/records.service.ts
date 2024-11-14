@@ -112,18 +112,19 @@ export class RecordsService {
     );
   }
 
-  updateBirdRecord(record: BirdRecord): Observable<BirdRecord> {
+  updateBirdRecord(updatedRecord: BirdRecord): Observable<BirdRecord> {
     const currentRecords = this.birdRecordsSubject.getValue();
-    const updatedRecords = currentRecords.map(r => (r.id === record.id ? record : r));
-    this.birdRecordsSubject.next(updatedRecords);
-
-    return this.http.put<BirdRecord>(`${this.apiUrl}/birds/${record.id}`, record).pipe(
+    const updatedRecords = currentRecords.map(r => (r.id === updatedRecord.id ? updatedRecord : r)); 
+    this.birdRecordsSubject.next(updatedRecords);   
+    return this.http.put<BirdRecord>(`${this.apiUrl}/birds/${updatedRecord.id}`, updatedRecord).pipe(
       catchError(error => {
-        this.birdRecordsSubject.next(currentRecords);
+        this.birdRecordsSubject.next(currentRecords); 
         return throwError(() => new Error('Failed to update bird record.'));
       })
     );
   }
+  
+  
 
   deleteBirdRecord(id: number): Observable<void> {
     const currentRecords = this.birdRecordsSubject.getValue();

@@ -29,7 +29,8 @@
 .card-header {
   font-size: 1.25rem;
   padding: 15px;
-  background-color: #22c922;
+  /* background-color: #22c922; */
+  background-color: rgb(233, 231, 231);
   color: #ffffff;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
