@@ -33,6 +33,16 @@ export class WorkersComponent implements OnInit {
     this.loadWorkers();
   }
 
+  isValidImage(imageUrl: string | null): boolean {
+    return typeof imageUrl === 'string' && imageUrl.length > 0;
+  }
+  
+  imageError(event: any): void {
+    const iconElement = document.createElement('i');
+    iconElement.classList.add('fa', 'fa-user', 'worker-image');
+    event.target.replaceWith(iconElement);
+  }
+  
   loadWorkers() {
     this.workersService.loadWorkers();
     this.workersService.workers$.subscribe((workers: Worker[]) => {

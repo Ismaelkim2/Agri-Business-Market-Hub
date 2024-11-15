@@ -20,12 +20,20 @@
                 <tbody>
                     <tr *ngFor="let customer of customers">
                         <td>{{ customer.id }}</td>
+
                         <td>
-                            <img 
-                                [src]="customer.image" 
-                                alt="Customer Image" 
-                                class="customer-image"/>
+                            <ng-container *ngIf="customer.image && isValidImage(customer.image); else defaultImage">
+                                <img 
+                                    [src]="customer.image" 
+                                    alt="Customer Image" 
+                                    class="customer-image"
+                                    (error)="imageError($event)"/>
+                            </ng-container>
+                            <ng-template #defaultImage>
+                                <i class="fa fa-user customer-image"></i>
+                            </ng-template>
                         </td>
+                        
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.email }}</td>
                         <td>{{ customer.phone }}</td>

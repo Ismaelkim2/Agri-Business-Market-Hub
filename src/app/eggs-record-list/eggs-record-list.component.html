@@ -1,0 +1,29 @@
+<app-sidebar></app-sidebar>
+
+<div class="container">
+  <button class="add-btn" routerLink="/eggs-record-form">Add Record</button>
+  <h2>Eggs Records</h2>
+  <table class="records-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Egg Count</th>
+        <th>Broken</th>
+        <th>Recorded By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of eggsRecords">
+        <td>{{ record.date }}</td>
+        <td>{{ record.eggCount }}</td>
+        <td>{{ record.broken }}</td>
+        <td>{{ record.recordedBy }}</td>
+        <td>
+          <button (click)="editRecord(record)">Edit</button>
+          <button (click)="deleteRecord(record.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

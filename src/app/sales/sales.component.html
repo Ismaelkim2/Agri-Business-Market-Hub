@@ -2,12 +2,10 @@
 <div class="main-container">
   <div class="expenses-table">
     <div class="header">
-      <div class="d-flex align-items-center">
-        <div (click)="goBack()" title="Back" class="back-icon">
-          <i class="fa fa-arrow-left"></i>
-        </div>
-        <h2 class="text-success ms-4">Farm Sales Records</h2>
+      <div class="d-flex align-items-center back-icon" (click)="goBack()" title="Back">
+        <i class="fa fa-arrow-left"></i>
       </div>
+      <h2 class="text-success ms-4">Farm Sales Records</h2>
       <div class="filter-container">
         <label for="filterInput">Filter by Item Sold:</label>
         <input
@@ -18,7 +16,7 @@
           placeholder="Enter item name to filter..."
         />
       </div>
-      <button class="btn-open-modal" (click)="openSalesModal(expenseModal)">+ Record Sales</button>
+      <button class="btn-open-modal" (click)="openSalesModal(salesModal)">+ Record Sales</button>
     </div>
 
     <table>
@@ -35,8 +33,8 @@
           <td>{{ sale.date | date: 'longDate' }}</td>
           <td>{{ sale.birdType }}</td>
           <td>{{ sale.sales | currency: 'KES' }}</td>
-          <td >
-            <button (click)="onEdit(i, expenseModal)" class="action-button ms-1">
+          <td>
+            <button (click)="onEdit(i, salesModal)" class="action-button ms-1">
               <i class="fa fa-edit text-secondary"></i>
             </button>
             <button (click)="onDeleteClick(sale)" class="action-button ms-1">
@@ -58,33 +56,35 @@
     </div>
   </div>
 
-  <ng-template #expenseModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Record Farm Sales</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  <ng-template #salesModal let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Record Farm Sales</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-    <div class="modal-body">
-      <form (ngSubmit)="saveSale()">
-        <div class="form-group">
-          <label for="date">Date:</label>
-          <input type="date" id="date" [(ngModel)]="newSale.date" name="date" required />
-        </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveSale()">
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" [(ngModel)]="newSale.date" name="date" required />
+          </div>
 
-        <div class="form-group">
-          <label for="birdType">Item Sold:</label>
-          <input type="text" id="birdType" [(ngModel)]="newSale.birdType" name="birdType" required />
-        </div>
+          <div class="form-group">
+            <label for="birdType">Item Sold:</label>
+            <input type="text" id="birdType" [(ngModel)]="newSale.birdType" name="birdType" required />
+          </div>
 
-        <div class="form-group">
-          <label for="sales">Sales Amount (Ksh):</label>
-          <input type="number" id="sales" [(ngModel)]="newSale.sales" name="sales" required />
-        </div>
+          <div class="form-group">
+            <label for="sales">Sales Amount (Ksh):</label>
+            <input type="number" id="sales" [(ngModel)]="newSale.sales" name="sales" required />
+          </div>
 
-        <button type="submit" class="btn-submit">Record</button>
-      </form>
+          <button type="submit" class="btn-submit">Record</button>
+        </form>
+      </div>
     </div>
   </ng-template>
 </div>

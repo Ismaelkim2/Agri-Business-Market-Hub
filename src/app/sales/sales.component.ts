@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { BirdRecord, SalesService } from '../services/sales.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
 
 @Component({
@@ -22,37 +22,43 @@ export class SalesComponent implements OnInit {
   pageSize = 5;
   currentPage = 1;
   totalPages = 1;
+  currentSalesPage: BirdRecord[] = [];
   filterText = '';
 
   constructor(
     private salesService: SalesService,
     private modalService: NgbModal,
-    private location: Location
+    private location: Location,
+    private renderer: Renderer2 
   ) {}
 
   ngOnInit() {
-    console.log('Initializing component and loading sales data...');
     this.loadSales();
   }
 
   goBack() {
-    console.log('Navigating back...');
     this.location.back();
   }
 
   openSalesModal(content: any) {
-    console.log('Opening sales modal...');
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       backdrop: 'static',
       keyboard: false,
+    }).result.finally(() => {
+      this.renderer.removeAttribute(document.querySelector('app-sidebar'), 'aria-hidden');
+      this.renderer.removeAttribute(document.querySelector('.main-container'), 'aria-hidden');
     });
+
+    this.renderer.setAttribute(document.querySelector('app-sidebar'), 'aria-hidden', 'true');
+    this.renderer.setAttribute(document.querySelector('.main-container'), 'aria-hidden', 'true');
   }
 
   saveSale() {
     if (this.newSale.date && this.newSale.birdType && this.newSale.sales !== undefined) {
       const saleRecord: BirdRecord = {
         ...this.newSale,
+        id: this.editMode && this.editIndex !== null ? this.salesList[this.editIndex].id : undefined,
         eggProduction: 0,
         feedConsumption: '',
         expenses: 0,
@@ -64,17 +70,18 @@ export class SalesComponent implements OnInit {
         hatchdata: '',
         birdCount: 0,
         sold: true,
+        count: 1,
+        salesAmount: this.newSale.sales!
       } as BirdRecord;
 
-      if (this.editMode && this.editIndex !== null) {
-        saleRecord.id = this.salesList[this.editIndex].id;
+      if (this.editMode) {
         this.updateSale(saleRecord);
       } else {
         this.createSale(saleRecord);
       }
     }
   }
-  
+
   private updateSale(saleRecord: BirdRecord) {
     this.salesService.updateBirdRecord(saleRecord).subscribe({
       next: () => {
@@ -94,7 +101,7 @@ export class SalesComponent implements OnInit {
       error: (err) => console.error('Error saving record:', err)
     });
   }
-  
+
   loadSales() {
     this.salesService.birdRecords$.subscribe(records => {
       this.salesList = records.filter(record => record.sales > 0);
@@ -102,7 +109,51 @@ export class SalesComponent implements OnInit {
       this.updatePagination();
     });
   }
-  
+
+  filterSales() {
+    this.filteredSalesList = this.salesList.filter(sale =>
+      sale.birdType.toLowerCase().includes(this.filterText.toLowerCase())
+    );
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredSalesList.length / this.pageSize);
+    this.updateCurrentSalesPage();
+  }
+
+  updateCurrentSalesPage() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.currentSalesPage = this.filteredSalesList.slice(start, end);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateCurrentSalesPage();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updateCurrentSalesPage();
+    }
+  }
+
+  getTotalSales(): number {
+    return this.salesList.reduce((total, sale) => total + sale.sales, 0);
+  }
+
+  private refreshSalesList() {
+    this.salesService.loadBirdRecords();
+    this.filteredSalesList = [...this.salesList];
+    this.updatePagination();
+    this.resetForm();
+    this.modalService.dismissAll();
+  }
 
   onEdit(index: number, content: any): void {
     this.newSale = { ...this.salesList[index] };
@@ -118,10 +169,7 @@ export class SalesComponent implements OnInit {
           this.salesList = this.salesList.filter(s => s.id !== sale.id);
           this.refreshSalesList();
         },
-        error: (err) => {
-          console.error('Error deleting sale:', err);
-          alert('There was an error deleting the sale. Please try again later.');
-        }
+        error: (err) => console.error('Error deleting sale:', err)
       });
     }
   }
@@ -138,7 +186,6 @@ export class SalesComponent implements OnInit {
   }
 
   resetForm() {
-    console.log('Resetting form...');
     this.newSale = {
       date: '',
       birdType: '',
@@ -147,47 +194,4 @@ export class SalesComponent implements OnInit {
     this.editMode = false;
     this.editIndex = null;
   }
-
-  filterSales() {
-    this.filteredSalesList = this.salesList.filter(sale =>
-      sale.birdType.toLowerCase().includes(this.filterText.toLowerCase())
-    );
-    this.currentPage = 1;
-    this.updatePagination();
-  }
-
-  updatePagination() {
-    this.totalPages = Math.ceil(this.filteredSalesList.length / this.pageSize);
-    this.currentPage = Math.min(this.currentPage, this.totalPages);
-  }
-
-  get currentSalesPage() {
-    const start = (this.currentPage  - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    return this.filteredSalesList.slice(start, end);
-  }
-
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-  }
-
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
-
-  getTotalSales(): number {
-    return this.salesList.reduce((total, sale) => total + sale.sales, 0);
-  }
-
-  private refreshSalesList() {
-    this.salesService.loadBirdRecords(); 
-    this.updatePagination();
-    this.resetForm();
-    this.modalService.dismissAll();
-  }
-
 }

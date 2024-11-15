@@ -31,6 +31,8 @@ import { AuthGuard } from './auth.guard';
 import { CustomersComponent } from './customers/customers.component';
 import { AddCustomerComponent } from './customers/add-customer/add-customer.component';
 import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
+import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.component';
+import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/eggs-record-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -61,6 +63,8 @@ const routes: Routes = [
   { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
   { path: 'sales', component: SalesComponent, canActivate: [AuthGuard] },
   { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard] },
+  { path: 'eggs-record-list', component: EggsRecordListComponent},
+  { path: 'eggs-record-form', component: EggsRecordFormComponent},
   { path: 'add-customer', component: AddCustomerComponent },
   { path: 'edit-customer/:id', component: EditCustomerComponent },
   { path: 'mortalities', component: MortalitiesComponent},

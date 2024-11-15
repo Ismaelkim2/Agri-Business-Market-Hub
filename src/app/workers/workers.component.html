@@ -86,9 +86,17 @@
           <tbody>
             <tr *ngFor="let worker of workers; let i = index">
               <td>{{ i + 1 }}</td>
+
               <td>
-                <img [src]="baseUrl + '/' + worker.image" alt="Worker Image" class="worker-image" />
+                <ng-container *ngIf="worker.image && isValidImage(worker.image); else defaultImage">
+                  <img [src]="baseUrl + '/' + worker.image" alt="Worker Image" class="worker-image" (error)="imageError($event)" />
+                </ng-container>
+                
+                <ng-template #defaultImage>
+                  <i class="fa fa-user worker-image"></i>
+                </ng-template>
               </td>
+              
               <td>{{ worker.name }}</td>
               <td>{{ worker.role }}</td>
               <td>{{ worker.salary | currency: "Kes." }}</td>

@@ -1,0 +1,24 @@
+<app-sidebar></app-sidebar>
+
+<div class="form-container">
+  <h2>{{ isEdit ? 'Edit Record' : 'Add Record' }}</h2>
+  <form (ngSubmit)="saveRecord()">
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" [(ngModel)]="record.date" name="date" required />
+    </div>
+    <div class="form-group">
+      <label for="eggCount">Egg Count:</label>
+      <input type="number" id="eggCount" [(ngModel)]="record.eggCount" name="eggCount" required />
+    </div>
+    <div class="form-group">
+      <label for="broken">Broken:</label>
+      <input type="number" id="broken" [(ngModel)]="record.broken" name="broken" required />
+    </div>
+    <div class="form-group">
+      <label for="recordedBy">Recorded By:</label>
+      <input type="text" id="recordedBy" [(ngModel)]="record.recordedBy" name="recordedBy" required />
+    </div>
+    <button type="submit" class="btn-submit">{{ isEdit ? 'Update' : 'Save' }}</button>
+  </form>
+</div>

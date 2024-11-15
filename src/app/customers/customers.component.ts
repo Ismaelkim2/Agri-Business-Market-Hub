@@ -19,6 +19,17 @@ export class CustomersComponent implements OnInit {
         this.loadCustomers();
     }
 
+    isValidImage(imageUrl: string | null): boolean {
+        return typeof imageUrl === 'string' && imageUrl.length > 0;
+      }
+      
+      imageError(event: any): void {
+        const iconElement = document.createElement('i'); 
+        iconElement.classList.add('fa', 'fa-user', 'customer-image'); 
+        event.target.replaceWith(iconElement);  
+      }
+      
+
     loadCustomers() {
         this.customerService.getCustomers().subscribe(data => {
             this.customers = data.map(customer => ({

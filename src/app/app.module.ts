@@ -54,6 +54,9 @@ import { EditCustomerComponent } from './customers/edit-customer/edit-customer.c
 import { MortalitiesComponent } from './mortalities/mortalities.component';
 import { EditMortalityComponent } from './mortalities/edit-mortality/edit-mortality.component';
 import { ToastrModule } from 'ngx-toastr';
+import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/eggs-record-form.component';
+import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.component';
+
 
 
 
@@ -94,7 +97,10 @@ import { ToastrModule } from 'ngx-toastr';
     AddCustomerComponent,
     EditCustomerComponent,
     MortalitiesComponent,
-    EditMortalityComponent
+    EditMortalityComponent,
+    EggsRecordFormComponent,
+    EggsRecordListComponent
+  
     
     
 

@@ -53,7 +53,6 @@ export class ExpensesComponent {
       };
 
       if (this.editMode) {
-        // Update an existing record
         this.expenseService.updateExpenseRecord(expenseRecord).subscribe({
           next: () => {
             this.loadExpenses();
@@ -63,7 +62,6 @@ export class ExpensesComponent {
           error: (err) => console.error('Error updating record:', err)
         });
       } else {
-        // Add a new record
         this.expenseService.saveExpenseRecord(expenseRecord).subscribe({
           next: () => {
             this.loadExpenses();
