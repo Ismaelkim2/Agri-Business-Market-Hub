@@ -33,6 +33,8 @@ import { AddCustomerComponent } from './customers/add-customer/add-customer.comp
 import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
 import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.component';
 import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/eggs-record-form.component';
+import { DetailViewComponent } from './detail-view/detail-view.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -68,6 +70,7 @@ const routes: Routes = [
   { path: 'add-customer', component: AddCustomerComponent },
   { path: 'edit-customer/:id', component: EditCustomerComponent },
   { path: 'mortalities', component: MortalitiesComponent},
+  { path: 'details/:type', component: DetailViewComponent },
   { path: '**', redirectTo: 'login' }
 ];
 

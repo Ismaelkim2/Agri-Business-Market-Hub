@@ -3,7 +3,7 @@
 <div class="container-fluid main-content">
   <div class="d-flex flex-wrap justify-content-start mb-4">
 
-    <div class="card summary-card mx-2 mt-4 mb-1">
+    <div class="card summary-card me-2 mt-4 mb-1">
       <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-money-bill"></i> Sales</strong>
       </div>
@@ -20,7 +20,9 @@
             </button>
           </strong>
 
-          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+          [routerLink]="['/details', 'sales']"
+          >
             View more
           </button>
 
@@ -29,7 +31,7 @@
     </div>
     
 
-    <div class="card summary-card mx-2  mt-4 mb-1">
+    <div class="card summary-card ms-0 me-2  mt-4 mb-1">
       <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-bomb"></i> Expenses</strong>
       </div>
@@ -44,14 +46,16 @@
           <strong *ngIf="!showExpenses" class="text-muted">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+          [routerLink]="['/details', 'expense']"
+          >
             View more
           </button>
         </h5>
       </div>
     </div>
     
-    <div class="card summary-card mx-2  mt-4 mb-1">
+    <div class="card summary-card me-2  mt-4 mb-1">
       <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-list"></i> Profit</strong>
       </div>
@@ -66,14 +70,16 @@
           <strong *ngIf="!showProfit" class="text-muted">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+          [routerLink]="['/details', 'profit']"
+          >
             View more
           </button>
         </h5>
       </div>
     </div>
     
-    <div class="card summary-card ms-2  mt-4 mb-1">
+    <div class="card summary-card me-1  mt-4 mb-1">
       <div class="card-header bg-success text-center text-white">
         <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
       </div>
@@ -91,7 +97,9 @@
           <strong *ngIf="!showTotalBirds">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;">
+          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+          [routerLink]="['/details', 'birds']"
+          >
             View more
           </button>
         </h5>

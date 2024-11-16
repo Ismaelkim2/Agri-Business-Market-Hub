@@ -12,7 +12,7 @@ body {
 }
 
 .summary-card {
-  width: 255px;
+  width: 258px;
   height: 200px;
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

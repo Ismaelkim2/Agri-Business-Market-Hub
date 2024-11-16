@@ -1,0 +1,38 @@
+<app-sidebar></app-sidebar>
+
+<div class="container">
+
+    <div class="d-flex justify-content-between">
+        <div (click)="goBack()" class="back-icon">
+            <i class="fa fa-arrow-left text-dark" title="back"></i>
+          </div>
+    
+        <div><h2 class="text-center text-success my-1">{{ cardType | titlecase }} Details</h2></div>
+    </div>
+      
+  
+    <div class="graph-container my-1">
+      <canvas id="graphCanvas"></canvas>
+    </div>
+
+    <div class="summary-table my-4">
+      <h3 class="text-center text-success">Summary Table</h3>
+      <table class="table table-striped table-bordered">
+        <thead class="bg-success text-white">
+          <tr>
+            <th>Category</th>
+            <th>Percentage (%)</th>
+            <th>Amount (Kes.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of summaryData">
+            <td>{{ data.category }}</td>
+            <td>{{ data.percentage }}%</td>
+            <td>{{ data.amount | currency: 'Kes.' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
