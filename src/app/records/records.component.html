@@ -20,11 +20,11 @@
             </button>
           </strong>
 
-          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+        <small><button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
           [routerLink]="['/details', 'sales']"
           >
             View more
-          </button>
+          </button></small>  
 
         </h5>
       </div>
@@ -46,11 +46,11 @@
           <strong *ngIf="!showExpenses" class="text-muted">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+        <small> <button class="bg-success mt-2" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
           [routerLink]="['/details', 'expense']"
           >
             View more
-          </button>
+          </button></small> 
         </h5>
       </div>
     </div>
@@ -70,11 +70,11 @@
           <strong *ngIf="!showProfit" class="text-muted">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+         <small> <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
           [routerLink]="['/details', 'profit']"
           >
             View more
-          </button>
+          </button></small>
         </h5>
       </div>
     </div>
@@ -85,23 +85,23 @@
       </div>
       <div class="card-body bg-light text-center">
 
-       <div class="d-flex">
+       <div class="d-flex ">
       <div><h5>Breed/Type: Sasso</h5></div> 
       <div> <button (click)="toggleVisibility('totalBirds')" class="toggle-btn mb-1">
           <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
         </button>
       </div> 
     </div>
-        <h5 class="mt-4">
+        <h5 class="mt-3">
           <strong *ngIf="showTotalBirds">No: {{ effectiveTotalBirds }} <i class="fa fa-check-to-slot text-success"></i></strong>
           <strong *ngIf="!showTotalBirds">
             <button class="bg-success" style="height: 30px;width: 100px;border-radius:8px;border: none;"></button>
           </strong>
-          <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
+          <small> <button class="bg-success mt-4" style="float: right;cursor: pointer; border-radius: 8px;height: 30px;color: white;border: none;"
           [routerLink]="['/details', 'birds']"
           >
             View more
-          </button>
+          </button></small>
         </h5>
       </div>
     </div>
@@ -123,13 +123,13 @@
           <option value="">All Months</option>
           <option *ngFor="let month of months" [value]="month">{{ month }}</option>
         </select>
-        <button (click)="printMonthlyRecords()" class="btn btn-success me-3" style="width: 100px;height: 40px;">
+        <button (click)="printMonthlyRecords()" class="btn btn-success me-3 mt-1" style="width: 100px;height: 40px;">
           <i class="fa fa-print"></i> Print Records
         </button>
       </div>
     </div>
 
-    <div class="table-responsive shadow-sm rounded">
+    <div class="table-responsive shadow-sm rounded mt-1">
       <table class="table table-hover table-bordered">
         <thead class="bg-success text-light">
           <tr>

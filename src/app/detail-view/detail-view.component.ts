@@ -40,14 +40,18 @@ export class DetailViewComponent implements OnInit {
         { month: 'Jun', amount: 20000 },
         { month: 'July', amount: 34000 },
         { month: 'Aug', amount: 15000 },
-        { month: 'Sept', amount: 7000 },
+        { month: 'Sept', amount: 70000 },
         { month: 'Oct', amount: 20000 },
         { month: 'Nov', amount: 4000 },
         { month: 'Dec', amount: 15000 },
       ];
       this.summaryData = [
-        { category: 'Retail', percentage: 60, amount: 20000 },
-        { category: 'Wholesale', percentage: 40, amount: 15000 },
+        { category: 'Eggs', percentage: 20, amount: 20000 },
+        { category: 'Hens', percentage: 15, amount: 15000 },
+        { category: 'Cocks', percentage: 20, amount: 20000 },
+        { category: 'Drinkers', percentage: 15, amount: 15000 },
+        { category: 'Retail', percentage: 20, amount: 20000 },
+        { category: 'Wholesale', percentage: 15, amount: 15000 },
       ];
     }
     this.generateGraph();

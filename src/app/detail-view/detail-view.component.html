@@ -2,12 +2,12 @@
 
 <div class="container">
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between  align-items-center">
         <div (click)="goBack()" class="back-icon">
             <i class="fa fa-arrow-left text-dark" title="back"></i>
           </div>
     
-        <div><h2 class="text-center text-success my-1">{{ cardType | titlecase }} Details</h2></div>
+        <div><h2 class="text-center text-success my-1 me-5">{{ cardType | titlecase }} Analysis</h2></div>
     </div>
       
   
@@ -16,7 +16,7 @@
     </div>
 
     <div class="summary-table my-4">
-      <h3 class="text-center text-success">Summary Table</h3>
+      <h3 class="text-center text-success">{{ cardType | titlecase }} Summary Table</h3>
       <table class="table table-striped table-bordered">
         <thead class="bg-success text-white">
           <tr>

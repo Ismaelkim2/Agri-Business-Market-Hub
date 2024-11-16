@@ -1,5 +1,5 @@
 .container {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: auto;
     padding: 20px;
     margin-left: 250px;
@@ -8,6 +8,7 @@
   
   .graph-container {
     text-align: center;
+    height: auto;
   }
   
   canvas {
@@ -27,5 +28,11 @@
     .container{
         margin-left: 0;
     }
+
+    .graph-container {
+        text-align: center;
+        height: auto;
+      }
+
   }
   
