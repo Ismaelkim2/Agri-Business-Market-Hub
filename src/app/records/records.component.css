@@ -4,35 +4,56 @@ body {
 }
 
 .container-fluid.main-content {
-  margin-left: 240px; 
+  margin-left: 250px; 
   margin-top: 60px;
   max-width: 1100px;
   width: 100%;
  
-}
+} 
 
 .summary-card {
-  width: 258px;
-  height: 200px;
-  border-radius: 12px;
+  width: 260px;
+  height: auto;
+  border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  overflow: hidden;
   margin-top: 20px;
+
 }
 
 .summary-card:hover {
-  transform: scale(1.00);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #28a745, #155724);
+  padding: 10px;
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  padding: 20px;
+  font-size: 1rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .toggle-btn {
   background: transparent;
   border: none;
-  font-size: 1rem;
-  color: #6c757d;
+  position: absolute;
+  font-size: 1.2rem;
+  color: #000;
   cursor: pointer;
   float: right;
   margin-top: -5px;
+  top: 10px;
+  right: 10px;
   outline: none;
 }
 
@@ -40,6 +61,23 @@ body {
   color: #343a40;
 }
 
+.progress {
+  background: #f1f1f1;
+  border-radius: 50px;
+  height: 8px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: linear-gradient(135deg, #28a745, #85e085);
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.text-success {
+  color: green;
+}
 
 h3 {
   font-size: 1.5rem;
@@ -60,6 +98,11 @@ th, td {
   text-align: center;
 }
 
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+
 .form-select {
   padding: 8px;
   border-radius: 4px;
@@ -67,6 +110,19 @@ th, td {
 
 .btn-success {
   padding: 10px 20px;
+}
+
+.btn-outline-primary {
+  border: 1px solid #007bff;
+  color: #007bff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.btn-outline-primary:hover {
+  background: #007bff;
+  color: white;
 }
 
 .pagination-controls .btn-outline-success {
@@ -120,6 +176,10 @@ th, td {
     margin-bottom: 20px;
   }
 
+  .toggle-btn {
+    margin-top: 5px;
+  }
+
   .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -145,6 +205,10 @@ th, td {
     width: 100%;
     height: auto;
     margin-bottom: 20px;
+  }
+
+  .toggle-btn {
+    margin-top: 5px;
   }
 
   .table-responsive {

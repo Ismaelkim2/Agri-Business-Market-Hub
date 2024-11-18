@@ -8,6 +8,10 @@
   transition: background-color 0.3s;
 }
 
+.navbar-nav{
+  display: none;
+}
+
 .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.5);
 }
@@ -90,7 +94,13 @@
   font-size: 14px;
 }
 
+
 @media (max-width: 991px) {
+
+  .navbar-collapse.show .navbar-nav {
+    display: block; 
+  }
+
   .sidebar {
       left: -250px; 
   }

@@ -1,45 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
-
-export interface EggsRecord {
-  id: number;
-  date: string; 
-  eggCount: number;
-  broken: number;
-  recordedBy: string;
- 
-}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EggsRecordService {
-  private apiUrl = `${environment.apiUrl}/api/eggs`;
+  private baseUrl = `${environment.apiUrl}/api/eggs`;
 
-  constructor(private http: HttpClient) {
-    this.getRecords()
-  }
+  constructor(private http: HttpClient) {}
+
 
   getRecords(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/records`);
+    return this.http.get<any[]>(this.baseUrl);
   }
 
-  getRecordById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/records/${id}`);
+  addRecord(record: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, record);
   }
+  
 
-  createRecord(record: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/records`, record);
-  }
-
-  updateRecord(record: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/records/${record.id}`, record);
+  updateRecord(id: number, record: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}`, record);
   }
 
   deleteRecord(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/records/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

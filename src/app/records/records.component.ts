@@ -14,7 +14,8 @@ export class RecordsComponent implements OnInit {
   showExpenses = true;
   showProfit = true;
   showTotalBirds = true;
-
+  salesProgress: number = 0;
+  ProfitProgress: number = 0;
 
   monthlySales: { [month: number]: number } = {};
   monthlyExpenses: { [month: number]: number } = {};
@@ -47,7 +48,33 @@ export class RecordsComponent implements OnInit {
     this.fetchExpenseRecords();
     this.fetchTotalBirds();
     this.fetchMortalities();
+    this.calculateProgress();
   }
+
+  calculateProgress(): void {
+    const salesGoal = 50000;
+    if (salesGoal > 0) {
+      this.salesProgress = (this.totalSalesAmount / salesGoal) * 100;
+      if (this.salesProgress > 100) {
+        this.salesProgress = 100;
+      }
+    } else {
+      this.salesProgress = 0; 
+    }
+  
+    const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
+    if (totalAmount > 0) {
+      this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
+      if (this.ProfitProgress > 100) {
+        this.ProfitProgress = 100; 
+      }
+    } else {
+      this.ProfitProgress = 0;
+    }
+
+  }
+
+
   toggleVisibility(card: string) {
     switch (card) {
       case 'sales':
@@ -120,8 +147,7 @@ export class RecordsComponent implements OnInit {
 
   calculateMonthlySales(): void {
     this.monthlySales = {};
-    this.totalSalesAmount = 0; // Reset total sales
-    // Sort the sales list by date descending
+    this.totalSalesAmount = 0;
     this.salesList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
     this.salesList.forEach(record => {
@@ -132,6 +158,7 @@ export class RecordsComponent implements OnInit {
         this.totalSalesAmount += record.sales; 
       }
     });
+    this.calculateProgress();
   }
   
   calculateMonthlyExpenses(): void {
@@ -147,6 +174,7 @@ export class RecordsComponent implements OnInit {
         this.totalExpensesAmount += record.amount; 
       }
     });
+    this.calculateProgress();
   }
   
   getFilteredMonthlyRecords(): string[] {

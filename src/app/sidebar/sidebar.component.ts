@@ -83,6 +83,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.loggedInUserSubscription.unsubscribe();
   }
 
+  closeNavbar() {
+    const navbar = document.getElementById('navbarSupportedContent');
+    if (navbar) {
+      navbar.classList.remove('show'); 
+    }
+  }
+  
+
   navigateTo(route: string): void {
     this.dataService.isLoggedIn.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
