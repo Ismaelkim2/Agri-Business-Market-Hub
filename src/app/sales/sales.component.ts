@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { BirdRecord, SalesService } from '../services/sales.service';
+import {  SalesRecord, SalesService } from '../services/sales.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
 
@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./sales.component.css']
 })
 export class SalesComponent implements OnInit {
-  newSale: Partial<BirdRecord> = {
+  newSale: Partial<SalesRecord> = {
     date: '',
     birdType: '',
     sales: 0,
@@ -17,12 +17,12 @@ export class SalesComponent implements OnInit {
 
   editMode = false;
   editIndex: number | null = null;
-  salesList: BirdRecord[] = [];
-  filteredSalesList: BirdRecord[] = [];
+  salesList: SalesRecord[] = [];
+  filteredSalesList: SalesRecord[] = [];
   pageSize = 5;
   currentPage = 1;
   totalPages = 1;
-  currentSalesPage: BirdRecord[] = [];
+  currentSalesPage: SalesRecord[] = [];
   filterText = '';
 
   constructor(
@@ -56,7 +56,7 @@ export class SalesComponent implements OnInit {
 
   saveSale() {
     if (this.newSale.date && this.newSale.birdType && this.newSale.sales !== undefined) {
-      const saleRecord: BirdRecord = {
+      const saleRecord: SalesRecord = {
         ...this.newSale,
         id: this.editMode && this.editIndex !== null ? this.salesList[this.editIndex].id : undefined,
         eggProduction: 0,
@@ -72,7 +72,7 @@ export class SalesComponent implements OnInit {
         sold: true,
         count: 1,
         salesAmount: this.newSale.sales!
-      } as BirdRecord;
+      } as SalesRecord;
 
       if (this.editMode) {
         this.updateSale(saleRecord);
@@ -82,7 +82,7 @@ export class SalesComponent implements OnInit {
     }
   }
 
-  private updateSale(saleRecord: BirdRecord) {
+  private updateSale(saleRecord: SalesRecord) {
     this.salesService.updateBirdRecord(saleRecord).subscribe({
       next: () => {
         this.salesList[this.editIndex!] = saleRecord;
@@ -92,7 +92,7 @@ export class SalesComponent implements OnInit {
     });
   }
 
-  private createSale(saleRecord: BirdRecord) {
+  private createSale(saleRecord: SalesRecord) {
     this.salesService.saveBirdRecord(saleRecord).subscribe({
       next: (savedRecord) => {
         this.salesList.push(savedRecord);
@@ -103,7 +103,7 @@ export class SalesComponent implements OnInit {
   }
 
   loadSales() {
-    this.salesService.birdRecords$.subscribe(records => {
+    this.salesService.SalesRecord$.subscribe(records => {
       this.salesList = records.filter(record => record.sales > 0);
       this.filteredSalesList = [...this.salesList];
       this.updatePagination();
@@ -162,7 +162,7 @@ export class SalesComponent implements OnInit {
     this.openSalesModal(content);
   }
 
-  deleteSale(sale: BirdRecord): void {
+  deleteSale(sale: SalesRecord): void {
     if (sale.id !== undefined) {
       this.salesService.deleteSale(sale.id).subscribe({
         next: () => {
@@ -174,14 +174,14 @@ export class SalesComponent implements OnInit {
     }
   }
 
-  onDeleteClick(sale: BirdRecord) {
+  onDeleteClick(sale: SalesRecord) {
     const confirmDelete = confirm(`Are you sure you want to delete this sale: ${sale.birdType}?`);
     if (confirmDelete) {
       this.deleteSale(sale);
     }
   }
 
-  trackByFn(index: number, item: BirdRecord) {
+  trackByFn(index: number, item: SalesRecord) {
     return item.id;
   }
 

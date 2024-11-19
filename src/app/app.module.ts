@@ -57,6 +57,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/eggs-record-form.component';
 import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 
 
@@ -101,7 +102,8 @@ import { DetailViewComponent } from './detail-view/detail-view.component';
     EditMortalityComponent,
     EggsRecordFormComponent,
     EggsRecordListComponent,
-    DetailViewComponent
+    DetailViewComponent,
+    ActivitiesComponent
 
   
     

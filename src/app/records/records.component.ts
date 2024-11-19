@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordsService } from '../services/records.service';
 import { ExpenseService, ExpenseRecord } from '../services/expense.service';
-import { BirdRecord, SalesService } from '../services/sales.service';
+import { SalesRecord, SalesService } from '../services/sales.service';
 import { MortalitiesService, Mortality } from '../services/mortalities.service';
 
 @Component({
@@ -21,11 +21,11 @@ export class RecordsComponent implements OnInit {
   monthlyExpenses: { [month: number]: number } = {};
   totalSalesAmount = 0;
   totalExpensesAmount = 0;
-  salesList: BirdRecord[] = [];
+  salesList: SalesRecord[] = [];
   totalBirds = 0;
   totalMortalities = 0;
   mortalityRecords: Mortality[] = [];
-  birdRecords: BirdRecord[] = [];
+  birdRecords: SalesRecord[] = [];
   expenseRecords: ExpenseRecord[] = [];
   selectedYear = new Date().getFullYear();
   years: number[] = [];
@@ -121,7 +121,7 @@ export class RecordsComponent implements OnInit {
   }
 
   fetchSalesRecords(): void {
-    this.salesService.birdRecords$.subscribe(
+    this.salesService.SalesRecord$.subscribe(
       (records) => {
         this.salesList = records;
         this.calculateMonthlySales(); 

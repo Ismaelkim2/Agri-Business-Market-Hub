@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment.prod';
 
 export interface BirdRecord {
   date: string;
   count: number;
   eggProduction: number;
-  feedConsumption:  string;
+  feedConsumption: string;
   vaccineRecords: { vaccine: string; date: string }[];
   hatchDate: string;
   totalBirds?: number;
@@ -28,7 +28,7 @@ export interface BirdRecord {
   remarks?: string;
   type: string;
   id?: number;
-  salesAmount: number
+  salesAmount: number;
 }
 
 export interface WeeklySummary {
@@ -63,7 +63,7 @@ export interface DailyRecord {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecordsService {
   private birdRecordsSubject = new BehaviorSubject<BirdRecord[]>([]);
@@ -77,13 +77,24 @@ export class RecordsService {
 
   private apiUrl = `${environment.apiUrl}/api/records`;
 
+  recentActivities$ = this.birdRecords$.pipe(
+    map((records: BirdRecord[]) =>
+      records
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .map((record) => {
+          const formatDate = new Date(record.date).toLocaleString();
+          return `Recorded ${record.count} birds on ${formatDate}, ${record.eggProduction} eggs produced.`;
+        })
+        .slice(0, 4)
+    )
+  );
+
   constructor(private http: HttpClient) {
     this.fetchBirdRecords();
   }
 
-
   getBirdRecords(): Observable<BirdRecord[]> {
-    return this.http.get<BirdRecord[]>(`${environment.apiUrl}/birds`).pipe(
+    return this.http.get<BirdRecord[]>(`${this.apiUrl}/birds`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('Get Bird Records Error:', error);
         return throwError(error);
@@ -92,9 +103,10 @@ export class RecordsService {
   }
 
   fetchBirdRecords(): void {
-    this.http.get<BirdRecord[]>(`${this.apiUrl}/birds`)
+    this.http
+      .get<BirdRecord[]>(`${this.apiUrl}/birds`)
       .pipe(catchError(this.handleError))
-      .subscribe(records => {
+      .subscribe((records) => {
         this.birdRecordsSubject.next(records);
       });
   }
@@ -105,7 +117,7 @@ export class RecordsService {
     this.birdRecordsSubject.next(updatedRecords);
 
     return this.http.post<BirdRecord>(`${this.apiUrl}/birds`, record).pipe(
-      catchError(error => {
+      catchError((error) => {
         this.birdRecordsSubject.next(currentRecords);
         return throwError(() => new Error('Failed to save bird record.'));
       })
@@ -114,35 +126,37 @@ export class RecordsService {
 
   updateBirdRecord(updatedRecord: BirdRecord): Observable<BirdRecord> {
     const currentRecords = this.birdRecordsSubject.getValue();
-    const updatedRecords = currentRecords.map(r => (r.id === updatedRecord.id ? updatedRecord : r)); 
-    this.birdRecordsSubject.next(updatedRecords);   
-    return this.http.put<BirdRecord>(`${this.apiUrl}/birds/${updatedRecord.id}`, updatedRecord).pipe(
-      catchError(error => {
-        this.birdRecordsSubject.next(currentRecords); 
-        return throwError(() => new Error('Failed to update bird record.'));
-      })
+    const updatedRecords = currentRecords.map((r) =>
+      r.id === updatedRecord.id ? updatedRecord : r
     );
+    this.birdRecordsSubject.next(updatedRecords);
+    return this.http
+      .put<BirdRecord>(`${this.apiUrl}/birds/${updatedRecord.id}`, updatedRecord)
+      .pipe(
+        catchError((error) => {
+          this.birdRecordsSubject.next(currentRecords);
+          return throwError(() => new Error('Failed to update bird record.'));
+        })
+      );
   }
-  
-  
 
   deleteBirdRecord(id: number): Observable<void> {
     const currentRecords = this.birdRecordsSubject.getValue();
-    const updatedRecords = currentRecords.filter(record => record.id !== id);
+    const updatedRecords = currentRecords.filter((record) => record.id !== id);
     this.birdRecordsSubject.next(updatedRecords);
 
     return this.http.delete<void>(`${this.apiUrl}/birds/${id}`).pipe(
-      catchError(error => {
+      catchError((error) => {
         this.birdRecordsSubject.next(currentRecords);
         return throwError(() => new Error('Failed to delete bird record.'));
       })
     );
   }
-  
 
   getTotalBirds(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/birds`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<number>(`${this.apiUrl}/birds`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

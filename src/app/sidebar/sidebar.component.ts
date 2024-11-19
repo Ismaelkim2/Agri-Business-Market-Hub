@@ -7,8 +7,7 @@ import { CartService } from '../cart.service';
 import { DataServiceService } from '../data-service.service';
 import { Product } from '../models/product.model';
 import { environment } from '../../environments/environment.prod';
-
-
+import { RecordsService } from '../services/records.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +15,10 @@ import { environment } from '../../environments/environment.prod';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
+  recentActivities: string[] = [];
+  isVibrating = false;
+  private vibrationInterval: any;
+
   cart: Product[] = [];
   notification: string | null = null;
   cartSubscription: Subscription = new Subscription();
@@ -26,7 +29,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   userFirstName: string | null = null;
   userImageUrl: string = '';
   loggedInUser: UserDTO | null | undefined;
-  environment=environment;
+  environment = environment;
   isSidebarOpen = false;
   imageError = false;
   isLargeScreen = window.innerWidth >= 992;
@@ -34,10 +37,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataServiceService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private recordsService: RecordsService
   ) {}
 
   ngOnInit(): void {
+    this.recordsService.recentActivities$.subscribe(activities => {
+      this.recentActivities = activities;
+      this.startVibration(); 
+    });
+
     this.isSidebarOpen = this.isLargeScreen;
 
     this.cartSubscription = this.cartService.getCart().subscribe((cart: Product[]) => {
@@ -55,15 +64,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
         this.loggedInUserSubscription = this.dataService.loggedInUser.subscribe((user: UserDTO | null) => {
-          console.log("User Details:", user); 
+          console.log("User Details:", user);
           this.userFirstName = user ? user.firstName : null;
           this.userImageUrl = user ? user.userImageUrl : '';
           
-            // Log the image URL to ensure it's correct
-        if (user && user.userImageUrl) {
-          console.log("User Image URL:", this.environment.apiUrl + '/' + user.userImageUrl.replace('\\', '/'));
-        }
-
+          if (user && user.userImageUrl) {
+            console.log("User Image URL:", this.environment.apiUrl + '/' + user.userImageUrl.replace('\\', '/'));
+          }
         });
       } else {
         this.userFirstName = null;
@@ -73,14 +80,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.dataService.loggedInUser.subscribe((user: UserDTO | null) => {
       this.loggedInUser = user;
     });
+
+    this.startVibrationInterval()
   }
-  
 
   ngOnDestroy(): void {
     this.cartSubscription.unsubscribe();
     this.cartUpdatedSubscription.unsubscribe();
     this.isLoggedInSubscription.unsubscribe();
     this.loggedInUserSubscription.unsubscribe();
+    clearInterval(this.vibrationInterval);
+  }
+
+  viewActivities(): void {
+    this.router.navigateByUrl('/activities', {
+      state: { recentActivities: this.recentActivities },
+    });
   }
 
   closeNavbar() {
@@ -90,7 +105,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
   
-
   navigateTo(route: string): void {
     this.dataService.isLoggedIn.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
@@ -122,16 +136,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/registration']);
   }
 
+
   SignOut(): void {
     this.dataService.signOut();
     this.router.navigate(['/login']);
   }
 
- 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
- 
+
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.isLargeScreen = window.innerWidth >= 992;
@@ -143,4 +157,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     (event.target as HTMLImageElement).style.display = 'none'; 
   }
 
+  startVibration() {
+    this.isVibrating = true;
+    setTimeout(() => {
+      this.isVibrating = false;
+    }, 15000); 
+  }
+
+
+  startVibrationInterval() {
+    this.vibrationInterval = setInterval(() => {
+      this.startVibration();
+    }, 5 * 60 * 1000);
+  }
 }

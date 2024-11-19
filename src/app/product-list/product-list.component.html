@@ -10,18 +10,26 @@
     <div *ngIf="notification" class="notification">
       {{ notification }}
     </div>
-
     <div class="product-list">
       <div *ngFor="let product of products" class="product-card">
-        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+        <ng-container *ngIf="product.mediaType === 'image'; else videoTemplate">
+          <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+        </ng-container>
+        <ng-template #videoTemplate>
+          <video controls class="product-video">
+            <source [src]="product.imageUrl" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </ng-template>
         <div class="product-info">
           <h3>{{ product.name }}</h3>
           <p>{{ product.description }}</p>
           <p class="price">${{ product.price }}</p>
-          <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+          <button (click)="addToCart(product)" class="btn btn-success">Add to Cart</button>
           <button (click)="quickView(product)" class="btn btn-secondary">Quick View</button>
         </div>
       </div>
     </div>
+    
   </div>
 </div>

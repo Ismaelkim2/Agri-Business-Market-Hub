@@ -1,13 +1,13 @@
 export interface Product {
-    id: number;
-    name: string;
-    description: string;
-    quantity:number;
-    imageUrl: string;
-    price: number;
-    // orderDate:Date | null
-    status:string;
-  }
+  id: number;
+  name: string;
+  quantity: number;
+  description: string;
+  imageUrl: string;
+  price: number;
+  status: string;
+  mediaType?: 'image' | 'video'; 
+}
 
   export interface Order {
     id: number;

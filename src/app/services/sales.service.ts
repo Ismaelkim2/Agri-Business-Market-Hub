@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 
-export interface BirdRecord {
+export interface SalesRecord {
   id?: number;
   date: string ;
   birdType: string;
@@ -27,8 +27,8 @@ export interface BirdRecord {
   providedIn: 'root'
 })
 export class SalesService {
-  private birdRecordsSubject = new BehaviorSubject<BirdRecord[]>([]);
-  birdRecords$ = this.birdRecordsSubject.asObservable();
+  private birdRecordsSubject = new BehaviorSubject<SalesRecord[]>([]);
+ SalesRecord$ = this.birdRecordsSubject.asObservable();
 
   private apiUrl = `${environment.apiUrl}/api/sales`; 
 
@@ -37,7 +37,7 @@ export class SalesService {
   }
 
   loadBirdRecords() {
-    this.http.get<BirdRecord[]>(this.apiUrl).subscribe(
+    this.http.get<SalesRecord[]>(this.apiUrl).subscribe(
       (records) => {
         this.birdRecordsSubject.next(records);
       },
@@ -45,8 +45,8 @@ export class SalesService {
     );
   }
 
-  saveBirdRecord(record: BirdRecord): Observable<BirdRecord> {
-    return this.http.post<BirdRecord>(this.apiUrl, record).pipe(
+  saveBirdRecord(record: SalesRecord): Observable<SalesRecord> {
+    return this.http.post<SalesRecord>(this.apiUrl, record).pipe(
       catchError((error) => {
         console.error('Failed to save bird record', error);
         return throwError(() => new Error('Failed to save bird record.'));
@@ -55,8 +55,8 @@ export class SalesService {
   }
   
 
-  updateBirdRecord(record: BirdRecord): Observable<BirdRecord> {
-    return this.http.put<BirdRecord>(`${this.apiUrl}/${record.id}`, record);
+  updateBirdRecord(record: SalesRecord): Observable<SalesRecord> {
+    return this.http.put<SalesRecord>(`${this.apiUrl}/${record.id}`, record);
   }
 
   deleteSale(id: number): Observable<void> {

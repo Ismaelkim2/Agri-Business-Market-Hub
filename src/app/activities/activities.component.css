@@ -1,0 +1,117 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9fc;  
+    color: #333;
+  }
+  
+  .container {
+    margin-left: 280px; 
+    padding: 0 20px;
+    margin-top: 40px;
+    max-width: 1080px;
+    position: fixed;
+  }
+  
+
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #28a745;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  
+
+  .card {
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .card-body i {
+    font-size: 1.75rem;
+    color: #28a745;
+  }
+  
+  .card-body span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+
+  .card-body button {
+    border: none;
+    background-color: transparent;
+    color: #dc3545;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .card-body button:hover {
+    color: #bd2130;
+  }
+  
+  .card-body button:focus {
+    outline: none;
+  }
+  
+
+  @media (max-width: 1024px) {
+    .container {
+      margin-left: 0;
+    }
+    h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 15px;
+    }
+    .card-body i {
+      font-size: 1.5rem;
+    }
+    .card-body span {
+      font-size: 1rem;
+    }
+    .card-body button {
+      font-size: 1rem;
+      top: 8px;
+      right: 8px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card-body {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .card-body span {
+      font-size: 0.95rem;
+    }
+  }
+  

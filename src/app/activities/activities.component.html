@@ -1,0 +1,21 @@
+<app-sidebar></app-sidebar>
+
+<div class="container py-5">
+  <h2 class="text-center text-success mb-4">Recent Activities</h2>
+  
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let activity of activities">
+      <div class="card shadow-lg mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center position-relative">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-check-circle text-success mr-2"></i>
+            <span>{{ activity }}</span>
+          </div>
+          <button class="btn-close position-absolute" aria-label="Close" (click)="removeActivity(activity)">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

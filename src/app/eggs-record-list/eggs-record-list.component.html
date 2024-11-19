@@ -1,15 +1,13 @@
 <app-sidebar></app-sidebar>
-<div class="container my-4">
-  <h2 class="text-center mb-1">Egg Production Records</h2>
-  <div class="text-center mb-1 mt-5">
-    <button (click)="navigateToAddRecord()" class="btn btn-primary btn-lg">
-      <i class="fas fa-plus"></i> Add New Record
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <button (click)="navigateToAddRecord()" class="btn btn-primary btn-lg shadow-sm" style="margin-top: 40px;">
+      <i class="fas fa-plus me-2"></i> Add New Record
     </button>
   </div>
-  
   <div class="table-responsive">
-    <table class="table table-bordered table-hover mt-1">
-      <thead class="thead-dark">
+    <table class="table table-bordered table-hover shadow-sm">
+      <thead>
         <tr>
           <th>Date</th>
           <th>Egg Count</th>
@@ -17,15 +15,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of eggRecords">
+        <tr *ngFor="let record of eggRecords" class="record-row">
           <td>{{ record.date | date: 'shortDate' }}</td>
           <td>{{ record.eggsCount }}</td>
           <td>
-            <button class="btn btn-warning btn-sm mr-2 icon-button" (click)="editRecord(record)">
-              <i class="fas fa-edit text-warning"></i>
+            <button class="btn btn-warning btn-sm shadow-sm me-2" (click)="editRecord(record)">
+              <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-danger btn-sm ms-2 icon-button" (click)="deleteRecord(record.id)">
-              <i class="fas fa-trash text-danger"></i>
+            <button class="btn btn-danger btn-sm shadow-sm" (click)="deleteRecord(record.id)">
+              <i class="fas fa-trash"></i>
             </button>
           </td>
         </tr>

@@ -21,10 +21,10 @@
 }
 
 .logo-image {
-  width: 50px;
+  width: 45px;
   height: auto;
   border-radius: 8px;
-  margin-right: 10px;
+  margin-right: 12px;
   transition: transform 0.3s;
 }
 
@@ -152,5 +152,83 @@
   .navbar-collapse .nav-link:hover {
     background-color: #1e7e34;
   }
+
+  .container-fluid{
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
+@media (max-width: 576px) {
+  .notifications {
+    text-align: right;
+  }
+
+  .btn-sm-sm {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .btn-sm-sm i {
+    font-size: 12px !important; 
+    margin-bottom: 8px;
+  }
+
+  .btn-sm-sm .badge {
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 577px) {
+  .btn-sm-sm {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .btn-sm-sm i {
+    font-size: 14px !important;
+    margin-bottom: 8px;
+  }
+
+  .btn-sm-sm .badge {
+    font-size: 18px !important; 
+  }
+}
+
+/* Vibration animation for the bell icon */
+@keyframes vibration {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+
+.vibrating {
+  animation: vibration 0.3s ease-in-out;
+}
+
+.notifications .btn {
+  position: relative;
+  border: none;
+}
+
+.notifications .btn i {
+  font-size: 1.2rem; 
+}
+
+.notifications .badge {
+  font-size: 12px;
+  top: 0;
+  right: 0;
+}

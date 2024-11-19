@@ -1,21 +1,37 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Location } from '@angular/common';
+import { BirdRecord, RecordsService } from '../services/records.service';
+import { SalesRecord, SalesService } from '../services/sales.service';
+import {
+  Chart,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
 @Component({
   selector: 'app-detail-view',
   templateUrl: './detail-view.component.html',
   styleUrls: ['./detail-view.component.css'],
 })
-export class DetailViewComponent implements OnInit {
+export class DetailViewComponent implements OnInit, OnDestroy {
   cardType: string = '';
   monthlyData: any[] = [];
   summaryData: any[] = [];
+  birdRecords: BirdRecord[] = [];
+  salesRecord: SalesRecord[] = [];
   chart: any;
 
-  constructor(private route: ActivatedRoute,
-    private location:Location,
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private recordsService: RecordsService,
+    private salesService: SalesService
   ) {
     Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
   }
@@ -25,41 +41,48 @@ export class DetailViewComponent implements OnInit {
     this.loadData();
   }
 
-  goBack(){
+  goBack(): void {
     this.location.back();
   }
 
   loadData(): void {
-    if (this.cardType === 'sales') {
-      this.monthlyData = [
-        { month: 'January', amount: 12000 },
-        { month: 'February', amount: 1500 },
-        { month: 'March', amount: 15000 },
-        { month: 'April', amount: 20000 },
-        { month: 'May', amount: 15000 },
-        { month: 'Jun', amount: 20000 },
-        { month: 'July', amount: 34000 },
-        { month: 'Aug', amount: 15000 },
-        { month: 'Sept', amount: 70000 },
-        { month: 'Oct', amount: 20000 },
-        { month: 'Nov', amount: 4000 },
-        { month: 'Dec', amount: 15000 },
-      ];
-      this.summaryData = [
-        { category: 'Eggs', percentage: 20, amount: 20000 },
-        { category: 'Hens', percentage: 15, amount: 15000 },
-        { category: 'Cocks', percentage: 20, amount: 20000 },
-        { category: 'Drinkers', percentage: 15, amount: 15000 },
-        { category: 'Retail', percentage: 20, amount: 20000 },
-        { category: 'Wholesale', percentage: 15, amount: 15000 },
-      ];
+    if (this.cardType === 'birds') {
+      this.loadBirdRecords();
+    } else if (this.cardType === 'sales') {
+      this.loadSalesRecords();
     }
-    this.generateGraph();
   }
 
-  generateGraph(): void {
-    const labels = this.monthlyData.map((data) => data.month);
-    const data = this.monthlyData.map((data) => data.amount);
+  loadBirdRecords(): void {
+    this.recordsService.getBirdRecords().subscribe((records) => {
+      this.birdRecords = records;
+      this.generateGraph(this.birdRecords, 'Bird Count');
+    });
+  }
+
+  loadSalesRecords(): void {
+    this.salesService.SalesRecord$.subscribe((records) => {
+      this.salesRecord = records;
+      this.summaryData = records.map((record) => ({
+        category: record.birdType,
+        percentage: ((record.salesAmount / this.calculateTotalSales()) * 100).toFixed(2),
+        amount: record.salesAmount,
+      }));
+      this.generateGraph(this.salesRecord, 'Sales Amount');
+    });
+  }
+
+  calculateTotalSales(): number {
+    return this.salesRecord.reduce((total, record) => total + record.salesAmount, 0);
+  }
+
+  generateGraph(records: (BirdRecord | SalesRecord)[], label: string): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    const labels = records.map((record) => record.date);
+    const data = records.map((record) => record.salesAmount || record.birdCount);
 
     this.chart = new Chart('graphCanvas', {
       type: 'bar',
@@ -67,7 +90,7 @@ export class DetailViewComponent implements OnInit {
         labels,
         datasets: [
           {
-            label: `${this.cardType} Amounts`,
+            label,
             data,
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -88,5 +111,11 @@ export class DetailViewComponent implements OnInit {
         },
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }
