@@ -3,6 +3,7 @@ import { RecordsService } from '../services/records.service';
 import { ExpenseService, ExpenseRecord } from '../services/expense.service';
 import { SalesRecord, SalesService } from '../services/sales.service';
 import { MortalitiesService, Mortality } from '../services/mortalities.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-records',
@@ -35,6 +36,8 @@ export class RecordsComponent implements OnInit {
   itemsPerPage = 5;
   noDataForYear = false;
 
+  salesTarget: number = 50000;  
+
   constructor(
     private recordsService: RecordsService,
     private expenseService: ExpenseService,
@@ -52,28 +55,25 @@ export class RecordsComponent implements OnInit {
   }
 
   calculateProgress(): void {
-    const salesGoal = 50000;
-    if (salesGoal > 0) {
-      this.salesProgress = (this.totalSalesAmount / salesGoal) * 100;
+    if (this.salesTarget > 0) {
+      this.salesProgress = (this.totalSalesAmount / this.salesTarget) * 100;
       if (this.salesProgress > 100) {
         this.salesProgress = 100;
       }
     } else {
-      this.salesProgress = 0; 
+      this.salesProgress = 0;
     }
-  
+
     const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
     if (totalAmount > 0) {
       this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
       if (this.ProfitProgress > 100) {
-        this.ProfitProgress = 100; 
+        this.ProfitProgress = 100;
       }
     } else {
       this.ProfitProgress = 0;
     }
-
   }
-
 
   toggleVisibility(card: string) {
     switch (card) {
@@ -130,6 +130,7 @@ export class RecordsComponent implements OnInit {
     );
   }
 
+
   fetchExpenseRecords(): void {
     this.expenseService.expenseRecords$.subscribe(
       (records) => {
@@ -149,15 +150,16 @@ export class RecordsComponent implements OnInit {
     this.monthlySales = {};
     this.totalSalesAmount = 0;
     this.salesList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
+  
     this.salesList.forEach(record => {
       const date = new Date(record.date);
       if (date.getFullYear() === this.selectedYear) {
         const month = date.getMonth() + 1;
         this.monthlySales[month] = (this.monthlySales[month] || 0) + record.sales;
-        this.totalSalesAmount += record.sales; 
+        this.totalSalesAmount += record.sales;
       }
     });
+    console.log(this.monthlySales); 
     this.calculateProgress();
   }
   

@@ -1,11 +1,11 @@
-
 .container {
   position: relative;
-  background-color: #ffffff;
+  background-color: #f4f4f9;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .spinner-overlay {
@@ -23,20 +23,23 @@
 
 form {
   position: relative;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
 }
-
 
 .image-wrapper {
   position: relative;
   width: 100%;
-  height: 100%; 
+  height: 100%;
   overflow: hidden;
 }
 
 .image-wrapper img {
   width: 100%;
-  height: 100%; 
-  object-fit: cover; 
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
 }
 
 .welcome-message {
@@ -47,40 +50,60 @@ form {
 }
 
 .welcome-message h3 {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 5px;
   color: #28a745;
 }
 
 .welcome-message p {
-  font-size: 15px;
-  color: #28a745;
-  margin: 0 20px;
+  font-size: 16px;
+  color: #fff;
   text-shadow: 1px 1px 2px rgba(74, 241, 124, 0.5);
 }
 
 .formdiv {
   position: absolute;
+  max-width: 480px;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.95); 
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   padding: 30px;
-  max-width: 600px; 
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
-}
-
-form .formdiv[disabled] {
-  pointer-events: none;
-  opacity: 0.5;
+  width: 100%;
 }
 
 .form-label {
   font-size: 16px;
   color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.styled-input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.styled-input:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  outline: none;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 .btn {
@@ -108,22 +131,13 @@ form .formdiv[disabled] {
   background-color: #218838;
 }
 
-.toggle-password-btn {
-  border-left: none;
-  border-radius: 0 5px 5px 0;
+.forgot-password {
+  font-size: 14px;
+  color: #007bff;
   cursor: pointer;
-}
-
-input[type="tel"], input[type="password"], .form-control {
-  border-radius: 5px;
-  border: 1px solid #ced4da;
-  padding: 12px;
-  margin-bottom: 15px;
-}
-
-input[type="tel"]:focus, input[type="password"]:focus {
-  border-color: #28a745;
-  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  text-decoration: underline;
+  text-align: center;
+  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
@@ -133,10 +147,10 @@ input[type="tel"]:focus, input[type="password"]:focus {
   }
 
   .welcome-message h3 {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .welcome-message p {
-    font-size: 16px;
+    font-size: 14px;
   }
 }

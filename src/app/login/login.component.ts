@@ -17,13 +17,28 @@ export class LoginComponent {
   password: string = '';
   showPassword: boolean = false;
   errorMessage: string = '';
-  loading = false;
+  loading: boolean = false;
 
   constructor(
     private dataService: DataServiceService, 
     private router: Router,
     private toastr: ToastrService,
   ) {}
+
+
+  onPhoneNumberInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      this.phoneNumber = target.value;
+    }
+  }
+
+  onPasswordInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      this.password = target.value;
+    }
+  }
 
   onSubmit() {
     if (this.phoneNumber.length < 10) {
@@ -45,7 +60,7 @@ export class LoginComponent {
         success => {
           if (success) {
             this.toastr.success('Logged in successfully');
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/records']);
           } else {
             this.errorMessage = 'Incorrect Phone Number or Password';
           }

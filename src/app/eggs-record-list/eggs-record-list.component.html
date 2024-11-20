@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of eggRecords" class="record-row">
+        <tr *ngFor="let record of pagedRecords" class="record-row">
           <td>{{ record.date | date: 'shortDate' }}</td>
           <td>{{ record.eggsCount }}</td>
           <td>
@@ -29,5 +29,12 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">Next</button>
   </div>
 </div>

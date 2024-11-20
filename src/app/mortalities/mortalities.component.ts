@@ -22,6 +22,10 @@ export class MortalitiesComponent implements OnInit {
   addSuccess = false;  
   addError = false;  
 
+  displayedMortalities: Mortality[] = []; 
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+
   constructor(private mortalitiesService: MortalitiesService) {}
 
   ngOnInit(): void {
@@ -31,8 +35,18 @@ export class MortalitiesComponent implements OnInit {
   fetchMortalities() {
     this.mortalitiesService.getMortalities().subscribe(data => {
       this.mortalities = data.map(mortality => ({ ...mortality, visible: true }));
+      this.updateDisplayedMortalities();
+      this.sortMortalities();
     });
   }
+
+get totalMortalities() {
+  return this.mortalities.reduce((total,mortality)=>total+ mortality.numberOfMortalities,0)
+}
+
+sortMortalities(){
+  this.mortalities.sort((a,b)=>new Date(b.date).getTime() - new Date(a.date).getTime())
+}
 
   showAddMortalityForm() {
     this.isAddingNewMortality = true;
@@ -43,6 +57,7 @@ export class MortalitiesComponent implements OnInit {
   addNewMortality() {
     const tempId = Date.now(); 
     const newRecord = { ...this.newMortality, id: tempId }; 
+    this.mortalities.unshift(newRecord);
     this.mortalities.push(newRecord);
     this.isAddingNewMortality = false;
 
@@ -61,6 +76,7 @@ export class MortalitiesComponent implements OnInit {
         this.mortalities.pop();
         this.addError = true;
         this.resetMessageTimeout();
+        this.mortalities.shift();
       }
     );
 
@@ -95,7 +111,10 @@ export class MortalitiesComponent implements OnInit {
     }
 
     this.mortalitiesService.updateMortality(updatedMortality.id, updatedMortality).subscribe(
-      () => {},
+      () => {
+        this.sortMortalities();
+      this.updateDisplayedMortalities();
+      },
       error => {
         console.error('Error updating mortality:', error);
         if (this.editingMortality) { 
@@ -137,5 +156,34 @@ export class MortalitiesComponent implements OnInit {
         mortality.visible = !mortality.visible; 
       }
     );
+  }
+
+  updateDisplayedMortalities() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedMortalities = this.mortalities.slice(startIndex, endIndex);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updateDisplayedMortalities();
+  }
+
+  getTotalPages() {
+    return Math.ceil(this.mortalities.length / this.itemsPerPage);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.getTotalPages()) {
+      this.currentPage++;
+      this.updateDisplayedMortalities();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedMortalities();
+    }
   }
 }

@@ -42,7 +42,7 @@
                   <tr *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index">
                     <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
                       <!-- <td>{{ record.date | date:'yyyy-MM-dd' }}</td> -->
-                      <td>{{ formatDate(record.date) }}</td>
+                      <td>{{ formatDate(record.date ) }}</td>
                       <td>{{ record.count }}</td>
                       <td>{{ calculateDescriptiveAge(record.date) }}</td>
                       <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>

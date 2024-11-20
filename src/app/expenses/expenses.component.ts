@@ -16,7 +16,7 @@ export class ExpensesComponent {
   filterText: string = '';
   editMode: boolean = false;
   editIndex: number | null = null;
-  currentPage: number = 1;
+  currentPage: number = 1 ;
   pageSize: number = 5;
   totalPages: number = 1;
 

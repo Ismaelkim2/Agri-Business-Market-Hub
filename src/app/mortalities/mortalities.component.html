@@ -7,6 +7,13 @@
       Add New Mortality Record
   </button>
 
+  <div class="total-mortalities">
+    <h3>
+      Total Mortalities: 
+      <span class="text-danger fw-bold">{{ totalMortalities }}</span>
+    </h3>
+  </div>
+  
   <div *ngIf="addSuccess" class="alert alert-success">Mortality record added successfully!</div>
   <div *ngIf="addError" class="alert alert-danger">Failed to add mortality record.</div>
 
@@ -54,11 +61,11 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let element of mortalities" [ngClass]="{'hidden': !element.visible}">
-              <td *ngIf="element.visible">{{ element.date | date }}</td>
-              <td *ngIf="element.visible">{{ element.numberOfMortalities }}</td>
-              <td *ngIf="element.visible">{{ element.reason }}</td>
-              <td *ngIf="element.visible">{{ element.recordedBy }}</td>
+        <tr *ngFor="let element of displayedMortalities">
+            <td>{{ element.date | date }}</td>
+            <td>{{ element.numberOfMortalities }}</td>
+            <td>{{ element.reason }}</td>
+            <td>{{ element.recordedBy }}</td>
               <td>
                   <button (click)="edit(element)" class="action-button edit"><i class="fa fa-pen-to-square"></i></button>
                   <button (click)="delete(element.id)" class="action-button delete"><i class="fa fa-trash"></i></button>
@@ -66,4 +73,11 @@
           </tr>
       </tbody>
   </table>
+
+  <div class="pagination-controls">
+    <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success">Previous</button>
+    <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()" class="btn bg-success">Next</button>
+</div>
+
 </div>

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="image-wrapper">
-    <img src="assets/images/farmer.png" alt="Login Image">
+    <img src="assets/images/farmer.png" alt="Login Image" />
 
     <div class="formdiv">
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
@@ -13,14 +13,14 @@
           <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
-          <p class="mt-3 ms-2" style="color: rgb(20, 124, 20);">please wait.....</p>
+          <p class="mt-3 ms-2" style="color: rgb(20, 124, 20);">Please wait...</p>
         </div>
 
-        <div class="mb-3" style="margin-top: 20px;">
+        <!-- Phone Number Input -->
+        <div class="input-wrapper">
           <label for="phoneNumber" class="form-label">Phone Number</label>
           <input
             type="tel"
-            class="form-control"
             id="phoneNumber"
             name="phoneNumber"
             [(ngModel)]="phoneNumber"
@@ -28,47 +28,49 @@
             required
             minlength="10"
             placeholder="e.g. 0712345678"
-          >
-          <div *ngIf="phoneNumberInput.errors && (phoneNumberInput.dirty || phoneNumberInput.touched)" class="text-danger">
+            (input)="onPhoneNumberInput($event)"
+            class="styled-input"
+          />
+          <div *ngIf="phoneNumberInput.errors && (phoneNumberInput.dirty || phoneNumberInput.touched)" class="error-message">
             <small *ngIf="phoneNumberInput.errors['required']">Phone number is required.</small>
             <small *ngIf="phoneNumberInput.errors['minlength']">Phone number must be at least 10 digits.</small>
           </div>
         </div>
 
-        <div class="mb-3">
+        <!-- Password Input -->
+        <div class="input-wrapper">
           <label for="password" class="form-label">Password</label>
-          <div class="input-group">
-            <input
-              [type]="showPassword ? 'text' : 'password'"
-              class="form-control"
-              id="password"
-              name="password"
-              [(ngModel)]="password"
-              #passwordInput="ngModel"
-              required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-              placeholder="Enter password"
-            >
-            <div class="input-group-append">
-              <button type="button" class="btn btn-outline-secondary toggle-password-btn bg-light" (click)="togglePasswordVisibility()">
-                <i class="fa fa-eye-slash"></i>
-              </button>
-            </div>
-          </div>
-          <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)" class="text-danger">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            #passwordInput="ngModel"
+            required
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            placeholder="Enter password"
+            (input)="onPasswordInput($event)"
+            class="styled-input"
+          />
+          <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)" class="error-message">
             <small *ngIf="passwordInput.errors['required']">Password is required.</small>
             <small *ngIf="passwordInput.errors['pattern']">Password must contain letters and numbers.</small>
           </div>
         </div>
 
+        <!-- Error Message -->
         <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-        <button type="submit" class="btn btn-primary w-100" [disabled]="loading || !loginForm.valid">Login</button><br><br>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loading || !loginForm.valid">Login</button>
+        <br /><br />
 
-        <h4 class="text-center text-info forgot-password" (click)="navigateToForgotPassword()" style="cursor: pointer; text-decoration: underline;">
+        <!-- Forgot Password Link -->
+        <h4 class="text-center text-info forgot-password" (click)="navigateToForgotPassword()">
           Forgot Password?
         </h4>
 
+        <!-- Create Account Button -->
         <button routerLink="/registration" class="btn btn-success w-100 mt-2">Create Account</button>
       </form>
     </div>

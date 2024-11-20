@@ -6,7 +6,8 @@
   margin-left: 250px;
   background-color: #f4f6f8;
   min-height: 100vh;
-  margin-top: 45px;
+  margin-top: 48px;
+  max-width: 1200px;
 }
 
 @media (max-width: 768px) {
@@ -38,7 +39,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 20px 0;
   overflow-x: auto;
 }
