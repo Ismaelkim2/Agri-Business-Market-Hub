@@ -98,10 +98,16 @@ export class EggsRecordListComponent implements OnInit {
   }
 
 
+  // closeEditModal(): void {
+  //   this.isEditing = false;
+  //   this.currentRecord = null;
+  // }
+
   closeEditModal(): void {
     this.isEditing = false;
     this.currentRecord = null;
   }
+
 
   updateRecord(): void {
     if (this.currentRecord) {
