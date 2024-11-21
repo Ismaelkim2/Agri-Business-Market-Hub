@@ -1,12 +1,37 @@
-<app-sidebar></app-sidebar>
+<app-sidebar></app-sidebar> 
+
 <div class="container my-5">
-  <div class="text-center mb-4">
-    <button (click)="navigateToAddRecord()" class="btn btn-primary btn-lg shadow-sm" style="margin-top: 40px;">
-      <i class="fas fa-plus me-2"></i> Add New Record
+  <div class="header-section d-flex justify-content-between align-items-center mt-5">
+    <button (click)="navigateToAddRecord()" class="btn btn-primary btn-lg shadow-sm">
+      <i class="fas fa-plus me-2 fw-bold"></i> Add New Record
     </button>
+    <div class="fw-bold text-center total-eggs">
+      {{ totalEggs }} Eggs <i class="fa fa-egg"></i>
+    </div>
   </div>
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover shadow-sm">
+
+  <div class="chart-title text-center mt-4">
+    <h3 class="fw-bold text-primary">Egg Production Trends</h3>
+    <p class="text-muted">Visual representation of egg production over time</p>
+  </div>
+
+  <div class="chart-container mt-4">
+    <ngx-charts-line-chart
+      [view]="isSmallScreen ? [350, 250] : [1000, 400]"
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="false"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Date'"
+      [yAxisLabel]="'Egg Count'"
+      [autoScale]="true"
+    ></ngx-charts-line-chart>
+  </div>
+
+  <div class="table-responsive mt-5">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th>Date</th>
@@ -19,10 +44,10 @@
           <td>{{ record.date | date: 'shortDate' }}</td>
           <td>{{ record.eggsCount }}</td>
           <td>
-            <button class="btn btn-warning btn-sm shadow-sm me-2" (click)="editRecord(record)">
+            <button class="btn btn-warning btn-sm" (click)="openEditModal(record)">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-danger btn-sm shadow-sm" (click)="deleteRecord(record.id)">
+            <button class="btn btn-danger btn-sm ms-2" (click)="deleteRecord(record.id)">
               <i class="fas fa-trash"></i>
             </button>
           </td>
@@ -31,10 +56,31 @@
     </table>
   </div>
 
-  <!-- Pagination Controls -->
-  <div class="pagination">
-    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">Next</button>
+  <div *ngIf="isEditing" class="modal-overlay" (click)="closeEditModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h4>Edit Egg Record</h4>
+      <form (ngSubmit)="updateRecord()">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input *ngIf="currentRecord" type="date" id="date" [(ngModel)]="currentRecord.date" name="date" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="eggsCount">Egg Count</label>
+          <input *ngIf="currentRecord" type="number" id="eggsCount" [(ngModel)]="currentRecord.eggsCount" name="eggsCount" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="pagination mt-3">
+    <button class="btn btn-outline-primary" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span class="page-info">Page {{ currentPage }} of {{ getTotalPages() }}</span>
+    <button class="btn btn-outline-primary " (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
+      Next
+    </button>
   </div>
 </div>

@@ -1,0 +1,8 @@
+<div class="notification-container">
+    <div class="spinner" *ngIf="showSpinner"></div>
+    <div class="notification-message">
+      <span>{{ message }}</span>
+      <div *ngIf="showTick" class="tick-icon">✔</div>
+    </div>
+  </div>
+  

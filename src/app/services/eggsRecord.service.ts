@@ -3,7 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 
-
+interface ResponseMessage {
+  message?: string;
+  error?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +30,7 @@ export class EggsRecordService {
     return this.http.put<any>(`${this.baseUrl}/${id}`, record);
   }
 
-  deleteRecord(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  deleteRecord(id: number): Observable<ResponseMessage> {
+    return this.http.delete<ResponseMessage>(`${this.baseUrl}/${id}`);
   }
 }

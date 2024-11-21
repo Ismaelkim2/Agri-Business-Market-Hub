@@ -35,6 +35,7 @@ import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.com
 import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/eggs-record-form.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,7 @@ const routes: Routes = [
   { path: 'mortalities', component: MortalitiesComponent},
   { path: 'details/:type', component: DetailViewComponent },
   { path: 'activities', component: ActivitiesComponent },
+  { path: 'notification', component: NotificationComponent },
   { path: '**', redirectTo: 'login' }
 ];
 

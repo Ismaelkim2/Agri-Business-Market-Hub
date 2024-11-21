@@ -58,10 +58,8 @@ import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/egg
 import { EggsRecordListComponent } from './eggs-record-list/eggs-record-list.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { ActivitiesComponent } from './activities/activities.component';
-
-
-
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
@@ -103,12 +101,9 @@ import { ActivitiesComponent } from './activities/activities.component';
     EggsRecordFormComponent,
     EggsRecordListComponent,
     DetailViewComponent,
-    ActivitiesComponent
-
+    ActivitiesComponent,
+    NotificationComponent
   
-    
-    
-
    
   ],
   imports: [
@@ -122,6 +117,7 @@ import { ActivitiesComponent } from './activities/activities.component';
     MatSnackBarModule,
     MatCardModule ,
     NgbModule,
+    NgxChartsModule,
     ToastrModule.forRoot(),
   
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
