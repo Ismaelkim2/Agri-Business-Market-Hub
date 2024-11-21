@@ -120,6 +120,7 @@ export class SalesComponent implements OnInit {
 
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredSalesList.length / this.pageSize);
+    this.currentPage = Math.min(this.currentPage, this.totalPages);
     this.updateCurrentSalesPage();
   }
 

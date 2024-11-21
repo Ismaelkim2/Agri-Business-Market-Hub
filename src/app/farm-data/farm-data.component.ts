@@ -141,7 +141,7 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   }
 
   formatDate(date: string): string {
-    return format(new Date(date), 'MMM dd, yyyy hh:mm a'); 
+    return format(new Date(date), 'MMM dd, yyyy'); 
   }
 
 
@@ -162,7 +162,11 @@ export class FarmDataComponent implements OnInit, OnDestroy {
       if (recordId !== undefined) {
         this.recordsService.deleteBirdRecord(recordId).subscribe(
           () => {
-            this.filteredPoultryRecords.splice(index, 1);
+            const globalIndex = this.birdRecords.findIndex(record => record.id === recordId);
+            if (globalIndex !== -1) {
+              this.birdRecords.splice(globalIndex, 1); 
+            }
+            this.filteredPoultryRecords.splice(index, 1); 
             this.applyFilter();
             alert('Bird record deleted successfully');
           },
@@ -287,17 +291,30 @@ export class FarmDataComponent implements OnInit, OnDestroy {
   }
 
   getNextVaccine(age: number, hatchedDate: string): { vaccine: string, date: string } {
-    if (age <= 7) return { vaccine: 'Newcastle 1st Dose', date: this.addDays(hatchedDate, 7) };
-    if (age > 7 && age <= 14) return { vaccine: 'Newcastle 2nd Dose', date: this.addDays(hatchedDate, 14) };
-    if (age > 14 && age <= 21) return { vaccine: 'Gumboro 1st Dose', date: this.addDays(hatchedDate, 21) };
-    if (age > 21 && age <= 28) return { vaccine: 'Gumboro 2nd Dose', date: this.addDays(hatchedDate, 28) };
-    if (age === 42 && age <= 50 ) return { vaccine: 'Fowl Box', date: this.addDays(hatchedDate, 42) };
-    if (age === 56 && age <= 60) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 56) };
-    if (age === 112 && age <= 119) return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 112) };
-    if (age > 120) return { vaccine: 'Dewormer', date: this.addDays(hatchedDate, 120) };
+    if (age <= 7) 
+        return { vaccine: 'Newcastle 1st Dose', date: this.addDays(hatchedDate, 7) };
+    if (age > 7 && age <= 14) 
+        return { vaccine: 'Newcastle 2nd Dose', date: this.addDays(hatchedDate, 14) };
+    if (age > 14 && age <= 21) 
+        return { vaccine: 'Gumboro 1st Dose', date: this.addDays(hatchedDate, 21) };
+    if (age > 21 && age <= 28) 
+        return { vaccine: 'Gumboro 2nd Dose', date: this.addDays(hatchedDate, 28) };
+    if (age >= 42 && age <= 50) 
+        return { vaccine: 'Fowl Box', date: this.addDays(hatchedDate, 42) };
+    if (age > 50 && age <= 120) 
+        return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 56) };
+    if (age === 112 || (age > 112 && age <= 119)) 
+        return { vaccine: 'Fowl Typhoid', date: this.addDays(hatchedDate, 112) };
+    if (age >= 120 && (age - 120) % 90 === 0) // Repeat Newcastle every 3 months
+        return { vaccine: 'Newcastle Booster', date: this.addDays(hatchedDate, age) };
+    if (age >= 365 && (age - 365) % 365 === 0) // Repeat Fowl Box yearly
+        return { vaccine: 'Fowl Box', date: this.addDays(hatchedDate, age) };
+    if (age > 120 && (age - 120) % 120 === 0) // Deworm every 4 months
+        return { vaccine: 'Dewormer', date: this.addDays(hatchedDate, 120) };
+    
     return { vaccine: 'Next dose coming soon', date: 'N/A' };
-  }
-  
+}
+
   cancelEdit() {
     this.isEditing = false;
     this.poultryIndex = null;

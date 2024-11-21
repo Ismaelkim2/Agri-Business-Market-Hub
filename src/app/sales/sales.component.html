@@ -1,22 +1,23 @@
 <app-sidebar></app-sidebar>
 <div class="main-container">
   <div class="expenses-table">
+
     <div class="header">
-      <div class="d-flex align-items-center back-icon" (click)="goBack()" title="Back">
-        <i class="fa fa-arrow-left"></i>
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div (click)="goBack()" style="cursor: pointer;">
+          <i class="fa fa-chevron-left mt-"2 title="back" style="cursor: pointer;"></i>
+        </div>
+        <div class="ms-4">
+          <h2 class="text-success">Farm Sales Records</h2>
+        </div>
       </div>
-      <h2 class="text-success ms-4">Farm Sales Records</h2>
-      <div class="filter-container">
-        <label for="filterInput">Filter by Item Sold:</label>
-        <input
-          type="text"
-          id="filterInput"
-          [(ngModel)]="filterText"
-          (ngModelChange)="filterSales()"
-          placeholder="Enter item name to filter..."
-        />
+
+      <div class="filter-container d-flex flex-column flex-sm-row align-items-center gap-3 mb-3">
+        <label for="filterInput" class="text-sm-start">Filter by Sales Type:</label>
+        <input type="text" id="filterInput" [(ngModel)]="filterText" (ngModelChange)="filterSales()" placeholder="Enter expense type to filter..." class="form-control">
       </div>
-      <button class="btn-open-modal" (click)="openSalesModal(salesModal)">+ Record Sales</button>
+
+      <button class="btn-open-modal text-light fw-bold" (click)="openSalesModal(salesModal)"> <i class="fa fa-plus"></i> Record Sales</button>
     </div>
 
     <table>

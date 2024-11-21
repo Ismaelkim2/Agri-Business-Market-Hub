@@ -77,10 +77,14 @@ export class EggsRecordListComponent implements OnInit {
   }
 
   updateChart(): void {
+    const sortedRecordsForChart = [...this.eggRecords].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+  
     this.chartData = [
       {
         name: 'Eggs',
-        series: this.eggRecords.map((record) => ({
+        series: sortedRecordsForChart.map((record) => ({
           name: new Date(record.date).toLocaleDateString(),
           value: record.eggsCount,
         })),
@@ -96,12 +100,6 @@ export class EggsRecordListComponent implements OnInit {
     this.currentRecord = { ...record };  
     this.isEditing = true;
   }
-
-
-  // closeEditModal(): void {
-  //   this.isEditing = false;
-  //   this.currentRecord = null;
-  // }
 
   closeEditModal(): void {
     this.isEditing = false;
