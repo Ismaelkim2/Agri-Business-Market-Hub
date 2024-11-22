@@ -3,6 +3,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
 import { ExpenseRecord, ExpenseService } from '../services/expense.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -28,6 +30,13 @@ export class ExpensesComponent {
 
   ngOnInit() {
     this.loadExpenses();
+  }
+
+  ngAfterViewInit(): void {
+    let tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   goBack(): void {

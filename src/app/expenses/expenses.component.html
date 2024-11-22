@@ -1,69 +1,86 @@
 <app-sidebar></app-sidebar>
 <div class="main-container">
   <div class="expenses-table">
-    
+
     <div class="header">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div (click)="goBack()">
-          <i class="fa fa-chevron-left mt-2" title="back" style="cursor: pointer;"></i>
+          <i class="fa fa-chevron-left mt-2" title="Back" style="cursor: pointer;"></i>
         </div>
         <div class="ms-4">
-          <h2 class="text-success">Farm Expenses Records</h2>
+          <h2 class="text-success fw-bold">Farm Expenses Records</h2>
         </div>
       </div>
 
-      <div class="filter-container d-flex flex-column flex-sm-row align-items-center gap-3 mb-3">
-        <label for="filterInput" class="text-sm-start">Filter by Expense Type:</label>
-        <input type="text" id="filterInput" [(ngModel)]="filterText" (ngModelChange)="filterExpenses()" placeholder="Enter expense type to filter..." class="form-control">
+      <div class="filter-container d-flex flex-row align-items-center justify-content-between gap-2 mb-3">
+        <div class="input-icon-container flex-grow-1">
+          <input 
+            type="text" 
+            id="filterInput" 
+            [(ngModel)]="filterText" 
+            (ngModelChange)="filterExpenses()" 
+            placeholder="Search expense type..." 
+            class="form-control" 
+            aria-label="Search expense type">
+          <i class="fa fa-search position-absolute search-icon"></i>
+        </div>
+        <button 
+          class="btn btn-success d-flex align-items-center justify-content-center gap-2 fw-bold btn-responsive"
+          (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record Expense" >
+          <i class="fa fa-plus"></i> Add Expense
+        </button>
       </div>
-
-      <button class="btn-open-modal text-light fw-bold" (click)="openExpenseModal(expenseModal)">  <i class="fa fa-plus"></i>  Record Expenses</button>
     </div>
 
-    <table class="table table-striped table-responsive">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Type of Expense</th>
-          <th>Expense Amount (Ksh)</th>
-          <th>Notes</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let expense of currentExpensesPage">
-          <td>{{ expense.date | date: 'longDate' }}</td>
-          <td>{{ expense.expenseType }}</td>
-          <td>{{ expense.amount | currency: 'KES' }}</td>
-          <td>{{ expense.notes }}</td>
-          <td class="action-icons">
-            <button (click)="onEdit(expense, expenseModal)" class="btn btn-link">
-              <i class="fa fa-edit text-secondary"></i>
-            </button>
-            <button class="ms-2 btn btn-link" (click)="onDeleteExpense(expense)">
-              <i class="fa fa-trash text-danger"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="table table-striped table-hover table-borderless">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Expense</th>
+            <th>Amount</th>
+            <th>Notes</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let expense of currentExpensesPage">
+            <td>{{ expense.date | date: 'mediumDate' }}</td>
+            <td>{{ expense.expenseType }}</td>
+            <td>{{ expense.amount | currency: 'KES' }}</td>
+            <td>{{ expense.notes }}</td>
+            <td class="action-icons text-center">
+              <button (click)="onEdit(expense, expenseModal)" class="btn btn-link p-0" data-bs-toggle="tooltip" title="Edit Sale" >
+                <i class="fa fa-edit text-secondary"></i>
+              </button>
+              <button class="ms-1 btn btn-link p-0" (click)="onDeleteExpense(expense)" data-bs-toggle="tooltip" title="Delete Sale" >
+                <i class="fa fa-trash text-danger"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="pagination-controls">
-      <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success">Previous</button>
+      <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn bg-success text-white">Previous</button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn bg-success">Next</button>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn bg-success text-white">Next</button>
     </div>
 
-    <div class="total-expenses">
+    <div class="total-expenses mt-3">
       <strong>Total Expenses: <span class="text-danger">{{ getTotalExpenses() | currency: 'KES' }}</span></strong>
     </div>
   </div>
+</div>
+
 
  
   <ng-template #expenseModal let-modal>
+    <div class="modal-content">
     <div class="modal-header bg-success">
       <h4 class="modal-title">Record Farm Expenses</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button type="button ms-3" class="close text-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -93,5 +110,6 @@
         <button type="submit" class="btn-submit bg-success w-100">Record Expense</button>
       </form>
     </div>
+  </div>
   </ng-template>
-</div>
+

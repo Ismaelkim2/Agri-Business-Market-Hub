@@ -9,14 +9,7 @@
   transition: margin-left 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .main-container {
-    margin-left: 0;
-    padding: 15px;
-  }
-}
-
-.expenses-table {
+.sales-table {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
@@ -42,13 +35,60 @@
   margin-right: 8px;
 }
 
+
 .filter-container {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
   flex-wrap: wrap;
+  gap: 10px; 
+  width: 100%; 
 }
+
+.filter-container input::placeholder {
+  font-style: italic;
+  color: #aaa;
+  text-align: center;
+}
+
+.input-icon-container {
+  position: relative;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.input-icon-container input {
+  padding-left: 40px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1rem;
+  pointer-events: none; 
+}
+
+input.form-control {
+  padding-left: 40px; 
+  font-size: 0.9rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #80ffb9; 
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 149, 0.25);
+}
+
+
+button.btn-responsive {
+  white-space: nowrap; 
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+}
+
 
 .btn-open-modal,
 .btn-submit,
@@ -72,26 +112,41 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 1rem;
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.table-responsive {
+  width: 100%;
 }
 
 thead th {
+  font-weight: bold;
   background-color: #28a745;
   color: white;
-  padding: 12px;
+  padding: 10px;
   text-align: left;
-  border-bottom: 2px solid #218838;
 }
 
 tbody td {
-  padding: 12px;
+  padding: 6px;
   border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 
 .action-button {
   border: none;
@@ -132,7 +187,14 @@ tbody tr:nth-child(even) {
 }
 
 .modal-content {
-  padding: 15px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal.show .modal-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .form-group {
@@ -165,7 +227,10 @@ input, .filter-container input {
     margin: 0 auto;
   }
 
-  .filter-container,
+  .filter-container {
+    flex-direction: row; 
+    justify-content: space-between;
+  }
  
   .total-expenses {
     text-align: center;
@@ -195,5 +260,12 @@ input, .filter-container input {
   .action-button {
     font-size: 1rem;     
     padding: 8px;       
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    margin-left: 0;
+    padding: 15px;
   }
 }

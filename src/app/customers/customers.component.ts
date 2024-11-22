@@ -39,6 +39,10 @@ export class CustomersComponent implements OnInit {
         });
     }
 
+    get totalCustomers(){
+        return this.customers.length;
+    }
+
 
     addCustomer() {
         this.router.navigate(['/add-customer']); 

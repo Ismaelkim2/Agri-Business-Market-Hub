@@ -1,7 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import {  SalesRecord, SalesService } from '../services/sales.service';
+import { SalesRecord, SalesService } from '../services/sales.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-sales',
@@ -36,22 +38,47 @@ export class SalesComponent implements OnInit {
     this.loadSales();
   }
 
+  ngAfterViewInit(): void {
+    let tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }
+
   goBack() {
+    this.modalService.dismissAll();
     this.location.back();
   }
 
   openSalesModal(content: any) {
+    if (!this.editMode) {
+      this.resetForm();
+    }
+  
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       backdrop: 'static',
       keyboard: false,
     }).result.finally(() => {
-      this.renderer.removeAttribute(document.querySelector('app-sidebar'), 'aria-hidden');
-      this.renderer.removeAttribute(document.querySelector('.main-container'), 'aria-hidden');
+      this.resetAriaAttributes();
     });
-
-    this.renderer.setAttribute(document.querySelector('app-sidebar'), 'aria-hidden', 'true');
-    this.renderer.setAttribute(document.querySelector('.main-container'), 'aria-hidden', 'true');
+  
+    this.setAriaAttributes();
+  }
+  
+  
+  private setAriaAttributes() {
+    const sidebar = document.querySelector('app-sidebar');
+    const mainContainer = document.querySelector('.main-container');
+    if (sidebar) this.renderer.setAttribute(sidebar, 'aria-hidden', 'true');
+    if (mainContainer) this.renderer.setAttribute(mainContainer, 'aria-hidden', 'true');
+  }
+  
+  private resetAriaAttributes() {
+    const sidebar = document.querySelector('app-sidebar');
+    const mainContainer = document.querySelector('.main-container');
+    if (sidebar) this.renderer.removeAttribute(sidebar, 'aria-hidden');
+    if (mainContainer) this.renderer.removeAttribute(mainContainer, 'aria-hidden');
   }
 
   saveSale() {
@@ -79,6 +106,7 @@ export class SalesComponent implements OnInit {
       } else {
         this.createSale(saleRecord);
       }
+      this.modalService.dismissAll();  
     }
   }
 
@@ -157,10 +185,10 @@ export class SalesComponent implements OnInit {
   }
 
   onEdit(index: number, content: any): void {
-    this.newSale = { ...this.salesList[index] };
+    this.newSale = { ...this.salesList[index] }; 
     this.editMode = true;
     this.editIndex = index;
-    this.openSalesModal(content);
+    this.openSalesModal(content); 
   }
 
   deleteSale(sale: SalesRecord): void {
@@ -186,7 +214,7 @@ export class SalesComponent implements OnInit {
     return item.id;
   }
 
-  resetForm() {
+  private resetForm() {
     this.newSale = {
       date: '',
       birdType: '',
