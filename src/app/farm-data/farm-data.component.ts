@@ -5,12 +5,32 @@ import { BirdRecord, DailyRecord, RecordsService, WeeklySummary } from '../servi
 import { DataServiceService } from '../data-service.service';
 import { Router } from '@angular/router';
 import { format } from 'date-fns';
+import {
+  trigger,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-farm-data',
   templateUrl: './farm-data.component.html',
   styleUrls: ['./farm-data.component.css'],
+  animations: [
+    trigger('modalAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms 0ms', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('200ms 0ms', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
+
 export class FarmDataComponent implements OnInit, OnDestroy {
   formData: any = {};
   isEditMode: boolean = false;
@@ -63,6 +83,14 @@ export class FarmDataComponent implements OnInit, OnDestroy {
 
   goBack(){
     this.location.back();
+  }
+
+  
+  ngAfterViewInit(): void {
+    let tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   onSubmit() {
@@ -238,10 +266,15 @@ export class FarmDataComponent implements OnInit, OnDestroy {
     );
   }
   
+  openModal() {
+    console.log('Opening the modal...');
+    this.isModalOpen = true;
+  }
   
 
   toggleModal() {
     this.isModalOpen = !this.isModalOpen; 
+    console.log('Modal is now', this.isModalOpen ? 'open' : 'closed');
   }
 
 

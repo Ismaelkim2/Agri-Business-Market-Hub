@@ -36,15 +36,76 @@
   border-top-right-radius: 12px;
 }
 
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
 .back-icon i {
   font-size: 1.2rem;
   cursor: pointer;
+  margin-right: 8px;
 }
 
-.filter-input {
-  max-width: 200px;
-  border-radius: 4px;
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; 
+  width: 100%; 
 }
+
+.filter-container input::placeholder {
+  font-style: italic;
+  color: #aaa;
+  text-align: center;
+}
+
+.input-icon-container {
+  position: relative;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.input-icon-container input {
+  padding-left: 40px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1rem;
+  pointer-events: none; 
+}
+
+input.form-control {
+  padding-left: 40px; 
+  font-size: 0.9rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #80ffb9; 
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 149, 0.25);
+}
+
+
+button.btn-responsive {
+  white-space: nowrap; 
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+}
+
+
 
 .table-responsive {
   overflow-x: auto;
@@ -55,6 +116,16 @@
   vertical-align: middle;
   font-size: 0.85rem;
 }
+
+.table th
+ {
+  font-weight: bold;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
 
 .add-record-btn,
 .btn {
@@ -82,26 +153,76 @@
   margin-top: 8px;
 }
 
+
 .modal-content {
-  border-radius: 8px;
-}
+  border-radius: 12px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} 
 
 .modal-header {
-  background-color: #22c922;
-  color: #ffffff;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  background-color: #28a745;
+  color: white;
 }
 
 .modal-title {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 .close {
-  color: #ffffff;
+  color: white;
+  font-size: 1.2rem;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal {
+  display: none;
+  opacity: 0;
+}
+
+
+.btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: scale(1.05);
 }
 
 @media (max-width: 991px) {
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .filter-container {
+    flex-direction: row; 
+    justify-content: space-between;
+  }
+
   .layout {
     flex-direction: column;
   }
@@ -109,6 +230,15 @@
   .main-content {
     margin-left: 0;
     padding: 15px;
+  }
+
+  .modal-dialog {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .modal-content {
+    border-radius: 8px;
   }
 
   .pagination-controls {
@@ -125,12 +255,22 @@
 @media (max-width: 575px) {
   .filter-input {
     max-width: 100%;
+
+  }
+
+  .modal-dialog {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .modal-content {
+    border-radius: 8px;
   }
 
   .btn,
   .add-record-btn {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .back-icon i {
