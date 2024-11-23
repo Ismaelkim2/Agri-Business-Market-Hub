@@ -3,21 +3,22 @@ import { RecordsService } from '../services/records.service';
 import { ExpenseService, ExpenseRecord } from '../services/expense.service';
 import { SalesRecord, SalesService } from '../services/sales.service';
 import { MortalitiesService, Mortality } from '../services/mortalities.service';
-import { Chart } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
-  styleUrls: ['./records.component.css']
+  styleUrls: ['./records.component.css'],
 })
 export class RecordsComponent implements OnInit {
+  salesExpenseChart: any;
   showSales = true;
   showExpenses = true;
   showProfit = true;
   showTotalBirds = true;
   salesProgress: number = 0;
+  expenseProgress: number = 0;
   ProfitProgress: number = 0;
-
   monthlySales: { [month: number]: number } = {};
   monthlyExpenses: { [month: number]: number } = {};
   totalSalesAmount = 0;
@@ -31,19 +32,24 @@ export class RecordsComponent implements OnInit {
   selectedYear = new Date().getFullYear();
   years: number[] = [];
   selectedMonth = '';
-  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
   currentPage = 1;
   itemsPerPage = 5;
   noDataForYear = false;
 
-  salesTarget: number = 50000;  
+  salesTarget: number = 50000;
 
   constructor(
     private recordsService: RecordsService,
     private expenseService: ExpenseService,
     private salesService: SalesService,
     private mortalitiesService: MortalitiesService
-  ) {}
+  ) {
+    Chart.register(...registerables);
+  }
 
   ngOnInit(): void {
     this.loadYears();
@@ -54,25 +60,142 @@ export class RecordsComponent implements OnInit {
     this.calculateProgress();
   }
 
+
+  ngAfterViewInit(): void {
+    this.renderChart();
+  }
+
+  renderChart(): void {
+    const canvas = document.getElementById('salesExpenseChart') as HTMLCanvasElement;
+
+    if (!canvas) {
+      console.error('Canvas element not found.');
+      return;
+    }
+
+    this.salesExpenseChart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: this.months,
+        datasets: [
+          {
+            label: 'Sales',
+            data: this.formatChartData(this.monthlySales),
+            backgroundColor: 'rgba(40, 167, 69, 0.8)',
+          },
+          {
+            label: 'Expenses',
+            data: this.formatChartData(this.monthlyExpenses),
+            backgroundColor: 'rgba(220, 53, 69, 0.8)',
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }
+
+  updateChart(): void {
+    if (this.salesExpenseChart) {
+      this.salesExpenseChart.data.datasets[0].data = this.formatChartData(this.monthlySales);
+      this.salesExpenseChart.data.datasets[1].data = this.formatChartData(this.monthlyExpenses);
+      this.salesExpenseChart.update();
+    } else {
+      this.renderChart();
+    }
+  }
+
+  formatChartData(data: { [month: number]: number }): number[] {
+    return Array.from({ length: 12 }, (_, i) => data[i + 1] || 0); // Months are 1-indexed
+  }
+
   calculateProgress(): void {
     if (this.salesTarget > 0) {
       this.salesProgress = (this.totalSalesAmount / this.salesTarget) * 100;
-      if (this.salesProgress > 100) {
-        this.salesProgress = 100;
-      }
-    } else {
-      this.salesProgress = 0;
+      this.salesProgress = Math.min(this.salesProgress, 100);
+    }
+
+
+    if (this.salesTarget > 0) {
+      this.expenseProgress = (this.totalExpensesAmount / this.salesTarget) * 100;
+      this.salesProgress = Math.min(this.salesProgress, 100);
     }
 
     const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
     if (totalAmount > 0) {
       this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
-      if (this.ProfitProgress > 100) {
-        this.ProfitProgress = 100;
-      }
-    } else {
-      this.ProfitProgress = 0;
+      this.ProfitProgress = Math.min(this.ProfitProgress, 100);
     }
+  }
+
+  fetchSalesRecords(): void {
+    this.salesService.SalesRecord$.subscribe(
+      (records) => {
+        this.salesList = records;
+        this.calculateMonthlySales();
+        this.updateChart();
+      },
+      (error) => console.error('Error fetching sales records:', error)
+    );
+  }
+
+  fetchExpenseRecords(): void {
+    this.expenseService.expenseRecords$.subscribe(
+      (records) => {
+        this.expenseRecords = records;
+        this.calculateMonthlyExpenses();
+        this.updateChart();
+      },
+      (error) => console.error('Error fetching expense records:', error)
+    );
+  }
+
+  calculateMonthlySales(): void {
+    this.monthlySales = {};
+    this.totalSalesAmount = 0;
+
+    this.salesList.forEach((record) => {
+      const date = new Date(record.date);
+      if (date.getFullYear() === this.selectedYear) {
+        const month = date.getMonth() + 1;
+        this.monthlySales[month] = (this.monthlySales[month] || 0) + record.sales;
+        this.totalSalesAmount += record.sales;
+      }
+    });
+
+    console.log('Monthly sales calculated:', this.monthlySales);
+    this.calculateProgress();
+  }
+
+  calculateMonthlyExpenses(): void {
+    this.monthlyExpenses = {};
+    this.totalExpensesAmount = 0;
+
+    this.expenseRecords.forEach((record) => {
+      const date = new Date(record.date);
+      if (date.getFullYear() === this.selectedYear) {
+        const month = date.getMonth() + 1;
+        this.monthlyExpenses[month] = (this.monthlyExpenses[month] || 0) + record.amount;
+        this.totalExpensesAmount += record.amount;
+      }
+    });
+
+    console.log('Monthly expenses calculated:', this.monthlyExpenses);
+    this.calculateProgress();
   }
 
   toggleVisibility(card: string) {
@@ -93,8 +216,8 @@ export class RecordsComponent implements OnInit {
         console.warn('Unknown card:', card);
     }
   }
-  
-  
+
+
   loadYears(): void {
     const currentYear = new Date().getFullYear();
     this.years = Array.from({ length: 5 }, (_, i) => currentYear - i);
@@ -105,80 +228,32 @@ export class RecordsComponent implements OnInit {
       (records) => {
         this.birdRecords = records;
         this.totalBirds = this.birdRecords.reduce((sum, record) => sum + (record.count || 0), 0);
+        console.log('Total birds calculated:', this.totalBirds);
       },
       (error) => console.error('Error fetching bird records:', error)
     );
   }
 
-  fetchMortalities(): void { 
+  fetchMortalities(): void {
     this.mortalitiesService.getMortalities().subscribe(
       (records) => {
         this.mortalityRecords = records;
         this.totalMortalities = this.mortalityRecords.reduce((sum, record) => sum + (record.numberOfMortalities || 0), 0);
+        console.log('Total mortalities calculated:', this.totalMortalities);
       },
       (error) => console.error('Error fetching mortality records:', error)
     );
   }
 
-  fetchSalesRecords(): void {
-    this.salesService.SalesRecord$.subscribe(
-      (records) => {
-        this.salesList = records;
-        this.calculateMonthlySales(); 
-      },
-      (error) => console.error('Error fetching sales records:', error)
-    );
-  }
-
-
-  fetchExpenseRecords(): void {
-    this.expenseService.expenseRecords$.subscribe(
-      (records) => {
-        this.expenseRecords = records;
-        this.calculateMonthlyExpenses();
-      },
-      (error) => console.error('Error fetching expense records:', error)
-    );
-  }
 
   onYearChange(): void {
     this.calculateMonthlySales();
     this.calculateMonthlyExpenses();
+    this.updateChart();
   }
 
-  calculateMonthlySales(): void {
-    this.monthlySales = {};
-    this.totalSalesAmount = 0;
-    this.salesList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  
-    this.salesList.forEach(record => {
-      const date = new Date(record.date);
-      if (date.getFullYear() === this.selectedYear) {
-        const month = date.getMonth() + 1;
-        this.monthlySales[month] = (this.monthlySales[month] || 0) + record.sales;
-        this.totalSalesAmount += record.sales;
-      }
-    });
-    console.log(this.monthlySales); 
-    this.calculateProgress();
-  }
-  
-  calculateMonthlyExpenses(): void {
-    this.monthlyExpenses = {};
-    this.totalExpensesAmount = 0; 
-    this.expenseRecords.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  
-    this.expenseRecords.forEach(record => {
-      const date = new Date(record.date);
-      if (date.getFullYear() === this.selectedYear) {
-        const month = date.getMonth() + 1;
-        this.monthlyExpenses[month] = (this.monthlyExpenses[month] || 0) + record.amount;
-        this.totalExpensesAmount += record.amount; 
-      }
-    });
-    this.calculateProgress();
-  }
-  
+
+
   getFilteredMonthlyRecords(): string[] {
     const filteredMonths = this.months.filter(month => {
       const monthIndex = this.getMonthIndex(month) + 1;

@@ -1,92 +1,94 @@
+
 <app-sidebar></app-sidebar>
 
 <div class="container-fluid main-content">
-  <div class="d-flex flex-wrap justify-content-start mb-5">
-
-    <div class="card summary-card me-2 mt-4 mb-1">
-      <div class="card-header bg-gradient-primary text-center text-white">
-        <strong class="fs-5"><i class="fa fa-money-bill-wave"></i> Sales</strong>
-      </div>
-      <div class="card-body bg-white text-center position-relative">
-        <h5 class="my-2">
-          Total Sales
-          <button (click)="toggleVisibility('sales')" class="toggle-btn">
-            <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
-          </button>
-        </h5>
-        <div>
-          <strong *ngIf="showSales" class="display-6 text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showSales" class="text-muted">----</strong>
-        </div>
-        <div class="progress mt-3">
-          <div class="progress-bar bg-success"
-           [style.width.%]="salesProgress"
-           aria-valuemin="0"
-          aria-valuemax="100">
+  <div class="grid-container">
+  
+      <div class="card summary-card">
+        <div class="card-body bg-white text-center position-relative">
+          <h5 class="my-2">
+            Sales
+            <button (click)="toggleVisibility('sales')" class="toggle-btn">
+              <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
+            </button>
+          </h5>
+          <div>
+            <strong *ngIf="showSales" class="display-6 text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
+            <strong *ngIf="!showSales" class="text-muted">----</strong>
           </div>
-        </div>
-        <div class="text-center mt-2">
-          <strong>{{ salesProgress | number: '1.0-0' }}%</strong>
-        </div>
-        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'sales']">
-          View More <i class="fa fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-
-    <div class="card summary-card ms-0 me-2 mt-4 mb-1">
-      <div class="card-header bg-danger text-center text-white">
-        <strong class="fs-5"><i class="fa fa-bomb"></i> Expenses</strong>
-      </div>
-      <div class="card-body bg-light text-center position-relative">
-        <h5 class="my-2">
-          Amount:
-          <button (click)="toggleVisibility('expenses')" class="toggle-btn">
-            <i class="fa" [ngClass]="{ 'fa-eye': showExpenses, 'fa-eye-slash': !showExpenses }"></i>
+          <div class="progress mt-3">
+            <div class="progress-bar bg-success" [style.width.%]="salesProgress" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="text-center mt-2">
+            <strong>{{ salesProgress | number: '1.0-0' }}%</strong>
+          </div>
+          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'sales']">
+            View More <i class="fa fa-arrow-right"></i>
           </button>
-          <strong *ngIf="showExpenses" class="display-6 text-danger">{{ totalExpensesAmount | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showExpenses" class="text-muted">----</strong>
-        </h5>
-        <button class="btn btn-outline-primary mt-5" [routerLink]="['/details', 'expense']">
-          View More <i class="fa fa-arrow-right"></i>
-        </button>
+        </div>
       </div>
-    </div>
-
  
-    <div class="card summary-card me-2 mt-4 mb-1">
-      <div class="card-header bg-success text-center text-white">
-        <strong class="fs-4"><i class="fa fa-list"></i> Profit</strong>
-      </div>
-      <div class="card-body bg-light text-center">
-        <h5 class="my-2">
-          Profit Accumulated:
-          <button (click)="toggleVisibility('profit')" class="toggle-btn mt-5">
-            <i class="fa" [ngClass]="{ 'fa-eye': showProfit, 'fa-eye-slash': !showProfit }"></i>
-          </button>
-          <strong *ngIf="showProfit" class="display-6 text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
-          <strong *ngIf="!showProfit" class="text-muted">----</strong>
-        </h5>
-        <div class="progress mt-3">
-          <div class="progress-bar bg-success" [style.width.%]="ProfitProgress" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <div class="text-center mt-2">
-          <strong>{{ ProfitProgress | number: '1.0-0' }}%</strong>
-        </div>
-        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'profit']">
-          View More <i class="fa fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
+    <!-- Card 2: Expenses -->
+      <div class="card summary-card">
+        <div class="card-body bg-light text-center position-relative">
+          <h5 class="my-2">
+            Expense
+            <button (click)="toggleVisibility('expenses')" class="toggle-btn">
+              <i class="fa" [ngClass]="{ 'fa-eye': showExpenses, 'fa-eye-slash': !showExpenses }"></i>
+            </button>
+          </h5>
+            <div>
+            <strong *ngIf="showExpenses" class="display-6 text-danger mt-4">{{ totalExpensesAmount | currency: 'Kes.' }}</strong>
+            <strong *ngIf="!showExpenses" class="text-muted">----</strong>
+          </div>
+          
 
-    <div class="card summary-card me-1 mt-4 mb-1">
-      <div class="card-header bg-success text-center text-white">
-        <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
+          <div class="progress mt-3">
+            <div class="progress-bar bg-danger" [style.width.%]="salesProgress" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="text-center mt-2">
+            <strong>{{ expenseProgress | number: '1.0-0' }}%</strong>
+          </div>
+          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'expense']">
+            View More <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
+  
+
+    <!-- Card 3: Profit -->
+      <div class="card summary-card">
+        <div class="card-body bg-light text-center">
+          <h5 class="my-2">
+            Profit
+            <button (click)="toggleVisibility('profit')" class="toggle-btn">
+              <i class="fa" [ngClass]="{ 'fa-eye': showProfit, 'fa-eye-slash': !showProfit }"></i>
+            </button>
+          </h5>
+           <div> <strong *ngIf="showProfit" class="display-6 text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
+            <strong *ngIf="!showProfit" class="text-muted">----</strong>
+          </div>
+         
+          <div class="progress mt-3">
+            <div class="progress-bar bg-success" [style.width.%]="ProfitProgress" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="text-center mt-2">
+            <strong>{{ ProfitProgress | number: '1.0-0' }}%</strong>
+          </div>
+          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'profit']">
+            View More <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+  
+
+    <div class="card summary-card">
+      <!-- <div class="card-header bg-success text-center text-white">
+        <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
+      </div> -->
       <div class="card-body bg-light text-center">
         <div class="d-flex justify-content-between">
-          <div><h5>Breed/Type: Sasso</h5></div>
+          <div><h5 class="my-2">Birds</h5></div>
           <div>
             <button (click)="toggleVisibility('totalBirds')" class="toggle-btn mt-5">
               <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
@@ -102,7 +104,7 @@
         <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
           View More <i class="fa fa-arrow-right"></i>
         </button>
-        <div class="mt-3">
+        <div class="mt-3 vid">
           <button class="btn btn-outline-secondary me-2" routerLink="/product-list" >
             View Images/Videos <i class="fa fa-image"></i>
           </button>
@@ -112,13 +114,82 @@
         </div>
       </div>
     </div>
+ 
     
+    <div class="card summary-card">
+      <!-- <div class="card-header bg-success text-center text-white">
+        <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
+      </div> -->
+      <div class="card-body bg-light text-center">
+        <div class="d-flex justify-content-between">
+          <div><h5 class="my-2">mortality</h5></div>
+          <div>
+            <button (click)="toggleVisibility('totalBirds')" class="toggle-btn mt-5">
+              <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
+            </button>
+          </div>
+        </div>
+    
+        <h5 class="mt-1">
+          <strong *ngIf="showTotalBirds" class="display-6">No: 3% <i class="fa fa-check-to-slot text-success"></i></strong>
+          <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
+        </h5>
+  
+        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+          View More <i class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+ 
+    
+    <div class="card summary-card">
+      <!-- <div class="card-header bg-success text-center text-white">
+        <strong class="fs-4"><i class="fa fa-dove"></i> Total Birds</strong>
+      </div> -->
+      <div class="card-body bg-light text-center">
+        <div class="d-flex justify-content-between">
+          <div><h5 class="my-2">Customers</h5></div>
+          <div>
+            <button (click)="toggleVisibility('totalBirds')" class="toggle-btn mt-5">
+              <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
+            </button>
+          </div>
+        </div>
+    
+        <h5 class="mt-1">
+          <strong *ngIf="showTotalBirds" class="display-6">No: 4 <i class="fa fa-check-to-slot text-success"></i></strong>
+          <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
+        </h5>
+  
+        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+          View More <i class="fa fa-arrow-right"></i>
+        </button>
+    
+      </div>
+    </div>
+  </div>
+
+
 
 
   <div class="text-success" style="max-width: 1110px;">
     <hr>
   </div>
 
+
+<!-- chart -->
+<div class="row mt-4" >
+  <div class="col-12">
+    <div class="card shadow-lg">
+      <div class="card-body">
+        <canvas id="salesExpenseChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
   <div class="container-fluid mt-4">
     <div class="d-flex align-items-center mb-2" style="max-width: 1110px;">
       <h3 class="text-success fw-bold mt-2">Financial Overview</h3>
@@ -173,4 +244,4 @@
       <button (click)="nextPage()" class="btn btn-outline-success">Next</button>
     </div>
   </div>
-</div>
+</div> 
