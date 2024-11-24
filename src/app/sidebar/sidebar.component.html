@@ -114,6 +114,44 @@
 
 
 
+<nav class="bottom-navbar d-lg-none">
+  <ul class="nav justify-content-around align-items-center m-0 p-0">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/breed">
+        <i class="fa fa-dove"></i>
+        <span>Breed</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/eggs-records">
+        <i class="fa fa-egg"></i>
+        <span>Eggs</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/sales">
+        <i class="fa fa-money-bill"></i>
+        <span>Sales</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/records">
+        <i class="fa fa-book"></i>
+        <span>Records</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/expenses">
+        <i class="fa fa-chart-pie"></i>
+        <span>Expenses</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+
+
 <div class="sidebar" [ngClass]="{'open': isSidebarOpen}" *ngIf="isLargeScreen || isSidebarOpen" >
   <div class="user-info d-flex align-items-center">
     <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
