@@ -100,7 +100,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #ffffff; /* White background */
+  background-color: #228B22;
   border-top: 1px solid #ddd; /* Light border */
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Shadow for elevation */
   z-index: 1030; /* Above other elements */
@@ -117,7 +117,7 @@
 }
 
 .bottom-navbar .nav-link {
-  color: #666;
+  color: #ffffff;
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
@@ -136,7 +136,7 @@
 
 .bottom-navbar .nav-link:hover,
 .bottom-navbar .nav-link.active {
-  color: #007bff; /* Highlight color */
+  color: #007bff; 
 }
 
 
