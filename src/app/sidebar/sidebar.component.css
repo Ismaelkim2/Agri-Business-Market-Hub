@@ -18,7 +18,7 @@
 .d-flex {
   display: flex;
   align-items: center;
-  flex-wrap: nowrap; /* Prevent wrapping */
+  flex-wrap: nowrap; 
 }
 
 
@@ -47,12 +47,11 @@
 }
 
 .vertical-line {
-  height: 60px;
+  height: 100%;
   width: 2px; 
   background-color: #ffffff; 
   margin: 0 15px; 
   z-index: 1030;
-  border: 1px solid red;
   border: none;
   display: block;
 }
@@ -237,8 +236,8 @@
   }
 
   .vertical-line {
-    height: 20px; /* Smaller height */
-    margin: 0 6px; /* Adjust margins */
+    height: 60px; 
+    margin: 0 6px; 
   }
 
   .btn-sm-sm {
