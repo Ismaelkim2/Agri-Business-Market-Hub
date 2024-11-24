@@ -6,7 +6,21 @@
   width: 100%;
   z-index: 1030;
   transition: background-color 0.3s;
+  height: auto;
 }
+
+.navbar .d-flex {
+  height: 60px; 
+  display: flex;
+  align-items: center;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+
 
 .navbar-nav{
   display: none;
@@ -31,6 +45,18 @@
 .logo-image:hover {
   transform: scale(1.1);
 }
+
+.vertical-line {
+  height: 60px;
+  width: 2px; 
+  background-color: #ffffff; 
+  margin: 0 15px; 
+  z-index: 1030;
+  border: 1px solid red;
+  border: none;
+  display: block;
+}
+
 
 .text-white {
   color: white;
@@ -208,6 +234,11 @@
 @media (max-width: 576px) {
   .notifications {
     text-align: right;
+  }
+
+  .vertical-line {
+    height: 20px; /* Smaller height */
+    margin: 0 6px; /* Adjust margins */
   }
 
   .btn-sm-sm {

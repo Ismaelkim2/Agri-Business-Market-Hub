@@ -177,7 +177,7 @@
   </div>
 
   <div class="chart-title text-center mt-4">
-    <h3 class="fw-bold text-primary">Monthly Production Trends</h3>
+    <h4 class="fw-bold text-primary align-items-center">Monthly Production Trends</h4>
     <p class="text-muted">Visual representation of Monthly production over time</p>
   </div>
 <div class="row mt-2" >
@@ -192,7 +192,7 @@
 
 <div class="container-fluid mt-4">
   <div class="d-flex flex-column align-items-start align-items-md-center mb-3">
-    <h3 class="text-primary fw-bold text-center">Financial Overview</h3>
+    <h3 class="text-primary fw-bold text-center align-items-center">Financial Overview</h3>
     <div class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center w-100 mt-2 mt-md-0">
       <select [(ngModel)]="selectedYear" (change)="onYearChange()" class="form-select me-2 mb-2 mb-md-0">
         <option *ngFor="let year of years" [value]="year">{{ year }}</option>

@@ -72,27 +72,51 @@ export class RecordsComponent implements OnInit {
 
   renderChart(): void {
     const canvas = document.getElementById('salesExpenseChart') as HTMLCanvasElement;
-
+  
     if (!canvas) {
       console.error('Canvas element not found.');
       return;
     }
-
+  
     this.salesExpenseChart = new Chart(canvas, {
       type: 'bar',
       data: {
         labels: this.months,
         datasets: [
           {
-            label: 'Sales',
+            label: 'Sales (Bar)',
+            type: 'bar',
             data: this.formatChartData(this.monthlySales),
             backgroundColor: 'rgba(40, 167, 69, 0.8)',
+            // yAxisID: 'y', 
           },
+          // {
+          //   label: 'Sales (Line)',
+          //   type: 'line',
+          //   data: this.formatChartData(this.monthlySales),
+          //   borderColor: 'rgba(40, 167, 69, 1)',
+          //   borderWidth: 2,
+          //   fill: false,
+          //   order: 2,
+          //   yAxisID: 'y', 
+          // },
           {
-            label: 'Expenses',
+            label: 'Expenses (Bar)',
+            type: 'bar',
             data: this.formatChartData(this.monthlyExpenses),
             backgroundColor: 'rgba(220, 53, 69, 0.8)',
+            // yAxisID: 'y1', 
           },
+          // {
+          //   label: 'Expenses (Line)',
+          //   type: 'line',
+          //   data: this.formatChartData(this.monthlyExpenses),
+          //   borderColor: 'rgba(220, 53, 69, 1)',
+          //   borderWidth: 2,
+          //   fill: true,
+          //   order: 2,
+          //   yAxisID: 'y1', 
+          // },
         ],
       },
       options: {
@@ -108,11 +132,20 @@ export class RecordsComponent implements OnInit {
           },
           y: {
             beginAtZero: true,
+            position: 'left',
+          },
+          y1: {
+            beginAtZero: true,
+            position: 'right',
+            grid: {
+              drawOnChartArea: false,
+            },
           },
         },
       },
     });
   }
+  
 
   updateChart(): void {
     if (this.salesExpenseChart) {
