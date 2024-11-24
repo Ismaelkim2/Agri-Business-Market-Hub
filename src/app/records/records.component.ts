@@ -4,6 +4,7 @@ import { ExpenseService, ExpenseRecord } from '../services/expense.service';
 import { SalesRecord, SalesService } from '../services/sales.service';
 import { MortalitiesService, Mortality } from '../services/mortalities.service';
 import { Chart, registerables } from 'chart.js';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-records',
@@ -42,11 +43,14 @@ export class RecordsComponent implements OnInit {
 
   salesTarget: number = 50000;
 
+  customers: any[] = [];
+
   constructor(
     private recordsService: RecordsService,
     private expenseService: ExpenseService,
     private salesService: SalesService,
-    private mortalitiesService: MortalitiesService
+    private mortalitiesService: MortalitiesService,
+    private customerService: CustomerService
   ) {
     Chart.register(...registerables);
   }
@@ -58,6 +62,7 @@ export class RecordsComponent implements OnInit {
     this.fetchTotalBirds();
     this.fetchMortalities();
     this.calculateProgress();
+    this.loadCustomers();
   }
 
 
@@ -244,6 +249,19 @@ export class RecordsComponent implements OnInit {
       (error) => console.error('Error fetching mortality records:', error)
     );
   }
+
+  loadCustomers() {
+    this.customerService.getCustomers().subscribe(data => {
+        this.customers = data.map(customer => ({
+            ...customer
+           
+        }));
+    });
+}
+
+  get totalCustomers(){
+    return this.customers.length;
+}
 
 
   onYearChange(): void {
