@@ -49,8 +49,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 4px;
+  margin-bottom: 2px;
 }
 
 .filter-container {

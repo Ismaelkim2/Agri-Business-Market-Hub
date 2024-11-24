@@ -4,7 +4,8 @@
 
       <div class="d-flex align-items-center ms-n5 me-1" style="width: 100%;max-width: 380px;">
         <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon position-relative"></span>
+          <h6 style="color: aliceblue; position:absolute;" class="me-5">Menu</h6>
         </button>
         
         <div class="logo d-flex align-items-center " >
@@ -117,27 +118,29 @@
 <nav class="bottom-navbar d-lg-none">
   <ul class="nav justify-content-around align-items-center m-0 p-0">
     <li class="nav-item">
-      <a class="nav-link" routerLink="records">
+      <a class="nav-link" routerLink="/records">
         <i class="fa fa-house"></i>
         <span>Home</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/eggs-records-list">
+      <a class="nav-link" routerLink="/eggs-record-list">
         <i class="fa fa-egg"></i>
         <span>Eggs</span>
       </a>
     </li>
+   
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/farm-data">
+        <i class="fa fa-book"></i>
+        <span>Records</span>
+      </a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" routerLink="/sales">
         <i class="fa fa-money-bill"></i>
         <span>Sales</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/records">
-        <i class="fa fa-book"></i>
-        <span>Records</span>
       </a>
     </li>
     <li class="nav-item">

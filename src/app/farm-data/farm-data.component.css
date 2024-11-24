@@ -23,12 +23,12 @@
 .card {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 .card-header {
   font-size: 1.25rem;
-  padding: 15px;
+  padding: 8px;
   /* background-color: #22c922; */
   background-color: rgb(233, 231, 231);
   color: #ffffff;
@@ -41,8 +41,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 2px;
+  gap: 2px;
+  margin-bottom: 0;
 }
 
 .back-icon i {

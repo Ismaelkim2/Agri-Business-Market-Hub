@@ -24,13 +24,20 @@
             aria-label="Search expense type">
           <i class="fa fa-search position-absolute search-icon"></i>
         </div>
-        <button 
-          class="btn btn-success d-flex align-items-center justify-content-center gap-2 fw-bold btn-responsive"
-          (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record Expense" >
-          <i class="fa fa-plus"></i> Add Expense
-        </button>
+        <div class="d-flex justify-content-center align-items-center max-width-100 col-sm-12">
+          <button 
+            class="btn btn-success d-flex align-items-center justify-content-center gap-1 fw-bold btn-responsive btn-lg"
+            (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record new sales">
+            <i class="fa fa-plus"></i> Record Expense
+          </button>
+        </div>
       </div>
     </div>
+
+    <div class="text-success fw-bold" style="max-width: 100%; height: 8px;">
+      <hr class="fw-bold text-success">
+    </div>
+
 
     <div class="table-container">
       <table class="table table-striped table-hover table-borderless">
