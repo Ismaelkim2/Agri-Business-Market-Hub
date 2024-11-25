@@ -21,6 +21,7 @@
               <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
             </button>
           </h5>
+          <div><hr></div>
           <div>
             <strong *ngIf="showSales" class="display-6 text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
             <strong *ngIf="!showSales" class="text-muted">----</strong>
@@ -31,9 +32,9 @@
           <div class="text-center mt-2">
             <strong>{{ salesProgress | number: '1.0-0' }}%</strong>
           </div>
-          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'sales']">
+          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'sales']">
             View More <i class="fa fa-arrow-right"></i>
-          </button>
+          </button> -->
         </div>
       </div>
  
@@ -46,6 +47,7 @@
               <i class="fa" [ngClass]="{ 'fa-eye': showExpenses, 'fa-eye-slash': !showExpenses }"></i>
             </button>
           </h5>
+          <div><hr></div>
             <div>
             <strong *ngIf="showExpenses" class="display-6 text-danger mt-4">{{ totalExpensesAmount | currency: 'Kes.' }}</strong>
             <strong *ngIf="!showExpenses" class="text-muted">----</strong>
@@ -58,9 +60,9 @@
           <div class="text-center mt-2">
             <strong>{{ expenseProgress | number: '1.0-0' }}%</strong>
           </div>
-          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'expense']">
+          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'expense']">
             View More <i class="fa fa-arrow-right"></i>
-          </button>
+          </button> -->
         </div>
       </div>
   
@@ -74,6 +76,7 @@
               <i class="fa" [ngClass]="{ 'fa-eye': showProfit, 'fa-eye-slash': !showProfit }"></i>
             </button>
           </h5>
+          <div><hr></div>
            <div> <strong *ngIf="showProfit" class="display-6 text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
             <strong *ngIf="!showProfit" class="text-muted">----</strong>
           </div>
@@ -84,9 +87,9 @@
           <div class="text-center mt-2">
             <strong>{{ ProfitProgress | number: '1.0-0' }}%</strong>
           </div>
-          <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'profit']">
+          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'profit']">
             View More <i class="fa fa-arrow-right"></i>
-          </button>
+          </button> -->
         </div>
       </div>
   
@@ -94,30 +97,33 @@
     <div class="card summary-card">
       <div class="card-body bg-light text-center">
         <div class="d-flex justify-content-between">
-          <h5 class="my-2"><i class="fa fa-dove text-warning me-2"></i>Birds</h5>
+          <h5 class="my-2"><i class="fa fa-dove text-warning me-2">
+
+          </i>Birds
           <div>
             <button (click)="toggleVisibility('totalBirds')" class="toggle-btn ">
               <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
             </button>
           </div>
+        </h5>
         </div>
-    
+        <div><hr></div>
         <h5 class="mt-1">
           <strong *ngIf="showTotalBirds" class="display-6 fw-bold">{{ effectiveTotalBirds }} <i class="fa fa-check-to-slot text-success"></i></strong>
           <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
         </h5>
   
-        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+        <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
           View More <i class="fa fa-arrow-right"></i>
-        </button>
-        <div class="mt-3 vid">
+        </button> -->
+        <!-- <div class="mt-3 vid">
           <button class="btn btn-outline-secondary me-2" routerLink="/product-list" >
             View Images/Videos <i class="fa fa-image"></i>
           </button>
           <button class="btn btn-outline-info" >
             Upload Images/Videos <i class="fa fa-upload"></i>
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
  
@@ -125,22 +131,22 @@
     <div class="card summary-card">
       <div class="card-body bg-light text-center">
         <div class="d-flex justify-content-between">
-          <h5 class="my-2"><i class="fa fa-skull-crossbones text-danger me-2"></i>mortality</h5>
-          <div>
+          <h5 class="my-2">
+            <i class="fa fa-skull-crossbones text-danger me-2"></i>MORT
             <button (click)="toggleVisibility('totalBirds')" class="toggle-btn">
               <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
             </button>
-          </div>
+        </h5>
         </div>
-    
-        <h5 class="mt-1">
+        <div><hr></div>
+        <h5>
           <strong *ngIf="showTotalBirds" class="display-6 text-danger">Rate: {{(totalMortalities/totalBirds )*100 | number:'1.0-2'}}% </strong>
           <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
         </h5>
   
-        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+        <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
           View More <i class="fa fa-arrow-right"></i>
-        </button>
+        </button> -->
       </div>
     </div>
  
@@ -148,23 +154,23 @@
     <div class="card summary-card">
       <div class="card-body bg-light text-center">
         <div class="d-flex justify-content-between">
-         <h5 class="my-2"><i class="fa fa-people-roof text-dark me-2"></i>Customers</h5>
-          <div>
+         <h5 class="my-2">
+          <i class="fa fa-people-roof text-dark me-2"></i>CUST
             <button (click)="toggleVisibility('totalBirds')" class="toggle-btn">
               <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
             </button>
-          </div>
+        </h5>
         </div>
-    
+        <div><hr></div>
         <h5 class="mt-1">
           <strong *ngIf="showTotalBirds" class="display-6 fw-bold">{{totalCustomers}} <i class="fa fa-check-to-slot text-success"></i></strong>
           <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
         </h5>
   
-        <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+        <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
           View More <i class="fa fa-arrow-right"></i>
         </button>
-    
+     -->
       </div>
     </div>
   </div>
@@ -176,73 +182,63 @@
     <hr>
   </div>
 
-  <div class="chart-title text-center mt-4">
-    <h4 class="fw-bold text-primary align-items-center">Monthly Production Trends</h4>
-    <p class="text-muted">Visual representation of Monthly production over time</p>
-  </div>
-<div class="row mt-2" >
-  <div class="col-12">
-    <div class="card shadow-lg">
-      <div class="card-body">
-        <canvas id="salesExpenseChart"></canvas>
+
+  <div class="container-fluid2 mt-4">
+    <div class="d-flex flex-column flex-lg-row">
+      <!-- Chart Section -->
+      <div class="chart-container flex-grow-1 me-lg-3">
+        <h3 class="fw-bold text-success">Sales &Expense Production Trend</h3>
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <canvas id="salesExpenseChart"></canvas>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Table Section -->
+      <div class="table-container flex-grow-1 mt-4 mt-lg-0">
+        <h3 class="fw-bold text-success">Monthly production Records</h3>
+        <div class="table-responsive shadow-sm rounded">
+          <table class="table table-hover table-bordered">
+            <thead class="bg-success text-light">
+              <tr>
+                <th>Month</th>
+                <th>Total Sales</th>
+                <th>Total Expenditure</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!noDataForYear; else noDataTemplate">
+              <tr *ngFor="let month of getFilteredMonthlyRecords() | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage">
+                <td>{{ month }} {{ selectedYear }}</td>
+                <td>{{ monthlySales[getMonthIndex(month) + 1] || 0 | currency: 'Kes.' }}</td>
+                <td>{{ monthlyExpenses[getMonthIndex(month) + 1] || 0 | currency: 'Kes.' }}</td>
+                <td [ngClass]="{
+                    'text-success': (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) > 0,
+                    'text-danger': (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) <= 0
+                  }">
+                  {{ (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) | currency: 'Kes.' }}
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #noDataTemplate>
+              <tr>
+                <td colspan="4" class="text-center text-danger fw-bold">No records available for this year</td>
+              </tr>
+            </ng-template>
+          </table>
+        </div>
+
+
+        <div class="pagination-controls d-flex justify-content-center mt-4 mb-5">
+          <button (click)="previousPage()" class="btn btn-outline-success">Previous</button>
+          <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+          <button (click)="nextPage()" class="btn btn-outline-success">Next</button>
+        </div>
+
       </div>
     </div>
   </div>
+  
 </div>
 
-<div class="container-fluid mt-4">
-  <div class="d-flex flex-column align-items-start align-items-md-center mb-3">
-    <h3 class="text-primary fw-bold text-center align-items-center">Financial Overview</h3>
-    <div class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center w-100 mt-2 mt-md-0">
-      <select [(ngModel)]="selectedYear" (change)="onYearChange()" class="form-select me-2 mb-2 mb-md-0">
-        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-      </select>
-      <select [(ngModel)]="selectedMonth" class="form-select me-2 mb-2 mb-md-0">
-        <option value="">All Months</option>
-        <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-      </select>
-      <button (click)="printMonthlyRecords()" class="btn btn-success d-flex align-items-center">
-        <i class="fa fa-print me-2"></i> Print
-      </button>
-    </div>
-  </div>
-
-  <div class="table-responsive shadow-sm rounded">
-    <table class="table table-hover table-bordered">
-      <thead class="bg-success text-light">
-        <tr>
-          <th>Month</th>
-          <th>Total Sales</th>
-          <th>Total Expenditure<th>
-          <th>Profit</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="!noDataForYear; else noDataTemplate">
-        <tr *ngFor="let month of getFilteredMonthlyRecords() | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage">
-          <td>{{ month }} {{ selectedYear }}</td>
-          <td>{{ monthlySales[getMonthIndex(month) + 1] || 0 | currency: 'Kes.' }}</td>
-          <td>{{ monthlyExpenses[getMonthIndex(month) + 1] || 0 | currency: 'Kes.' }}</td>
-          <td [ngClass]="{
-              'text-success': (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) > 0,
-              'text-danger': (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) <= 0
-            }">
-            {{ (monthlySales[getMonthIndex(month) + 1] || 0) - (monthlyExpenses[getMonthIndex(month) + 1] || 0) | currency: 'Kes.' }}
-          </td>
-        </tr>
-      </tbody>
-      <ng-template #noDataTemplate>
-        <tr>
-          <td colspan="4" class="text-center text-danger fw-bold">No records available for this year</td>
-        </tr>
-      </ng-template>
-    </table>
-  </div>
-
-  <div class="pagination-controls d-flex justify-content-center mt-4 mb-5">
-    <button (click)="previousPage()" class="btn btn-outline-success">Previous</button>
-    <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="nextPage()" class="btn btn-outline-success">Next</button>
-  </div>
-</div>
-
-</div>

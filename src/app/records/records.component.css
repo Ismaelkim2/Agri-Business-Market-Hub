@@ -183,7 +183,7 @@ th, td {
 }
 
 .chart-title h3 {
-  font-size: 2rem;
+  font-size: 1rem;
   color: #5a5a5a;
   margin-bottom: 5px;
 }
@@ -194,10 +194,32 @@ th, td {
   margin-top: 0;
 }
 
+.container-fluid2 .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.chart-container {
+  flex: 1 1 calc(60% - 1rem);
+  min-width: 300px;
+  max-width: 100%;
+}
+
+.table-container {
+  flex: 1 1 calc(40% - 1rem);
+  min-width: 300px;
+}
+
 
 @media (min-width: 1200px) {
   .grid-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .display-6{
+    font-size:1.1rem ;
+    font-weight: bold;
   }
 }
 
@@ -258,6 +280,16 @@ th, td {
   
   .btn-success {
     width: 100%;
+  }
+
+  .container-fluid .d-flex {
+    flex-direction: column;
+  }
+
+  .chart-container,
+  .table-container {
+    flex: 1 1 100%;
+    margin: 0;
   }
 }
 
@@ -332,6 +364,16 @@ th, td {
   .btn-success {
     width: 100%;
   }
+
+  .container-fluid .d-flex {
+    flex-direction: column;
+  }
+
+  .chart-container,
+  .table-container {
+    flex: 1 1 100%;
+    margin: 0;
+  }
 }
 
 @media (max-width: 576px) {
@@ -404,5 +446,16 @@ th, td {
   
   .btn-success {
     width: 100%;
+  }
+
+  .container-fluid .d-flex {
+    flex-direction: column;
+  }
+
+  .chart-container,
+  .table-container {
+    flex: 1 1 100%;
+    margin: 0;
+    max-width: 100%;
   }
 }
