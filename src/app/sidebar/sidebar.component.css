@@ -1,5 +1,6 @@
 .navbar {
-  background-color: #228B22;
+  background-color: #228B22; 
+
   padding: 10px;
   position: fixed;
   top: 0;
@@ -35,9 +36,9 @@
 }
 
 .logo-image {
-  width: 45px;
+  width: 65px;
   height: auto;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-right: 12px;
   transition: transform 0.3s;
 }
@@ -71,6 +72,25 @@
   transition: transform 0.3s;
 }
 
+.user-photo2 {
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.user-photo2:hover {
+  transform: scale(1.1);
+}
+
+.username-text {
+  font-size: 12px; 
+  color: white; 
+  margin-top: 4px; 
+}
+
+
 .user-photo:hover {
   transform: scale(1.1);
 }
@@ -90,7 +110,8 @@
   left: -250px;
   width: 250px;
   height: calc(100% - 60px);
-  background-color: #228B22;
+  background-color: #228B22; 
+  /* background-color: whitesmoke; */
   padding: 15px;
   transition: transform 0.3s ease;
   position: fixed;
@@ -104,7 +125,7 @@
 }
 
 .sidebar .nav-link {
-  color: #ffffff;
+  color: #2e302e;
   padding: 10px 15px;
   transition: background-color 0.3s;
   border-radius: 5px;
@@ -114,21 +135,27 @@
   background-color: #1e7e34;
 }
 
+
+.navbar i,
+.sidebar i {
+  color: #228B22 !important;
+}
+
+
 .online-status {
   color: rgb(13, 224, 13);
   font-size: 14px;
 }
 
-/* bottom-navbar */
 .bottom-navbar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #228B22;
-  border-top: 1px solid #ddd; /* Light border */
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Shadow for elevation */
-  z-index: 1030; /* Above other elements */
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); 
+  z-index: 1030; 
 }
 
 .bottom-navbar .nav {
@@ -256,6 +283,21 @@
 }
 
 @media (min-width: 577px) {
+  .logo-text {
+    font-size: 0.2rem; 
+    margin-top: 0;
+  }
+
+  .user-photo2 {
+    width: 16px; 
+    height: 16px;
+  }
+
+  .username-text {
+    font-size: 4px;
+    margin-top: 1px;
+  }
+
   .btn-sm-sm {
     width: 40px !important;
     height: 40px !important;

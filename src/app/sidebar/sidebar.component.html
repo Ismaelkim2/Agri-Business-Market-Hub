@@ -1,45 +1,70 @@
-<nav class="navbar navbar-expand-lg navbar-fixed-top">
+<nav class="navbar navbar-expand-lg navbar-fixed-top ">
   <div class="container-fluid" style="height: 60px;">
     <div class="d-flex justify-content-between align-items-center w-100">
 
-      <div class="d-flex align-items-center ms-n5 me-1" style="width: 100%;max-width: 380px;">
+      <div class="d-flex align-items-center ms-n5 me-1" style="width: 100%;max-width: 100%;">
         <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon position-relative"></span>
-          <h6 style="color: aliceblue; position:absolute;" class="me-5">Menu</h6>
+          <span class="navbar-toggler-icon position-relative tex-whitesmoke"></span>
+          <h6 style="color: whitesmoke; position:absolute;" class="me-5">Menu</h6>
         </button>
 
         <div class="vertical-line"></div>
         
-        <div class="logo d-flex align-items-center " >
+        <div class="logo d-flex flex-lg-row flex-column align-items-center text-center">
           <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo" class="logo-image">
-          <span class=" text-white ms-n2 me-1">EcoEggsFarm</span>
+          <span class="text-white fw-bold ms-lg-2 mt-lg-0 logo-text fs-4">EcoEggsFarm</span>
         </div>
-
+        
 
         <div class="vertical-line"></div>
 
         <div class="notifications">
           <button
             class="btn btn-light position-relative btn-sm-sm"
-            style="width: 35px; height: 35px;"
+            style="width: 35px; height: 35px;border-radius: 50%;background-color: rgb(184, 182, 182);"
             (click)="viewActivities()"
           >
             <i class="fa fa-bell" [class.vibrating]="recentActivities.length > 0" style="font-size: 12px;"></i>
             <span
               class="badge bg-danger position-absolute top-0 start-100 translate-middle"
-              style="font-size: 12px;"
+              style="font-size: 8px;"
             >
               {{ recentActivities.length }}
             </span>
           </button>
         </div>
         
-        
-        
-        
-        
+        <div class="vertical-line ms-2"></div>
 
+        <div class="user-info d-flex flex-column align-items-center ms-2">
+          <div *ngIf="loggedInUser" class="nav-item d-flex flex-column align-items-center" style="height: 60px;" routerLink="/settings" >
+            <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
+              <img 
+                [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
+                alt="User Image" 
+                class="user-photo2 rounded-circle" 
+                (error)="onImageError($event)" 
+         
+              >
+            </ng-container>
+            <ng-template #defaultIcon >
+              <i 
+                class="fa fa-user user-photo2 rounded-circle d-lg-none" 
+                style="font-size: 16px; color: rgb(102, 98, 98);" 
+               >
+              </i>
+            </ng-template>
+            <div  *ngIf="loggedInUser">
+              <span class="navbar-text fs-6 fw-bold text-white text-center username-text d-lg-none">
+                {{ userFirstName }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
       </div>
+     
+      
          
       <div class="collapse navbar-collapse  " id="navbarSupportedContent">
 
@@ -174,39 +199,39 @@
       <ng-template #defaultIcon>
         <i class="fa fa-user user-photo rounded-circle" style="font-size: 1.2em;color: rgb(102, 98, 98);" routerLink="/settings"></i>
       </ng-template>
-      <p class="online-status">👤 Online</p>
+      <p class="online-status">Online</p>
     </li>
   </div>
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line"></i> Dashboard</a>
+      <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line text-white fw-bold"></i> Dashboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book"></i> Records</a>
+      <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book text-white fw-bold"></i> Records</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill"></i> Sales</a>
+      <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill text-white fw-bold "></i> Sales</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/expenses"><i class="fa fa-book"></i> Expenses</a>
+      <a class="nav-link" routerLink="/expenses"><i class="fa fa-book text-white fw-bold "></i> Expenses</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/eggs-record-list"><i class="fa fa-egg"></i> Eggs Production</a>
+      <a class="nav-link" routerLink="/eggs-record-list"><i class="fa fa-egg text-white fw-bold "></i> Eggs Production</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group"></i> Workers</a>
+      <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group text-white fw-bold "></i> Workers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping"></i> Customers</a>
+      <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping text-white fw-bold "></i> Customers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones"></i> Mortalities</a>
+      <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones text-white fw-bold "></i> Mortalities</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
+      <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf text-white fw-bold "></i> Our Services</a>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars text-white fw-bold"></i> More</a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" (click)="navigateTo('/about-us')">About Us</a></li>
         <li><a class="dropdown-item" (click)="navigateTo('contact')">Contact Us</a></li>
