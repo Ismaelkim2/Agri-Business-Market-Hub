@@ -21,7 +21,7 @@ export interface User {
     email: string;
     password: string;
     above18: boolean;
-    userImageUrl: string;
+    userImageUrl: string | null;
     createdBy: string;
     role?:string
     documentUrls: string[];

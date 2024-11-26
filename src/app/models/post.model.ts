@@ -10,7 +10,7 @@ export class Post {
   weight?: number;
   livestockType?: string;
   livestockDescription?: string;
-  imageUrl: string;
+  imageUrl: string |null;
   createdBy: string;
   likes: number;
   DatePipe:any

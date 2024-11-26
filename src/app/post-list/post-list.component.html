@@ -45,7 +45,7 @@
           <div class="d-flex align-items-center mb-3">
             <!-- Post creator's image -->
             <div *ngIf="post.userDTO">
-              <img [src]="'http://localhost:8081/' + post.userDTO.userImageUrl.replace('\\', '/')"
+              <img [src]="'http://localhost:8081/' + post.userDTO.userImageUrl?.replace('\\', '/')"
                    alt="User Photo"
                    class="user-photo rounded-circle">
             </div>
@@ -104,7 +104,7 @@
           <div class="d-flex align-items-center mb-3">
             <!-- User's profile picture -->
             <div *ngIf="isedittingpost!.userDTO">
-              <img [src]="'http://localhost:8081/' + isedittingpost!.userDTO.userImageUrl.replace('\\', '/')"
+              <img [src]="'http://localhost:8081/' + isedittingpost!.userDTO.userImageUrl?.replace('\\', '/')"
                    alt="User Photo"
                    class="user-photo rounded-circle">
             </div>

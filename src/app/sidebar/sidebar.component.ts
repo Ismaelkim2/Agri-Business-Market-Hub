@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   loggedInUserSubscription: Subscription = new Subscription();
   isLoggedIn: boolean = false;
   userFirstName: string | null = null;
-  userImageUrl: string = '';
+  userImageUrl?: string | null;
   loggedInUser: UserDTO | null | undefined;
   environment = environment;
   isSidebarOpen = false;

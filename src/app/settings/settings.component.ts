@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataServiceService } from './../data-service.service';
 import { UserDTO } from './../models/user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-settings',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class SettingsComponent implements OnInit {
   settingsForm!: FormGroup;
   loggedInUser!: UserDTO;
+  environment=environment
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,14 +37,19 @@ export class SettingsComponent implements OnInit {
   }
 
   loadCredentials(user: UserDTO): void {
+    const userImageUrl = user.userImageUrl && user.userImageUrl.trim() !== '' ? user.userImageUrl : null;
+  
     this.settingsForm.patchValue({
       name: user.firstName + ' ' + user.lastName,
-      role: user.role || 'N/A', 
+      role: user.role || 'N/A',
       contacts: user.phoneNumber,
       email: user.email,
-      image:user.userImageUrl
+      image: userImageUrl,
     });
+  
+    this.loggedInUser.userImageUrl = userImageUrl;
   }
+  
 
   onSubmit(): void {
     if (this.settingsForm.valid) {

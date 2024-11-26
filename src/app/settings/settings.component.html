@@ -3,22 +3,27 @@
 
     <div> <h4 class="card-title text-center"><i class="fa fa-gear"></i>  Settings</h4></div>
 
-    <!-- <div class="logo d-flex align-items-center">
-        <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo">
-        <span class="ms-2">Eco-Eggs Poultry</span>
-      </div> -->
-    
+
     <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
         
-        <div *ngIf="loggedInUser?.userImageUrl" class="text-center d-flex">
-            <div class="ms-4"><img [src]="'http://localhost:8081/' + loggedInUser.userImageUrl.replace('\\','/')"
-                 alt="User Image"
-                 class="user-photo rounded-circle mb-3"></div>
-                 <div><button style="color: white;border-radius: 4px;background-color: rgb(15, 119, 15);border: none;">
-                    <a href="" class="dropdown-item" (click)="SignOut()">Sign Out</a></button>
-                </div>
-        </div>
-
+        <div *ngIf="loggedInUser" class="text-center d-flex">
+            <ng-container class="ms-4">
+              <img 
+                *ngIf="loggedInUser.userImageUrl && loggedInUser.userImageUrl.trim() !== ''; else defaultIcon" 
+                [src]="environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/')"
+                alt="User Image"
+                class="user-photo rounded-circle mb-3">
+            </ng-container>
+          
+            <ng-template #defaultIcon>
+              <img 
+                src="assets/default-user.png" 
+                alt="Default User" 
+                class="user-photo rounded-circle mb-3">
+            </ng-template>
+          </div>
+          
+          
      
         <div class="mb-3 d-flex align-items-center">
             <label for="name" class="form-label flex-grow-1">Name:</label>
