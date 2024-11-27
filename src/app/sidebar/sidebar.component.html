@@ -15,7 +15,6 @@
           <span class="text-white fw-bold ms-lg-2 mt-lg-0 logo-text fs-4">EcoEggsFarm</span>
         </div>
         
-
         <div class="vertical-line"></div>
 
         <div class="notifications">
@@ -34,27 +33,26 @@
           </button>
         </div>
         
-        <div class="vertical-line ms-2"></div>
+        <div class="vertical-line ms-3"></div> 
 
-        <div class="user-info d-flex flex-column align-items-center ms-2">
-          <div *ngIf="loggedInUser" class="nav-item d-flex flex-column align-items-center" style="height: 60px;" routerLink="/settings" >
+        <div class="user-info d-flex flex-column align-items-center ms-2 float-end" style="float: right;">
+          <div *ngIf="loggedInUser" class="nav-item d-flex flex-column align-items-center float-end" style="height: 60px;float: right;" routerLink="/settings" >
             <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
               <img 
                 [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
                 alt="User Image" 
                 class="user-photo2 rounded-circle" 
                 (error)="onImageError($event)" 
-         
               >
             </ng-container>
             <ng-template #defaultIcon >
               <i 
-                class="fa fa-user user-photo2 rounded-circle d-lg-none" 
+                class="fa fa-user user-photo2 rounded-circle d-lg-none float-end" 
                 style="font-size: 16px; color: rgb(102, 98, 98);" 
                >
               </i>
             </ng-template>
-            <div  *ngIf="loggedInUser">
+            <div  *ngIf="loggedInUser" class="float-end">
               <span class="navbar-text fs-6 fw-bold text-white text-center username-text d-lg-none">
                 {{ userFirstName }}
               </span>
@@ -77,39 +75,65 @@
       
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line"></i> Dashboard</a>
+            <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line"
+              routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"></i> Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book"></i> Records</a>
+            <a class="nav-link" routerLink="/farm-data"
+            routerLinkActive="active-link" 
+            [routerLinkActiveOptions]="{ exact: true }" ><i class="fa fa-book"></i> Records</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill"></i> Sales</a>
+            <a class="nav-link" routerLink="/sales"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-money-bill"></i> Sales</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/expenses"><i class="fa fa-book"></i> Expenses</a>
+            <a class="nav-link" routerLink="/expenses"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-book"></i> Expenses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/eggs-record-list"><i class="fa fa-egg"></i> Eggs Production</a>
+            <a class="nav-link" routerLink="/eggs-record-list"
+            routerLinkActive="active-link" 
+            [routerLinkActiveOptions]="{ exact: true }" ><i class="fa fa-egg"></i> Eggs Production</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group"></i> Workers</a>
+            <a class="nav-link" routerLink="/workers"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-people-group"></i> Workers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping"></i> Customers</a>
+            <a class="nav-link" routerLink="/customers"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-bag-shopping"></i> Customers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones"></i> Mortalities</a>
+            <a class="nav-link" routerLink="/mortalities"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-skull-crossbones"></i> Mortalities</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
+            <a class="nav-link" routerLink="/our-services"
+            routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-leaf"></i> Our Services</a>
           </li>
       
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars"></i> More</a>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            routerLinkActive="active-link" 
+            [routerLinkActiveOptions]="{ exact: true }" ><i class="fa fa-bars"></i> More</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" (click)="navigateTo('/about-us')">About Us</a></li>
-              <li><a class="dropdown-item" (click)="navigateTo('contact')">Contact Us</a></li>
-              <li><a class="dropdown-item" (click)="navigateTo('/faq')">FAQ</a></li>
+              <li><a class="dropdown-item" (click)="navigateTo('/about-us')"
+                routerLinkActive="active-link" 
+                [routerLinkActiveOptions]="{ exact: true }" >About Us</a></li>
+              <li><a class="dropdown-item" (click)="navigateTo('contact')"
+                routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">Contact Us</a></li>
+              <li><a class="dropdown-item" (click)="navigateTo('/faq')"
+                routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">FAQ</a></li>
             </ul>
           </li>
         </ul>
@@ -147,33 +171,43 @@
 <nav class="bottom-navbar d-lg-none">
   <ul class="nav justify-content-around align-items-center m-0 p-0">
     <li class="nav-item">
-      <a class="nav-link" routerLink="/records">
+      <a class="nav-link" routerLink="/records"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-house"></i>
         <span>Home</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/eggs-record-list">
+      <a class="nav-link" routerLink="/eggs-record-list"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-egg"></i>
         <span>Eggs</span>
       </a>
     </li>
    
     <li class="nav-item">
-      <a class="nav-link" routerLink="/farm-data">
+      <a class="nav-link" routerLink="/farm-data"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-book"></i>
         <span>Records</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" routerLink="/sales">
+      <a class="nav-link" routerLink="/sales"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-money-bill"></i>
         <span>Sales</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/expenses">
+      <a class="nav-link" routerLink="/expenses"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-chart-pie"></i>
         <span>Expenses</span>
       </a>
@@ -204,38 +238,74 @@
   </div>
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link" routerLink="/records"><i class="fa fa-chart-line text-white fw-bold"></i> Dashboard</a>
+      <a class="nav-link" routerLink="/records"
+       routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa fa-chart-line text-white fw-bold"></i> Dashboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/farm-data"><i class="fa fa-book text-white fw-bold"></i> Records</a>
+      <a class="nav-link" routerLink="/farm-data"
+      routerLinkActive="active-link" 
+      [routerLinkActiveOptions]="{ exact: true }" >
+      <i class="fa fa-book text-white fw-bold"></i> Records</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/sales"><i class="fa fa-money-bill text-white fw-bold "></i> Sales</a>
+      <a class="nav-link" routerLink="/sales"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-money-bill text-white fw-bold "></i> Sales</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/expenses"><i class="fa fa-book text-white fw-bold "></i> Expenses</a>
+      <a class="nav-link" routerLink="/expenses"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-book text-white fw-bold "></i> Expenses</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/eggs-record-list"><i class="fa fa-egg text-white fw-bold "></i> Eggs Production</a>
+      <a class="nav-link" routerLink="/eggs-record-list"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-egg text-white fw-bold "></i> Eggs Production</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/workers"><i class="fa fa-people-group text-white fw-bold "></i> Workers</a>
+      <a class="nav-link" routerLink="/workers"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-people-group text-white fw-bold "></i> Workers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/customers"><i class="fa fa-bag-shopping text-white fw-bold "></i> Customers</a>
+      <a class="nav-link" routerLink="/customers"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-bag-shopping text-white fw-bold "></i> Customers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/mortalities"><i class="fa fa-skull-crossbones text-white fw-bold "></i> Mortalities</a>
+      <a class="nav-link" routerLink="/mortalities"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-skull-crossbones text-white fw-bold "></i> Mortalities</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf text-white fw-bold "></i> Our Services</a>
+      <a class="nav-link" routerLink="/our-services"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-leaf text-white fw-bold "></i> Our Services</a>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars text-white fw-bold"></i> More</a>
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+      routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa fa-bars text-white fw-bold"></i> More</a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" (click)="navigateTo('/about-us')">About Us</a></li>
-        <li><a class="dropdown-item" (click)="navigateTo('contact')">Contact Us</a></li>
-        <li><a class="dropdown-item" (click)="navigateTo('/faq')">FAQ</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('/about-us')"
+          routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">About Us</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('contact')"
+          routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">Contact Us</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('/faq')"
+          routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }">FAQ</a></li>
       </ul>
     </li>
   </ul>

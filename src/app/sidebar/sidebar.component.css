@@ -1,6 +1,7 @@
 .navbar {
-  background-color: #228B22; 
-
+  background-color: #2E7D32;
+  background: linear-gradient(90deg, #228B22, #2E8B57);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
   position: fixed;
   top: 0;
@@ -27,8 +28,15 @@
   display: none;
 }
 
-.navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.5);
+.navbar .nav-link.active {
+  background-color: #1B5E20;
+  color: white !important;
+  border-radius: 5px;
+}
+
+.nav-item a{
+  font-weight: bold;
+  color:#FFFFFF!important ;
 }
 
 .navbar-toggler-icon {
@@ -49,8 +57,8 @@
 
 .vertical-line {
   height: 100%;
-  width: 2px; 
-  background-color: #ffffff; 
+  width: 1px; 
+  background-color: #E0E0E0; 
   margin: 0 15px; 
   z-index: 1030;
   border: none;
@@ -110,14 +118,14 @@
   left: -250px;
   width: 250px;
   height: calc(100% - 60px);
-  background-color: #228B22; 
-  /* background-color: whitesmoke; */
-  padding: 15px;
+  background-color: #2E7D32;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  overflow-y: auto;
   transition: transform 0.3s ease;
   position: fixed;
   top: 60px;
   z-index: 1029;
-  overflow-y: auto;
 }
 
 .sidebar.open {
@@ -132,8 +140,32 @@
 }
 
 .sidebar .nav-link:hover {
-  background-color: #1e7e34;
+  background: #388E3C;
+  transform: scale(1.05);
 }
+
+.sidebar .nav-link.active-link, 
+.bottom-navbar .nav-link.active-link, 
+.navbar-collapse .nav-link.active-link {
+  background-color: #1abc9c !important; 
+  font-weight: bold; 
+  color: white !important; 
+  border-radius: 4px; 
+}
+
+.navbar-toggler:active, .navbar-toggler:focus {
+  background-color: #04f825 !important; 
+  outline: none;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #16a085; 
+  color: white;
+  transition: background-color 0.3s;
+}
+
+
+.bottom-navbar .nav-link.active
 
 
 .navbar i,
@@ -152,7 +184,9 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #228B22;
+  width: 100%;
+  background-color: #2E7D32;
+  border-top: 1px solid #1B5E20;
   border-top: 1px solid #ddd;
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); 
   z-index: 1030; 
@@ -190,7 +224,6 @@
 .bottom-navbar .nav-link.active {
   color: #007bff; 
 }
-
 
 
 @media (max-width: 991px) {
