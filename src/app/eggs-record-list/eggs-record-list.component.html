@@ -1,4 +1,4 @@
-<app-sidebar></app-sidebar> 
+<app-sidebar></app-sidebar>
 
 <div class="container my-5">
   <div class="header-section d-flex justify-content-between align-items-center mt-5">
@@ -8,6 +8,10 @@
     <div class="fw-bold text-center total-eggs">
       {{ totalEggs }} Eggs <i class="fa fa-egg"></i>
     </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-outline-primary" (click)="loadPreviousRecords()">Previous Records</button>
   </div>
 
   <div class="chart-title text-center mt-4">
@@ -46,12 +50,12 @@
       <tbody>
         <tr *ngFor="let record of pagedRecords" class="record-row">
           <td>{{ record.date | date: 'shortDate' }}</td>
-          <td>{{ record.eggsCount }}</td>
+        <td>{{ record.eggsCount }}</td>
           <td>
             <button class="btn btn-warning btn-sm" (click)="openEditModal(record)">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-danger btn-sm ms-2" (click)="deleteRecord(record.id)">
+            <button class="btn btn-danger btn-sm ms-2" (click)="deleteRecord(record)">
               <i class="fas fa-trash"></i>
             </button>
           </td>
@@ -68,17 +72,24 @@
           <label for="date">Date</label>
           <input *ngIf="currentRecord" type="date" id="date" [(ngModel)]="currentRecord.date" name="date" class="form-control" required />
         </div>
-        <div class="form-group">
+        <div class="form-group mt-2">
           <label for="eggsCount">Egg Count</label>
           <input *ngIf="currentRecord" type="number" id="eggsCount" [(ngModel)]="currentRecord.eggsCount" name="eggsCount" class="form-control" required />
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancel</button>
+        <div class="form-group mt-2">
+          <label for="brokenEggsCount">Broken Eggs Count</label>
+          <input *ngIf="currentRecord" type="number" id="brokenEggsCount" [(ngModel)]="currentRecord.brokenEggsCount" name="brokenEggsCount" class="form-control" required />
+        </div>
+        <div class="form-group mt-2">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="closeEditModal()">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <div class="pagination mt-3">
+
+  <div class="pagination mt-3 mb-5">
     <button class="btn btn-outline-primary" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
       Previous
     </button>
@@ -86,5 +97,8 @@
     <button class="btn btn-outline-primary " (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
       Next
     </button>
-  </div>
 </div>
+
+ 
+  </div>
+

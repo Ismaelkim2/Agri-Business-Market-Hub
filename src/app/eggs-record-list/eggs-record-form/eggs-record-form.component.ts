@@ -10,7 +10,7 @@ import { EggRecord } from '../eggs-record-list.component';
   styleUrls: ['./eggs-record-form.component.css'],
 })
 export class EggsRecordFormComponent implements OnInit {
-  record: EggRecord = { id: 0, date: new Date(), eggsCount: 0 };
+  record: EggRecord = { id: 0, date: new Date(), eggsCount: 0 ,brokenEggsCount: 0};
   editMode = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;

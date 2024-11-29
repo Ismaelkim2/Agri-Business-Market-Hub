@@ -1,12 +1,13 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EggsRecordService } from '../services/eggsRecord.service';
+import { EggsRecordService, WeeklyEggRecord } from '../services/eggsRecord.service';
 import { NotificationService } from '../services/notification.service';
 
 export interface EggRecord {
-  id: number;
+  id: number ;
   date: Date | string;
   eggsCount: number;
+  brokenEggsCount: number;
 }
 
 @Component({
@@ -19,13 +20,29 @@ export class EggsRecordListComponent implements OnInit {
   pagedRecords: EggRecord[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 4;
+  dailyRecords: { [key: string]: EggRecord } = {};
+  record: EggRecord | null = null;
 
   errorMessage: string | null = null;
   notificationMessage: string | null = null;
   showSpinner: boolean = true;
   showTick: boolean = false;
 
-
+  currentWeekRecords: EggRecord[] = [];
+  previousRecords: WeeklyEggRecord[] = [
+    {
+      startOfWeek: new Date('2024-11-01'),
+      endOfWeek: new Date('2024-11-07'),
+      eggsCount: 350,
+      brokenEggsCount: 5,
+    },
+    {
+      startOfWeek: new Date('2024-11-08'),
+      endOfWeek: new Date('2024-11-14'),
+      eggsCount: 400,
+      brokenEggsCount: 3,
+    },
+  ];
 
   chartData: any[] = [];
   chartLabels: string[] = [];
@@ -34,7 +51,6 @@ export class EggsRecordListComponent implements OnInit {
   };
 
   isSmallScreen: boolean = false;
-
   isEditing: boolean = false;
   currentRecord: EggRecord | null = null;
 
@@ -54,33 +70,77 @@ export class EggsRecordListComponent implements OnInit {
     this.fetchRecords();
   }
 
+  isSummaryRow(record: EggRecord): boolean {
+    return record.date instanceof Date && record.date.getDay() === 0; 
+  }
+
   fetchRecords(): void {
     this.eggsRecordService.getRecords().subscribe(
-      (data: EggRecord[]) => {
-        this.eggRecords = data.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+      (data: any) => {
+        console.log("Fetched Data:", data);
+        if (Array.isArray(data)) {
+          const today = new Date();
+          const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
+          const endOfWeek = new Date(startOfWeek);
+          endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the week
+  
+          this.eggRecords = data
+            .filter((record) => !record.archived) // Exclude archived records
+            .map((record) => {
+              console.log("Record before parsing:", record);
+              const recordDate = new Date(record.date); // Updated parsing logic
+              console.log("Parsed Date:", recordDate);
+              return { ...record, date: recordDate };
+            })
+            .filter((record) => record.date >= startOfWeek && record.date <= endOfWeek)
+            .sort((a, b) => b.date.getTime() - a.date.getTime()); // Sort by date
+  
+          console.log("Filtered and Sorted Records:", this.eggRecords);
+          this.groupRecordsByDay();
+        } else {
+          console.warn("Data is not an array:", data);
+          this.eggRecords = [];
+        }
         this.updatePagedRecords();
+        this.groupRecordsByDay();
         this.updateChart();
       },
-      (error) => console.error('Error fetching records:', error)
+      (error) => {
+        console.error("Error fetching records:", error);
+        this.eggRecords = [];
+      }
     );
   }
+  
+  
+
+  groupRecordsByDay(): void {
+    const dailyRecords: { [key: string]: EggRecord } = {};
+    this.pagedRecords.forEach((record) => {
+      const recordDate = new Date(record.date).toLocaleDateString();
+      if (!dailyRecords[recordDate]) {
+        dailyRecords[recordDate] = { ...record };
+      } else {
+        dailyRecords[recordDate].eggsCount += record.eggsCount;
+        dailyRecords[recordDate].brokenEggsCount += record.brokenEggsCount;
+      }
+    });
+    this.dailyRecords = dailyRecords;
+  }
+  
 
   get totalEggs(): number {
     return this.eggRecords.reduce((total, record) => total + record.eggsCount, 0);
   }
 
-  updatePagedRecords(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    this.pagedRecords = this.eggRecords.slice(startIndex, startIndex + this.itemsPerPage);
-  }
 
   updateChart(): void {
-    const sortedRecordsForChart = [...this.eggRecords].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-  
+    const sortedRecordsForChart = Array.isArray(this.eggRecords)
+      ? [...this.eggRecords].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )
+      : [];
+
     this.chartData = [
       {
         name: 'Eggs',
@@ -92,12 +152,51 @@ export class EggsRecordListComponent implements OnInit {
     ];
   }
 
+  loadPreviousRecords(): void {
+    this.eggsRecordService.getPreviousWeeksData().subscribe((data) => {
+      this.previousRecords = data;
+      this.router.navigate(['/archieved-egg-records']);
+    });
+  }
+
+  checkAndArchiveCurrentWeek(): void {
+    const today = new Date();
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the week
+
+    if (today > endOfWeek) {
+      const currentWeekRecords = this.eggRecords.filter((record) => {
+        const recordDate = new Date(record.date);
+        return recordDate >= startOfWeek && recordDate <= endOfWeek;
+      });
+
+      this.archiveCurrentWeekData(currentWeekRecords);
+    }
+  }
+
+  archiveCurrentWeekData(currentWeekRecords: EggRecord[]): void {
+    this.eggsRecordService.archiveCurrentWeekData(currentWeekRecords).subscribe(
+      () => {
+        this.eggRecords = this.eggRecords.filter(
+          (record) => !currentWeekRecords.some((archived) => archived.id === record.id)
+        );
+        this.loadPreviousRecords();
+        this.updatePagedRecords();
+        this.updateChart();
+      },
+      (error) => {
+        console.error('Error archiving current week data:', error);
+      }
+    );
+  }
+
   navigateToAddRecord(): void {
     this.router.navigate(['/eggs-record-form']);
   }
 
   openEditModal(record: EggRecord): void {
-    this.currentRecord = { ...record };  
+    this.currentRecord = { ...record };
     this.isEditing = true;
   }
 
@@ -108,51 +207,59 @@ export class EggsRecordListComponent implements OnInit {
 
 
   updateRecord(): void {
-    if (this.currentRecord) {
-      console.log('Updating record:', this.currentRecord);
+    if (this.record && this.record.id !== null) { 
+      const recordId = this.record.id;
+
+      if (typeof recordId === 'number') {
+        console.log('Updating record:', this.record);
   
-      this.eggsRecordService.updateRecord(this.currentRecord.id, this.currentRecord).subscribe(
-        (response) => {
-          const index = this.eggRecords.findIndex((record) => record.id === this.currentRecord?.id);
-          if (index !== -1) {
-            this.eggRecords[index] = this.currentRecord!;
-            this.updatePagedRecords();
-            this.updateChart();
+        this.eggsRecordService.updateRecord(recordId, this.record).subscribe(
+          (response) => {
+            const index = this.eggRecords.findIndex((record) => record.id === this.record?.id);
+            if (index !== -1 && this.record !== null) {
+              this.eggRecords[index] = this.record;
+              this.updatePagedRecords(); 
+              this.updateChart(); 
+            }
+            this.closeEditModal();
+            this.notificationService.showNotification('Record updated successfully', false, true);
+          },
+          (error) => {
+            console.error('Error updating record:', error);
+            this.notificationService.showNotification('Failed to update record.', false, false);
           }
-          this.closeEditModal();
-          this.notificationService.showNotification('Record updated successfully', false, true);
-        },
-        (error) => {
-          console.error('Error updating record:', error);
-          this.notificationService.showNotification('Failed to update record.', false, false);
-        }
-      );
+        );
+      } else {
+        console.error('Invalid record ID');
+      }
     } else {
-      console.error('No current record to update.');
+      console.error('No current record to update or ID is null.');
     }
   }
   
   
-  deleteRecord(id: number): void {
-    this.eggsRecordService.deleteRecord(id).subscribe(
-      (response) => {
-        console.log('Success:', response);
-        if (response.message) {
-          this.showNotification(response.message, true);  
-          this.eggRecords = this.eggRecords.filter((record) => record.id !== id);
-          this.updatePagedRecords();
-          this.updateChart();
-        } else if (response.error) {
-          this.showNotification(response.error, false);  
-        }
-      },
-      (error) => {
-        console.error('Error deleting record:', error);
-        this.showNotification('Failed to delete record.', false);
-      }
-    );
-  }
   
+  deleteRecord(record: any): void {
+    if (record && record.id !== null) {
+      this.eggsRecordService.deleteRecord(record.id).subscribe(
+        (response) => {
+          const index = this.eggRecords.findIndex(r => r.id === record.id);
+          if (index !== -1) {
+            this.eggRecords.splice(index, 1); 
+            this.updatePagedRecords();        
+            this.updateChart();           
+          }
+          this.notificationService.showNotification('Record deleted successfully', false, true);
+        },
+        (error) => {
+          console.error('Error deleting record:', error);
+          this.notificationService.showNotification('Failed to delete record.', false, false);
+        }
+      );
+    } else {
+      console.error('Invalid record or record ID is null.');
+    }
+  }
   
   showNotification(message: string, success: boolean = true): void {
     this.notificationMessage = message;
@@ -162,16 +269,26 @@ export class EggsRecordListComponent implements OnInit {
       this.notificationMessage = null;
     }, 4000);
   }
+
+  updatePagedRecords(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    this.pagedRecords = this.eggRecords.slice(startIndex, startIndex + this.itemsPerPage);
+  }
   
 
   goToPage(page: number): void {
-    if (page >= 1 && page <= this.getTotalPages()) {
-      this.currentPage = page;
-      this.updatePagedRecords();
-    }
+    if (page < 1 || page > this.getTotalPages()) return;
+    this.currentPage = page;
+    this.updatePagedRecords(); 
   }
 
   getTotalPages(): number {
     return Math.ceil(this.eggRecords.length / this.itemsPerPage);
   }
+
+
+  
 }
+
+
+

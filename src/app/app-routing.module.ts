@@ -36,6 +36,7 @@ import { EggsRecordFormComponent } from './eggs-record-list/eggs-record-form/egg
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ArchivedEggRecordsComponent } from './eggs-record-list/archived-egg-records/archived-egg-records.component';
 
 
 const routes: Routes = [
@@ -75,6 +76,7 @@ const routes: Routes = [
   { path: 'details/:type', component: DetailViewComponent },
   { path: 'activities', component: ActivitiesComponent },
   { path: 'notification', component: NotificationComponent },
+  { path: 'archieved-egg-records', component: ArchivedEggRecordsComponent },
   { path: '**', redirectTo: 'login' }
 ];
 

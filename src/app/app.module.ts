@@ -60,6 +60,7 @@ import { DetailViewComponent } from './detail-view/detail-view.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NotificationComponent } from './notification/notification.component';
+import { ArchivedEggRecordsComponent } from './eggs-record-list/archived-egg-records/archived-egg-records.component';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { NotificationComponent } from './notification/notification.component';
     EggsRecordListComponent,
     DetailViewComponent,
     ActivitiesComponent,
-    NotificationComponent
+    NotificationComponent,
+    ArchivedEggRecordsComponent
   
    
   ],
