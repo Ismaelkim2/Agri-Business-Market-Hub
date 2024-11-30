@@ -29,20 +29,7 @@ export class EggsRecordListComponent implements OnInit {
   showTick: boolean = false;
 
   currentWeekRecords: EggRecord[] = [];
-  previousRecords: WeeklyEggRecord[] = [
-    {
-      startOfWeek: new Date('2024-11-01'),
-      endOfWeek: new Date('2024-11-07'),
-      eggsCount: 350,
-      brokenEggsCount: 5,
-    },
-    {
-      startOfWeek: new Date('2024-11-08'),
-      endOfWeek: new Date('2024-11-14'),
-      eggsCount: 400,
-      brokenEggsCount: 3,
-    },
-  ];
+  previousRecords: WeeklyEggRecord[] = [];
 
   chartData: any[] = [];
   chartLabels: string[] = [];

@@ -14,9 +14,9 @@
     <button class="btn btn-outline-primary" (click)="loadPreviousRecords()">Previous Records</button>
   </div>
 
-  <div class="chart-title text-center mt-4">
+  <div class="chart-title text-center mt-2">
     <h3 class="fw-bold text-primary">Egg Production Trends</h3>
-    <p class="text-muted">Visual representation of egg production over time</p>
+    <p class="text-muted">Daily Visual representation of egg production over time</p>
   </div>
 
   <div class="chart-container mt-4">
@@ -29,7 +29,7 @@
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
       [xAxisLabel]="'Date'"
-      [yAxisLabel]="'Egg Count'"
+      [yAxisLabel]="'Daily Egg Count'"
       [autoScale]="true"
     ></ngx-charts-line-chart>
   </div>

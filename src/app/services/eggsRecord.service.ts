@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable } from 'rxjs';
-
-import { error } from 'node:console';
 import { EggRecord } from '../eggs-record-list/eggs-record-list.component';
 import { environment } from '../../environments/environment.prod';
+
+
 
 interface ResponseMessage {
   message?: string;
@@ -61,8 +61,16 @@ export class EggsRecordService {
     return this.http.post(`${this.baseUrl}/archive-week`, records);
   }
 
-  getPreviousWeeksData(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/previous-records`);
+  getPreviousWeeksData(): Observable<WeeklyEggRecord[]> {
+    return this.http.get<WeeklyEggRecord[]>(`${this.baseUrl}/previous-records`).pipe(
+      map((records: any[]) =>
+        records.map(record => ({
+          ...record,
+          startOfWeek: new Date(record.startOfWeek),
+          endOfWeek: new Date(record.endOfWeek),
+        }))
+      )
+    );
   }
 
 }

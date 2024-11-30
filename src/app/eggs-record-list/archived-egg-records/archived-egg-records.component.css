@@ -1,160 +1,106 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f7fb;
-}
-
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1100px;
+  margin: auto;
   padding: 20px;
   margin-left: 250px;
-  margin-top: 60px;
+  margin-top: 74px;
+  overflow-x: hidden; 
 }
+
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.me-3 {
+  margin-right: 1rem;
+}
+
+.invisible {
+  visibility: hidden; 
+}
+
 
 h2 {
   font-weight: 600;
   color: #4caf50;
+  margin-bottom: 20px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.chart-title h3 {
+  font-size: 2rem;
+  color: #5a5a5a;
+  margin-bottom: 5px;
 }
 
-th, td {
-  padding: 15px;
-  text-align: center;
+.chart-title p {
   font-size: 1rem;
+  color: #888;
+}
+
+.chart-container {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%; 
+  overflow: hidden; 
+  margin: auto;
+}
+
+
+.chart-container text.axis-label {
+  font-weight: bold;
+  fill: #34495e;
+}
+
+.chart-container text.tick {
+  fill: #7f8c8d;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0 10px;
+  table-layout: fixed;
 }
 
 th {
   background-color: #4caf50;
   color: white;
+  text-transform: uppercase;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+td {
+  background: white;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 tr:hover {
   background-color: #f1f1f1;
-}
-
-table td {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-
-table thead th {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.table-hover tbody tr:hover {
-  background-color: #e9ecef;
-}
-
-.table-bordered th,
-.table-bordered td {
-  border: 1px solid #ddd;
-}
-
-.form-container {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.form-label {
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.form-control {
-  font-size: 1rem;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  width: 100%;
-}
-
-.form-control:focus {
-  border-color: #22a04c;
-  box-shadow: 0 0 5px rgba(0, 255, 157, 0.5);
-}
-
-.alert {
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 8px;
-}
-
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-.alert-success {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.success-snackbar {
-  margin-top: 80px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  background-color: #4caf50;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.success-snackbar .mat-simple-snackbar-action {
-  color: #fff;
-  font-weight: bold;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 20px;
+  cursor: pointer;
 }
 
 .btn {
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 12px 25px;
-  border-radius: 25px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn-success {
-  background-color: #28a745;
-  border: none;
+  border-radius: 30px;
+  transition: all 0.3s ease;
 }
 
 .btn-success:hover {
   background-color: #218838;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
@@ -163,27 +109,16 @@ table thead th {
     margin-left: 0;
   }
 
-  .btn {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-
-  .form-container {
+  .chart-container {
     padding: 15px;
   }
 
-  .button-group {
-    flex-direction: column;
-    gap: 15px;
-  }
-}
-
-@media (max-width: 576px) {
-  h2 {
-    font-size: 1.5rem;
+  ngx-charts-line-chart {
+    width: 100%;
+    height: auto;
   }
 
   .table td, .table th {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }

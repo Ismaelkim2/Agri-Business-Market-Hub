@@ -147,7 +147,7 @@
 .sidebar .nav-link.active-link, 
 .bottom-navbar .nav-link.active-link, 
 .navbar-collapse .nav-link.active-link {
-  background-color: #1abc9c !important; 
+  background-color: #1abc42 !important; 
   font-weight: bold; 
   color: white !important; 
   border-radius: 4px; 
@@ -317,8 +317,9 @@
 
 @media (min-width: 577px) {
   .logo-text {
-    font-size: 0.2rem; 
+    font-size: 0.1rem; 
     margin-top: 0;
+    margin-bottom: 4px;
   }
 
   .user-photo2 {
