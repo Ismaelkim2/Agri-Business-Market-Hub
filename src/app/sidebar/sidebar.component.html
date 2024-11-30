@@ -138,7 +138,7 @@
           </li>
         </ul>
 
-        <ul class=" ms-auto d-flex">
+        <ul class=" ms-auto d-flex no-bullets ">
           <li class="nav-item" *ngIf="!loggedInUser">
             <button (click)="SignIn()" class="btn btn-primary">Sign In</button>
           </li>
@@ -146,7 +146,7 @@
             <button (click)="SignUp()" class="btn btn-primary">Sign Up</button>
           </li>
           <li class="nav-item" *ngIf="loggedInUser">
-            <span class="navbar-text fs-5 fw-bold text-muted">Welcome, {{ userFirstName }}!</span>
+            <span class="navbar-text fs-5 fw-bold text-muted">Signed in as: {{ userFirstName }}!</span>
           </li>
           <li *ngIf="loggedInUser" class="nav-item d-flex align-items-center">
             <img 

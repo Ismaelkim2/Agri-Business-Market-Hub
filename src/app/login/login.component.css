@@ -140,6 +140,35 @@ form {
   margin-top: 20px;
 }
 
+
+.password-wrapper {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #6c757d; 
+}
+
+.styled-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+
 @media (max-width: 768px) {
   .formdiv {
     width: 90%;

@@ -40,18 +40,23 @@
         <!-- Password Input -->
         <div class="input-wrapper">
           <label for="password" class="form-label">Password</label>
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            id="password"
-            name="password"
-            [(ngModel)]="password"
-            #passwordInput="ngModel"
-            required
-            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-            placeholder="Enter password"
-            (input)="onPasswordInput($event)"
-            class="styled-input"
-          />
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              #passwordInput="ngModel"
+              required
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+              placeholder="Enter password"
+              (input)="onPasswordInput($event)"
+              class="styled-input"
+            />
+            <button type="button" class="eye-icon" (click)="togglePasswordVisibility()">
+              <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+          </div>
           <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)" class="error-message">
             <small *ngIf="passwordInput.errors['required']">Password is required.</small>
             <small *ngIf="passwordInput.errors['pattern']">Password must contain letters and numbers.</small>

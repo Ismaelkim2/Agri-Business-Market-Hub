@@ -140,16 +140,12 @@
 
 
 <div class="modal" [ngClass]="{'show': isModalOpen}" tabindex="-1" role="dialog" *ngIf="isModalOpen" @modalAnimation>
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-bottom">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add New Poultry Record</h5>
-        <button 
-          type="button" 
-          class="close" 
-          (click)="closeModal()" 
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <h5 class="modal-title"><i class="fa fa-plus"></i> Record new flock</h5>
+        <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true" style="color: red;font-weight: bold;cursor: pointer;">&times;</span>
         </button>
       </div>
       <div class="modal-body">

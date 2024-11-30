@@ -1,7 +1,6 @@
-
 .container-fluid {
   padding: 30px 15px;
-  background-color: #f7fafc; 
+  background-color: #f7fafc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,12 +16,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.card shadow{
-
-  max-width: 800px;
-}
-
 
 .card:hover {
   transform: translateY(-5px);
@@ -42,6 +35,18 @@ h2.text {
   margin-bottom: 8px;
 }
 
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #6c757d;
+}
+
 input.form-control,
 input.form-control:focus {
   padding: 12px;
@@ -53,11 +58,6 @@ input.form-control:focus {
 input.form-control:focus {
   border-color: #28a745;
   box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
-}
-
-.btn-block {
-  display: block;
-  width: 100%;
 }
 
 .btn-success {
@@ -73,27 +73,7 @@ input.form-control:focus {
   background-color: #218838;
 }
 
-.alert {
-  font-size: 0.95rem;
-  margin-top: 15px;
-  padding: 10px;
-}
-
-.spinner-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 8px;
-}
-
 @media (max-width: 768px) {
-  .card {
-    padding: 25px;
-  }
-
   h2.text {
     font-size: 1.7rem;
   }

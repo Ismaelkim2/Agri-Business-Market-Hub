@@ -66,7 +66,7 @@
 
   <div *ngIf="isEditing" class="modal-overlay" (click)="closeEditModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
-      <h4>Edit Egg Record</h4>
+      <h4> <i class="fa fa-pen"></i> Edit Egg Record</h4>
       <form (ngSubmit)="updateRecord()">
         <div class="form-group">
           <label for="date">Date</label>

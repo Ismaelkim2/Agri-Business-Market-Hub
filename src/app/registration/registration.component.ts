@@ -22,6 +22,7 @@ export class RegistrationComponent {
   error: string = '';
   success: string = '';
   loading = false;
+  showPassword: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -94,5 +95,9 @@ export class RegistrationComponent {
     }
 
     return true;
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

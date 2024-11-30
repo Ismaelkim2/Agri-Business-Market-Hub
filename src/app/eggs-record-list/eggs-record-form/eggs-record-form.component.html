@@ -1,6 +1,11 @@
 <app-sidebar></app-sidebar>
 <div class="container my-5">
-  <h2 class="text-center mb-1 mt-3">{{ editMode ? 'Edit' : 'Add' }} Egg Record</h2>
+  <h2 class="text-center mb-1 mt-5">{{ editMode ? 'Edit' : 'Add' }} Egg Record</h2>
+  <div class="modal-header">
+    <button aria-label="Close" class="close-btn" (click)="cancel()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
   <form (ngSubmit)="saveRecord()" class="form-container">
     <div class="form-group">
       <label for="date" class="form-label">Date</label>
@@ -30,13 +35,14 @@
     </div>
     <div class="button-group">
       <button type="submit" class="btn btn-success btn-lg">
-        {{ editMode ? 'Update' : 'Save' }}
+        <i class="fa me-4" [ngClass]="editMode ? 'fa-edit' : 'fa-plus'"></i>
+              {{ editMode ? 'Update' : 'Save' }}
       </button>
-      <button type="button" class="btn btn-secondary btn-lg" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn btn-secondary btn-lg" (click)="cancel()">
+        <i class="fa fa-times me-4"></i>   Cancel
+      </button>
     </div>
   </form>
 
- <app-notification *ngIf="showNotification" [message]="successMessage" [showSpinner]="showSpinner" [showTick]="showTick"></app-notification>
+  <app-notification *ngIf="showNotification" [message]="successMessage" [showSpinner]="showSpinner" [showTick]="showTick"></app-notification>
 </div>
-
-

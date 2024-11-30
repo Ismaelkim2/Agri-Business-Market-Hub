@@ -69,12 +69,10 @@ body {
   transform: translateX(-50%); 
 }
 
-
 .success-snackbar .mat-simple-snackbar-action {
   color: #fff;
   font-weight: bold;
 }
-
 
 .button-group {
   display: flex;
@@ -88,6 +86,8 @@ body {
   padding: 12px 25px;
   border-radius: 25px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .btn-success {
@@ -108,6 +108,28 @@ body {
   background-color: #5a6268;
 }
 
+.fa {
+  margin-right: 8px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: darkred;
+}
 
 @media (max-width: 768px) {
   .container {
@@ -127,5 +149,9 @@ body {
   .button-group {
     flex-direction: column;
     gap: 15px;
+  }
+
+  .modal-header {
+    padding: 5px;
   }
 }
