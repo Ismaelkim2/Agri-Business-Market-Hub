@@ -65,36 +65,55 @@ export class EggsRecordListComponent implements OnInit {
     this.eggsRecordService.getRecords().subscribe(
       (data: any) => {
         console.log("Fetched Data:", data);
+  
         if (Array.isArray(data)) {
           const today = new Date();
-          const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
-          const endOfWeek = new Date(startOfWeek);
-          endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the week
+          // Set start and end of the week
+          const startOfWeek = new Date(today);
+          startOfWeek.setDate(today.getDate() - today.getDay());
+          startOfWeek.setHours(0, 0, 0, 0); // Start of the day (midnight)
   
+          const endOfWeek = new Date(startOfWeek);
+          endOfWeek.setDate(startOfWeek.getDate() + 6);
+          endOfWeek.setHours(23, 59, 59, 999); // End of the day
+  
+          console.log("Start of Week (normalized):", startOfWeek);
+          console.log("End of Week (normalized):", endOfWeek);
+  
+          // Filter, parse, and sort records
           this.eggRecords = data
             .filter((record) => !record.archived) // Exclude archived records
             .map((record) => {
               console.log("Record before parsing:", record);
-              const recordDate = new Date(record.date); // Updated parsing logic
-              console.log("Parsed Date:", recordDate);
-              return { ...record, date: recordDate };
+              const recordDate = new Date(record.date);
+              console.log("Parsed Date for Record:", recordDate);
+              return { ...record, date: recordDate }; // Ensure date is a valid Date object
             })
-            .filter((record) => record.date >= startOfWeek && record.date <= endOfWeek)
-            .sort((a, b) => b.date.getTime() - a.date.getTime()); // Sort by date
+            .filter((record) => {
+              const isInRange = record.date >= startOfWeek && record.date <= endOfWeek;
+              console.log(`Record ${record.id} is in range:`, isInRange);
+              return isInRange;
+            })
+            .sort((a, b) => b.date.getTime() - a.date.getTime()); // Sort by date descending
   
           console.log("Filtered and Sorted Records:", this.eggRecords);
-          this.groupRecordsByDay();
+  
+          if (this.eggRecords.length === 0) {
+            console.warn("No records found for the selected week.");
+          } else {
+            this.groupRecordsByDay(); // Group records by day if there are any
+          }
         } else {
           console.warn("Data is not an array:", data);
           this.eggRecords = [];
         }
-        this.updatePagedRecords();
-        this.groupRecordsByDay();
-        this.updateChart();
+  
+        this.updatePagedRecords(); // Update paginated records
+        this.updateChart(); // Update the chart with new data
       },
       (error) => {
         console.error("Error fetching records:", error);
-        this.eggRecords = [];
+        this.eggRecords = []; // Reset records in case of an error
       }
     );
   }
@@ -148,9 +167,9 @@ export class EggsRecordListComponent implements OnInit {
 
   checkAndArchiveCurrentWeek(): void {
     const today = new Date();
-    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the week
+    endOfWeek.setDate(startOfWeek.getDate() + 6); 
 
     if (today > endOfWeek) {
       const currentWeekRecords = this.eggRecords.filter((record) => {

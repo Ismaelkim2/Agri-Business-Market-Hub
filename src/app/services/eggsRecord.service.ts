@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { EggRecord } from '../eggs-record-list/eggs-record-list.component';
 import { environment } from '../../environments/environment.prod';
+
+
 
 
 
@@ -72,5 +74,21 @@ export class EggsRecordService {
       )
     );
   }
+
+  getDailyRecordsForWeek(startOfWeek: Date, endOfWeek: Date): Observable<EggRecord[]> {
+    const formatDate = (date: Date) => date.toISOString().split('T')[0]; // Extract only the date part
+    const params = new HttpParams()
+      .set('start', formatDate(startOfWeek))
+      .set('end', formatDate(endOfWeek));
+
+    return this.http.get<EggRecord[]>(`${this.baseUrl}/daily-records`, { params }).pipe(
+      catchError((error) => {
+        console.error('Error fetching daily records:', error);
+        return throwError(() => new Error('Failed to fetch daily records.'));
+      })
+    );
+}
+
+
 
 }

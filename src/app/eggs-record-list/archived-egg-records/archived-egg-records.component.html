@@ -1,22 +1,17 @@
 <app-sidebar></app-sidebar>
 <div class="container">
-
   <div class="chart-title text-center mt-1">
     <div class="d-flex align-items-center justify-content-between">
-      
       <div (click)="goBack()" class="me-3">
         <i class="fa fa-chevron-left" title="Back" style="cursor: pointer;"></i>
       </div>
-
       <div class="flex-grow-1 text-center">
         <h5 class="fw-bold text-primary">Weekly Egg Production Trends</h5>
       </div>
-    
       <div class="invisible me-3">
         <i class="fa fa-chevron-left"></i>
       </div>
     </div>
-    
     <p class="text-muted">Weekly Visual representation of egg production over time</p>
   </div>
 
@@ -34,25 +29,88 @@
       [autoScale]="true"
     ></ngx-charts-line-chart>
   </div>
-  
 
-  <table class="table table-hover mt-1 shadow-lg rounded">
+  <table class="table table-hover mt-1 shadow-lg rounded" style="border-collapse: collapse;">
     <thead>
       <tr>
-        <th title="Range of the week">Week</th>
-        <th title="Number of eggs produced">Egg Count</th>
-        <th title="Broken eggs count">Broken</th>
+        <th style="padding: 4px; text-align: center;" title="Range of the week">Week</th>
+        <th style="padding: 4px; text-align: center;" title="Number of eggs produced">Egg Count</th>
+        <th style="padding: 4px; text-align: center;" title="Actions">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let record of previousRecords">
-        <td>
-          {{ record.startOfWeek | date: 'shortDate' }} -
-          {{ record.endOfWeek | date: 'shortDate' }}
+        <td style="padding: 4px;">
+          {{ record.startOfWeek | date: 'shortDate' }} - {{ record.endOfWeek | date: 'shortDate' }}
         </td>
-        <td>{{ record.eggsCount }}</td>
-        <td>{{ record.brokenEggsCount }}</td>
+        <td style="padding: 4px;">{{ record.eggsCount }}</td>
+        <td style="padding: 4px;">
+          <p
+            class="btn btn-sm"
+            (click)="viewPreviousWeekData(record)"
+            style="border: none; color: rgb(116, 226, 144); cursor: pointer; padding: 0; margin: 0;"
+            onmouseover="this.style.color='forestgreen'"
+            onmouseout="this.style.color='rgb(116, 226, 144)'"
+          >
+            <i class="fa fa-eye"></i>
+          </p>
+        </td>
       </tr>
     </tbody>
   </table>
+  
+<!-- Modal -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  [class.show]="showModal"
+  style="display: block; background: rgba(0,0,0,0.5)"
+  *ngIf="showModal"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Daily Egg Records for the Selected Week</h5>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          style="color: red; font-size: 1.5rem; background: none; border: none;"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Date</th>
+              <th>Egg Count</th>
+              <th>Broken Eggs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of previousWeekRecords">
+              <td>{{ record.date | date: 'fullDate' }}</td>
+              <td>{{ record.eggsCount }}</td>
+              <td>{{ record.brokenEggsCount || 'NA' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer d-flex justify-content-end align-items-center">
+        <div
+          class="text-warning fw-bold d-flex align-items-center"
+          style="font-size: 1.2rem;"
+        >
+          <i class="fa fa-egg me-2"></i>
+          Total Eggs This Week: 
+          <span class="ms-2">{{ getTotalEggsForWeek() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>

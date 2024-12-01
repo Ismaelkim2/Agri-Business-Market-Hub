@@ -9,18 +9,19 @@ import { Location } from '@angular/common';
 })
 export class ArchivedEggRecordsComponent implements OnInit {
   previousRecords: WeeklyEggRecord[] = [];
+  previousWeekRecords: any[] = [];
   chartData: any[] = [];
   errorMessage: string = '';
+
+  showModal: boolean = false;
 
   colorScheme = {
     domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA'],
   };
 
-  isSmallScreen: boolean = false;
-
   viewSize: [number, number] = [1000, 400];
 
-  constructor(private eggsRecordService: EggsRecordService,private location: Location) {}
+  constructor(private eggsRecordService: EggsRecordService, private location: Location) {}
 
   ngOnInit(): void {
     this.updateChartSize();
@@ -31,44 +32,42 @@ export class ArchivedEggRecordsComponent implements OnInit {
   updateChartSize(): void {
     const screenWidth = window.innerWidth;
     if (screenWidth < 576) {
-      this.viewSize = [300, 250]; 
+      this.viewSize = [300, 250];
     } else if (screenWidth < 768) {
-      this.viewSize = [400, 300]; 
+      this.viewSize = [400, 300];
     } else if (screenWidth < 1024) {
-      this.viewSize = [700, 400]; 
+      this.viewSize = [700, 400];
     } else {
-      this.viewSize = [1000, 400]; 
+      this.viewSize = [1000, 400];
     }
   }
 
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
 
   loadPreviousRecords(): void {
     this.eggsRecordService.getPreviousWeeksData().subscribe(
       (data: WeeklyEggRecord[]) => {
-        const sortedRecords = data
+        this.previousRecords = data
           .map((record) => ({
             ...record,
             startOfWeek: new Date(record.startOfWeek),
             endOfWeek: new Date(record.endOfWeek),
           }))
-          .sort((a, b) => a.startOfWeek.getTime() - b.startOfWeek.getTime());
-  
-        this.previousRecords = [...sortedRecords].reverse(); 
-  
+          .sort((a, b) => b.startOfWeek.getTime() - a.startOfWeek.getTime());
+
         this.chartData = [
           {
             name: 'Weekly Egg Counts',
-            series: sortedRecords.map((record) => ({
+            series: this.previousRecords.map((record) => ({
               name: `${record.startOfWeek.toLocaleDateString()} - ${record.endOfWeek.toLocaleDateString()}`,
               value: record.eggsCount,
             })),
           },
           {
             name: 'Broken Eggs',
-            series: sortedRecords.map((record) => ({
+            series: this.previousRecords.map((record) => ({
               name: `${record.startOfWeek.toLocaleDateString()} - ${record.endOfWeek.toLocaleDateString()}`,
               value: record.brokenEggsCount,
             })),
@@ -80,6 +79,27 @@ export class ArchivedEggRecordsComponent implements OnInit {
         this.errorMessage = 'Failed to load previous records. Please try again later.';
       }
     );
+  }
+
+  viewPreviousWeekData(record: WeeklyEggRecord): void {
+    this.eggsRecordService.getDailyRecordsForWeek(record.startOfWeek, record.endOfWeek).subscribe({
+      next: (data) => {
+        this.previousWeekRecords = data;
+        this.showModal = true;
+      },
+      error: (error) => {
+        console.error('Error fetching daily records:', error);
+        this.errorMessage = 'Failed to load daily records. Please try again later.';
+      },
+    });
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+  getTotalEggsForWeek(): number {
+    return this.previousWeekRecords.reduce((total, record) => total + record.eggsCount, 0);
   }
   
 }

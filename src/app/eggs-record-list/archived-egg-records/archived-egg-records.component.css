@@ -65,7 +65,7 @@ h2 {
 
 .table {
   width: 100%;
-  border-spacing: 0 10px;
+  border-spacing: 0 8px;
   table-layout: fixed;
 }
 
@@ -102,6 +102,58 @@ tr:hover {
   background-color: #218838;
   transform: scale(1.05);
 }
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog {
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-body {
+  padding: 15px;
+}
+
+.modal .btn-close {
+  font-size: 1.5rem;
+  color: red;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .modal-dialog {
+    width: 90%;
+  }
+}
+
 
 @media (max-width: 768px) {
   .container {

@@ -166,6 +166,11 @@
   outline: none;
 }
 
+.navbar-toggler {
+ border-color: #ffffffff;
+}
+
+
 .navbar-nav .nav-link:hover {
   background-color: #16a085; 
   color: white;

@@ -48,7 +48,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of pagedRecords" class="record-row">
+        <tr *ngFor="let record of pagedRecords;let i = index" class="record-row">
           <td>{{ record.date | date: 'shortDate' }}</td>
         <td>{{ record.eggsCount }}</td>
           <td>
