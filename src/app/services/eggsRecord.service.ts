@@ -4,10 +4,6 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { EggRecord } from '../eggs-record-list/eggs-record-list.component';
 import { environment } from '../../environments/environment.prod';
 
-
-
-
-
 interface ResponseMessage {
   message?: string;
   error?: string;
@@ -76,7 +72,7 @@ export class EggsRecordService {
   }
 
   getDailyRecordsForWeek(startOfWeek: Date, endOfWeek: Date): Observable<EggRecord[]> {
-    const formatDate = (date: Date) => date.toISOString().split('T')[0]; // Extract only the date part
+    const formatDate = (date: Date) => date.toISOString().split('T')[0]; 
     const params = new HttpParams()
       .set('start', formatDate(startOfWeek))
       .set('end', formatDate(endOfWeek));
