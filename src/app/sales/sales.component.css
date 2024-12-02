@@ -120,13 +120,17 @@ table {
   width: 100%;
 }
 
-thead th {
+
+table th
+ {
   font-weight: bold;
-  background-color: #28a745;
+  background-color: #006400;
   color: white;
   padding: 10px;
-  text-align: left;
+  text-align: center;
+  text-transform: uppercase;
 }
+
 
 tbody td {
   padding: 6px;

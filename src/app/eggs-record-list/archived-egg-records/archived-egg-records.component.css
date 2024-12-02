@@ -70,12 +70,12 @@ h2 {
 }
 
 th {
-  background-color: #4caf50;
+  font-weight: bold;
+  background-color: #006400;
   color: white;
+  padding: 10px;
+  text-align: center;
   text-transform: uppercase;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 8px;
 }
 
 td {

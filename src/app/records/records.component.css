@@ -12,6 +12,7 @@ body {
   z-index: 999; 
   padding: 10px 20px;
   border-bottom: 1px solid #ddd;
+  margin-left: 250px;
 }
 
 .hello-admin-container h3 {
@@ -377,6 +378,12 @@ th, td {
 }
 
 @media (max-width: 576px) {
+  
+  .hello-admin-container {
+   margin-left: 0;
+  }
+  
+
   .grid-container {
     grid-template-columns: repeat(3, 1fr); 
     grid-gap: 5px;

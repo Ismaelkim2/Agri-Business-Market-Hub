@@ -1,7 +1,6 @@
 .navbar {
-  background-color: #2E7D32;
-  background: linear-gradient(90deg, #228B22, #2E8B57);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #caccce;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   position: fixed;
   top: 0;
@@ -10,6 +9,53 @@
   transition: background-color 0.3s;
   height: auto;
 }
+
+.nav-item a {
+  font-weight: bold;
+  color: #006400 !important;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.navbar-clollapse .nav-link {
+  color: #006400 !important;
+}
+
+.nav-item a:hover,
+.nav-item a.active {
+  color: #44494e; 
+  background-color: white;
+  border-radius: 5px;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.logo-text {
+  color: green; 
+}
+
+.username-text {
+  color: green;
+}
+
+.navbar-text {
+  color: green;
+}
+
+.navbar .btn-success {
+  background-color: white;
+  color: #44494e;
+  border: none;
+}
+
+.navbar .btn-success:hover {
+  background-color: #666b71;
+  color: white;
+}
+
 
 .navbar .d-flex {
   height: 60px; 
@@ -36,7 +82,7 @@
 
 .nav-item a{
   font-weight: bold;
-  color:#FFFFFF!important ;
+  color: #2C3E50 !important;
 }
 
 .navbar-toggler-icon {
@@ -45,8 +91,8 @@
 
 .logo-image {
   width: 65px;
-  height: auto;
-  border-radius: 10px;
+  height: 65px;
+  border-radius: 50%;
   margin-right: 12px;
   transition: transform 0.3s;
 }
@@ -94,7 +140,7 @@
 
 .username-text {
   font-size: 12px; 
-  color: white; 
+  color: green; 
   margin-top: 4px; 
   list-style-type: none;
 }
@@ -123,43 +169,36 @@
 }
 
 .sidebar {
-  left: -250px;
-  width: 250px;
-  height: calc(100% - 60px);
-  background-color: #2E7D32;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  overflow-y: auto;
-  transition: transform 0.3s ease;
   position: fixed;
-  top: 60px;
-  z-index: 1029;
+  top: 50px;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #caccce !important;
+  padding-top: 10px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar.open {
+  display: block;
   transform: translateX(0);
 }
 
 .sidebar .nav-link {
-  color: #2e302e;
-  padding: 10px 15px;
-  transition: background-color 0.3s;
-  border-radius: 5px;
+  color: #006400 !important;
+  font-size: 20px !important;
+  padding: 6px 14px;
 }
 
 .sidebar .nav-link:hover {
-  background: #388E3C;
-  transform: scale(1.05);
+  background-color: #495057;
+  color: #17a2b8;
 }
 
-.sidebar .nav-link.active-link, 
-.bottom-navbar .nav-link.active-link, 
-.navbar-collapse .nav-link.active-link {
-  background-color: #1abc42 !important; 
-  font-weight: bold; 
-  color: white !important; 
-  border-radius: 4px; 
+.sidebar .nav-item {
+  margin-bottom: 10px;
 }
+
 
 .navbar-toggler:active, .navbar-toggler:focus {
   background-color: #04f825 !important; 
@@ -178,31 +217,13 @@
 }
 
 
-.bottom-navbar .nav-link.active
-
-
-.navbar i,
-.sidebar i {
-  color: #228B22 !important;
-}
-
-
-.online-status {
-  color: rgb(13, 224, 13);
-  font-size: 14px;
-}
-
 .bottom-navbar {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
   width: 100%;
-  background-color: #2E7D32;
-  border-top: 1px solid #1B5E20;
-  border-top: 1px solid #ddd;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); 
-  z-index: 1030; 
+  z-index: 1030;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #caccce;
 }
 
 .bottom-navbar .nav {
@@ -216,21 +237,22 @@
 }
 
 .bottom-navbar .nav-link {
-  color: #ffffff;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
+  color: #006400;
+  font-size: 12px;
+  text-align: center;
 }
 
 .bottom-navbar .nav-link i {
-  font-size: 1.2rem;
+  font-size: 16px;
 }
 
 .bottom-navbar .nav-link span {
   font-size: 0.75rem;
   margin-top: 0.2rem;
+}
+
+.bottom-navbar .nav-link:hover {
+  color: #17a2b8;
 }
 
 .bottom-navbar .nav-link:hover,
@@ -279,8 +301,8 @@
 
 @media (max-width: 991px) {
   .navbar-collapse {
-    background-color: #228B22;
-    color: white;            
+    background-color: #caccce;
+    color: white !important;            
     text-align: left;          
     position: absolute;     
     left: 0;                  
@@ -290,7 +312,7 @@
   }
 
   .navbar-collapse .nav-link {
-    color: white;         
+    color: #006400 !important;         
   }
 
   .navbar-collapse .nav-link:hover {
@@ -336,8 +358,8 @@
   }
 
   .user-photo2 {
-    width: 16px; 
-    height: 16px;
+    width: 12px; 
+    height: 12px;
   }
 
   .username-text {

@@ -115,8 +115,13 @@ input[type="text"] {
 }
 
 .mortalities-table th {
-    background-color: #343a40;
-    color: white;
+   
+     font-weight: bold;
+     background-color: #006400;
+     color: white;
+     padding: 10px;
+     text-align: center;
+     text-transform: uppercase;
 }
 
 .hidden {

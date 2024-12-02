@@ -64,13 +64,12 @@ body {
 }
 
 .table th {
-  background: #22a04c;
-  color: #fff;
   font-weight: bold;
-  text-transform: uppercase;
-  padding: 8px;
+  background-color: #006400;
+  color: white;
+  padding: 10px;
   text-align: center;
-  border-radius: 5px;
+  text-transform: uppercase;
 }
 
 .table td {
