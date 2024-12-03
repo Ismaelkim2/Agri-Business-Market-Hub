@@ -92,13 +92,18 @@
 .logo-image {
   width: 65px;
   height: 65px;
-  border-radius: 50%;
+  border-radius: 50%; 
   margin-right: 12px;
   transition: transform 0.3s;
 }
 
 .logo-image:hover {
   transform: scale(1.1);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  margin-bottom: 0; 
 }
 
 .vertical-line {
@@ -124,17 +129,35 @@
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.3s;
+  object-fit: cover;
+
 }
 
-.user-photo2 {
-  width: 40px; 
-  height: 40px;
+.user-photo:hover {
+  transform: scale(1.1);
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
+  object-fit: cover;
 }
 
-.user-photo2:hover {
+.default-user-photo {
+  background-color: white;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.user-photo:hover {
   transform: scale(1.1);
 }
 
@@ -143,6 +166,7 @@
   color: green; 
   margin-top: 4px; 
   list-style-type: none;
+  text-align: center;  
 }
 
 
@@ -186,8 +210,8 @@
 
 .sidebar .nav-link {
   color: #006400 !important;
-  font-size: 20px !important;
-  padding: 6px 14px;
+  font-size: 16px !important;
+  padding: 8px 16px;
 }
 
 .sidebar .nav-link:hover {
@@ -223,7 +247,8 @@
   width: 100%;
   z-index: 1030;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #caccce;
+  background-color: #fff;
+  padding: 10px 0;
 }
 
 .bottom-navbar .nav {
@@ -234,30 +259,42 @@
 
 .bottom-navbar .nav-item {
   text-align: center;
+  font-weight: bold;
 }
 
 .bottom-navbar .nav-link {
   color: #006400;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
+  padding: 5px;
+  transition: color 0.3s, background-color 0.3s;
 }
 
 .bottom-navbar .nav-link i {
-  font-size: 16px;
+  font-size: 20px;
+  margin-bottom: 5px;
+  transition: transform 0.3s;
 }
 
 .bottom-navbar .nav-link span {
-  font-size: 0.75rem;
-  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: #333;
 }
 
 .bottom-navbar .nav-link:hover {
-  color: #17a2b8;
+  color: #fff;
+  background-color: #28a745;
+  border-radius: 50%;
 }
 
-.bottom-navbar .nav-link:hover,
 .bottom-navbar .nav-link.active {
-  color: #007bff; 
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+
+.bottom-navbar .nav-link i:hover {
+  transform: scale(1.2);
 }
 
 
@@ -326,6 +363,36 @@
 }
 
 @media (max-width: 576px) {
+  .logo-image {
+    width: 50px; 
+    height: 50px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem; 
+    margin-bottom: 6px; 
+  }
+
+
+ .user-photo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+  }
+
+  .default-user-photo{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
+
+  .username-text {
+    font-size: 8px;
+    margin-right: 4px;
+  }
+
+
   .notifications {
     text-align: right;
   }
@@ -348,23 +415,38 @@
   .btn-sm-sm .badge {
     font-size: 12px !important;
   }
+
+  .bottom-navbar .nav-item {
+    font-size: 12px;
+  }
+
+  .bottom-navbar .nav-link i {
+    font-size: 18px;
+  }
+
+  .bottom-navbar .nav-link span {
+    font-size: 0.7rem;
+  }
+
 }
 
 @media (min-width: 577px) {
   .logo-text {
-    font-size: 0.1rem; 
-    margin-top: 0;
-    margin-bottom: 4px;
+    font-size: 1.5rem; 
   }
 
-  .user-photo2 {
-    width: 12px; 
-    height: 12px;
+  .logo-image {
+    height: 50px;
+    width: 50px;
+  }
+
+  .user-photo {
+    width: 50px;
+    height: 50px;
   }
 
   .username-text {
-    font-size: 4px;
-    margin-top: 1px;
+    font-size: 10px;
   }
 
   .btn-sm-sm {
@@ -382,7 +464,7 @@
   }
 }
 
-/* Vibration animation for the bell icon */
+
 @keyframes vibration {
   0% {
     transform: translateX(0);
@@ -415,7 +497,7 @@
 }
 
 .notifications .badge {
-  font-size: 12px;
+  font-size: 10px;
   top: 0;
   right: 0;
 }

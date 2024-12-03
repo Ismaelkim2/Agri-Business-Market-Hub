@@ -4,15 +4,15 @@
 
       <div class="d-flex align-items-center ms-n5 me-1" style="width: 100%;max-width: 100%;">
         <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon position-relative tex-whitesmoke"></span>
-          <h6 style="color: whitesmoke; position:absolute;" class="me-5">Menu</h6>
+          <span class="navbar-toggler-icon position-relative tex-dark"></span>
+          <h6 style="color: green; position:absolute;" class="me-5">Menu</h6>
         </button>
 
         <div class="vertical-line d-lg-none"></div>
         
         <div class="logo d-flex flex-lg-row flex-column align-items-center text-center">
           <img src="assets/images/poultry.jpg" alt="Eco-Eggs Poultry Logo" class="logo-image">
-          <span class="text-green fw-bold ms-lg-2 mt-lg-0 logo-text fs-4">EcoEggsFarm</span>
+          <span class="text-green fw-bold ms-lg-2 mt-lg-0 logo-text fs-4 mb-sm-2">EcoEggsFarm</span>
         </div>
         
         <div class="vertical-line  d-lg-none"></div>
@@ -20,60 +20,48 @@
         <div class="notifications ms-2">
           <button
             class="btn btn-light position-relative btn-sm-sm"
-            style="width: 35px; height: 35px;border-radius: 50%;background-color: rgb(184, 182, 182);"
+            style="width: 35px; height: 35px;border-radius: 50%;background-color: rgb(184, 182, 182);justify-content: center;align-items: center;"
             (click)="viewActivities()"
           >
-            <i class="fa fa-bell" [class.vibrating]="recentActivities.length > 0" style="font-size: 12px;"></i>
+            <i class="fa fa-bell" [class.vibrating]="recentActivities.length > 0" style="font-size: 10px;"></i>
             <span
-              class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+              class="badge bg-danger position-absolute top-0 start-100 translate-middle justify-content-center align-items-center"
               style="font-size: 8px;"
             >
               {{ recentActivities.length }}
             </span>
           </button>
         </div>
+
         
         <div class="vertical-line ms-3  d-lg-none"></div> 
 
-        <div class="user-info d-flex flex-column align-items-center ms-2 float-end" style="float: right;">
-          <div *ngIf="loggedInUser" class="nav-item d-flex flex-column align-items-center float-end" style="height: 60px;float: right;" routerLink="/settings" >
+        <li class="nav-item d-flex align-items-center d-lg-none" *ngIf="loggedInUser">
+          <div class="user-info d-flex flex-column align-items-center ms-3">
             <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
               <img 
                 [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
                 alt="User Image" 
-                class="user-photo2 rounded-circle" 
+                class="user-photo rounded-circle" 
                 (error)="onImageError($event)" 
-                style="width: 50px; height: 50px; object-fit: cover;"
+                routerLink="/settings"
               >
             </ng-container>
+            
             <ng-template #defaultIcon>
-              <div
-                style="
-                  background-color: white;
-                  border-radius: 50%;
-                  width: 40px;
-                  height: 40px;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-top: 4px;
-                "
-                 class="d-lg-none"
-              >
-                <i
-                  class="fa fa-user user-photo2 d-lg-none"
-                  style="font-size: 16px; color: rgb(102, 98, 98);"
-                ></i>
+              <div class="default-user-photo">
+                <i class="fa fa-user user-photo2"></i>
               </div>
             </ng-template>
-            
-            <div  *ngIf="loggedInUser" class="float-end">
-              <span class="navbar-text fs-6 fw-bold text-green text-center username-text d-lg-none">
-                {{ userFirstName }}
-              </span>
+        
+            <div class="username-text mt-2">
+              <span class="navbar-text fs-6 fw-bold text-white">{{ userFirstName }}</span>
             </div>
           </div>
-        </div>
+        </li>
+        
+        
+      </div>
         
       </div>
      
@@ -198,10 +186,6 @@
               </ng-template>
           
   
-              <div *ngIf="loggedInUser">
-                <span class="navbar-text fs-6 fw-bold text-green">{{ userFirstName }}</span>
-              </div>
-
             </div>
           </li>
           
@@ -212,51 +196,38 @@
         </ul>
       </div>
     </div>
-  </div>
-</nav>
 
+</nav>
 
 
 <nav class="bottom-navbar d-lg-none">
   <ul class="nav justify-content-around align-items-center m-0 p-0">
     <li class="nav-item">
-      <a class="nav-link" routerLink="/records"
-      routerLinkActive="active-link" 
-        [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/records" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-house"></i>
         <span>Home</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/eggs-record-list"
-      routerLinkActive="active-link" 
-        [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/eggs-record-list" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-egg"></i>
         <span>Eggs</span>
       </a>
     </li>
-   
     <li class="nav-item">
-      <a class="nav-link" routerLink="/farm-data"
-      routerLinkActive="active-link" 
-        [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/farm-data" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-book"></i>
         <span>Records</span>
       </a>
     </li>
-
     <li class="nav-item">
-      <a class="nav-link" routerLink="/sales"
-      routerLinkActive="active-link" 
-        [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/sales" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-money-bill"></i>
         <span>Sales</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/expenses"
-      routerLinkActive="active-link" 
-        [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/expenses" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fa fa-chart-pie"></i>
         <span>Expenses</span>
       </a>
