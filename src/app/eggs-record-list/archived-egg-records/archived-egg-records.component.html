@@ -16,12 +16,19 @@
   </div>
 
   <div class="chart-container mt-2">
+<div class="custom-legend">
+  <span *ngFor="let item of chartData" class="legend-item">
+    <span class="legend-color-box" [style.background]="item.color"></span>
+    {{ item.name }}
+  </span>
+</div>
+
     <ngx-charts-line-chart
-      [view]="viewSize"
+      [view]="[width, height]"
       [results]="chartData"
       [xAxis]="true"
       [yAxis]="true"
-      [legend]="true"
+      [legend]="false"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
       [xAxisLabel]="'Week Range'"

@@ -20,6 +20,8 @@ export class ArchivedEggRecordsComponent implements OnInit {
   };
 
   viewSize: [number, number] = [1000, 400];
+  width: number = 1100; 
+  height: number = 600;
 
   constructor(private eggsRecordService: EggsRecordService, private location: Location) {}
 

@@ -58,18 +58,18 @@ body {
 }
 
 .table {
-  border-collapse: separate;
-  border-spacing: 0 4px;
+  width: 100%;
+  border-spacing: 0 8px;
   table-layout: fixed;
 }
 
 .table th {
+  background:#006400;
+  color: #fff;
   font-weight: bold;
-  background-color: #006400;
-  color: white;
-  padding: 10px;
-  text-align: center;
   text-transform: uppercase;
+  padding: 8px;
+  text-align: center;
 }
 
 .table td {
@@ -78,7 +78,6 @@ body {
   text-align: center;
   padding: 6px; 
   max-width: 150px;
-  word-wrap: break-word; 
 }
 
 .table-hover tbody tr:hover td {
