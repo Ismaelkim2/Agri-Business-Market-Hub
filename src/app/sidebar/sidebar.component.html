@@ -3,10 +3,18 @@
     <div class="d-flex justify-content-between align-items-center w-100">
 
       <div class="d-flex align-items-center ms-n5 me-1" style="width: 100%;max-width: 100%;">
-        <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon position-relative text-white"></span>
-          <h6 style="color: whitesmoke; position:absolute;" class="me-5">Menu</h6>
+     
+        <button class="navbar-toggler d-flex flex-column align-items-center d-lg-none" 
+        type="button"
+         data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" 
+          aria-controls="#navbarSupportedContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars navbar-toggler-icon text-success"></i>
+          <span class="menu-text text-success">Menu</span>
         </button>
+
 
         <div class="vertical-line d-lg-none"></div>
         
@@ -142,18 +150,18 @@
           </li>
         </ul>
 
-        <ul class=" ms-auto d-flex no-bullets ">
-          <li class="nav-item" *ngIf="!loggedInUser">
-            <button (click)="SignIn()" class="btn btn-success">Sign In</button>
-          </li>
-          <li class="nav-item" *ngIf="!loggedInUser" style="margin-left: 4px;">
-            <button (click)="SignUp()" class="btn btn-success">Sign Up</button>
-          </li>
+        <ul class=" d-flex no-bullets " style="background-color:#caccce !important;">
+         
+          <div class="d-flex justify-content-center align-items-center gap-2" *ngIf="!loggedInUser" >
+            <button (click)="SignIn()" class="btn btn-success bg-success">Sign In</button>
+            <button (click)="SignUp()" class="btn btn-success bg-success">Sign Up</button>
+          </div>
           
+        
           <li class="nav-item d-flex align-items-center" *ngIf="loggedInUser">
            
             <div class="user-info d-flex align-items-center ms-3">
-              <!-- User Image -->
+             
               <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
                 <img 
                   [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
@@ -184,15 +192,9 @@
                   ></i>
                 </div>
               </ng-template>
-          
-  
+    
             </div>
           </li>
-          
-
-          <!-- <li class="nav-item" *ngIf="loggedInUser">
-            <button (click)="SignOut()" class="btn btn-success" style="margin-left: 4px;">Sign Out</button>
-          </li> -->
         </ul>
       </div>
     </div>

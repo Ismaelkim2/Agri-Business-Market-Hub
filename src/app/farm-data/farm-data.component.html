@@ -1,142 +1,121 @@
 <app-sidebar></app-sidebar>
-<div class="layout" *ngIf="isLoggedIn">
-  <div class="main-content container-fluid dashboard-container">
-    <div class="row">
-      <div class="col-lg-12">
-        <section class="poultry-dashboard card shadow mb-4">
-
-          <div class="header">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
-              <div (click)="goBack()" class="back-icon" title="Back">
-                <i class="fa fa-chevron-left mt-2 ms-3"></i>
-              </div>
-              <div class="ms-4 mt-2">
-                <h2 class="text-success fw-bold">Poultry Records Data</h2>
-              </div>
-            </div>
-
-            <div class="filter-container d-flex align-items-center justify-content-between gap-2 mb-3">
-              <div class="input-icon-container flex-grow-1 ms-3 position-relative">
-                <input 
-                  type="text" 
-                  id="filterInput" 
-                  [(ngModel)]="filterTerm" 
-                  (ngModelChange)="applyFilter()" 
-                  placeholder="Search sales type..." 
-                  class="form-control" 
-                  aria-label="Search type">
-                <i class="fa fa-search position-absolute search-icon"></i>
-              </div>
-              <button 
-              class="btn btn-primary d-flex align-items-center justify-content-center gap-1 btn-responsive"
-              (click)="toggleModal()" 
-              data-bs-toggle="tooltip" 
-              title="Add new record">
-              <i class="fa fa-plus"></i> New Record
-            </button>
-            </div>
-          </div>
-
-          
-  <div class="text-success fw-bold" style="max-width: 100%; height: 8px;">
-    <hr class="fw-bold text-success">
-  </div>
-
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered table-striped">
-                <thead class="table-success">
-                  <tr>
-                    <th>Date Hatched</th>
-                    <th>No</th>
-                    <th>Age</th>
-                    <th>Feed on</th>
-                    <th>Next Vaccination</th>
-                    <th>Next Vacc. Date</th>
-                    <th>Sold?</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr 
-                    *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index"
-                    [ngClass]="{'table-warning': isEditing && poultryIndex === i}">
-                    
-                    <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
-                      <td>{{ formatDate(record.date) }}</td>
-                      <td>{{ record.count }}</td>
-                      <td>{{ calculateDescriptiveAge(record.date) }}</td>
-                      <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
-                      <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
-                      <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
-                      <td>
-                        <span [ngClass]="{ 'text-success': !record.sold, 'text-danger': record.sold }">
-                          {{ record.sold ? 'Yes ✓' : 'No' }}
-                        </span>
-                      </td>
-                      <td>
-                        <div class="d-flex">
-                          <button 
-                            class="btn btn-warning btn-sm me-2" 
-                            (click)="onEditFarm(i)" 
-                            data-bs-toggle="tooltip" 
-                            title="Edit record">
-                            <i class="fa fa-pen"></i>
-                          </button>
-                          <button 
-                            *ngIf="!record.sold" 
-                            class="btn btn-success btn-sm" 
-                            (click)="onSellBird(i)" 
-                            data-bs-toggle="tooltip" 
-                            title="Make a sale">
-                            Sell
-                          </button>
-                          <button 
-                            *ngIf="record.sold" 
-                            class="btn btn-danger btn-sm" 
-                            (click)=" onDeleteBird(i)" 
-                            data-bs-toggle="tooltip" 
-                            title="Delete record">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </ng-container>
-
-                    <ng-template #editForm>
-                      <td><input [(ngModel)]="record.date" type="date" class="form-control" /></td>
-                      <td><input [(ngModel)]="record.count" type="number" class="form-control" /></td>
-                      <td>{{ calculateDescriptiveAge(record.date) }}</td>
-                      <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
-                      <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
-                      <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
-                      <td><input [(ngModel)]="record.mortalities" type="number" class="form-control" /></td>
-                      <td>
-                        <button class="btn btn-primary btn-sm" (click)="onSaveChanges(i)" *ngIf="!isSavedArray[i]">Save</button>
-                        <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
-                        <div *ngIf="showNotification" class="notification">Changes saved successfully!</div>
-                      </td>
-                    </ng-template>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
-              <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-              <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
-              <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-            </div>
-          </div>
-
-          <div *ngIf="!filteredPoultryRecords || filteredPoultryRecords.length === 0" class="alert alert-info text-center">
-            No records available to display.
-          </div>
-        </section>
+<div class="main-container">
+  <div class="expense-table">
+    <div class="header d-flex align-items-center mt-3 mb-2">
+      <div class="back-icon" (click)="goBack()">
+        <i class="fa fa-chevron-left mt-2" title="Back" style="cursor: pointer;"></i>
       </div>
+
+      <div class="header-title text-center">
+        <h2 class="fw-bold" style="color: #006400;">
+          <i class="fa fa-cash-register"></i> Farm Records
+        </h2>
+      </div>
+    </div>
+
+    <div class="filter-container d-flex flex-row align-items-center justify-content-between gap-2 mb-3 mt-2">
+      <div class="input-icon-container flex-grow-1">
+        <input 
+          type="text" 
+          id="filterInput" 
+          [(ngModel)]="filterTerm" 
+          (ngModelChange)="applyFilter()" 
+          placeholder="Search record type..." 
+          class="form-control" 
+          aria-label="Search record type">
+        <i class="fa fa-search position-absolute search-icon"></i>
+      </div>
+
+      <div class=" record-button d-flex justify-content-center align-items-center max-width-100">
+        <button 
+          class="btn d-flex align-items-center justify-content-center gap-1 fw-bold btn-responsive"
+          style="background-color:#006400;color: whitesmoke;"
+          (click)="toggleModal()" data-bs-toggle="tooltip" title="Add new record">
+          <i class="fa fa-plus"></i>Record new flock
+        </button>
+      </div>
+    </div>
+
+    <hr class="fw-bold text-success" />
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped">
+          <thead class="table-success">
+            <tr>
+              <th>Date Hatched</th>
+              <th>No</th>
+              <th>Age</th>
+              <th>Feed on</th>
+              <th>Next Vaccination</th>
+              <th>Next Vacc. Date</th>
+              <th>Sold?</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr 
+              *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index"
+              [ngClass]="{'table-warning': isEditing && poultryIndex === i}">
+              <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
+                <td>{{ formatDate(record.date) }}</td>
+                <td>{{ record.count }}</td>
+                <td>{{ calculateDescriptiveAge(record.date) }}</td>
+                <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
+                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
+                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
+                <td>
+                  <span [ngClass]="{ 'text-success': !record.sold, 'text-danger': record.sold }">
+                    {{ record.sold ? 'Yes ✓' : 'No' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex">
+                    <button class="btn btn-warning btn-sm me-2" (click)="onEditFarm(i)" data-bs-toggle="tooltip" title="Edit record">
+                      <i class="fa fa-pen"></i>
+                    </button>
+                    <button *ngIf="!record.sold" class="btn btn-success btn-sm" (click)="onSellBird(i)" data-bs-toggle="tooltip" title="Make a sale">
+                      Sell
+                    </button>
+                    <button *ngIf="record.sold" class="btn btn-danger btn-sm" (click)="onDeleteBird(i)" data-bs-toggle="tooltip" title="Delete record">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-template #editForm>
+                <td><input [(ngModel)]="record.date" type="date" class="form-control" /></td>
+                <td><input [(ngModel)]="record.count" type="number" class="form-control" /></td>
+                <td>{{ calculateDescriptiveAge(record.date) }}</td>
+                <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
+                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
+                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
+                <td><input [(ngModel)]="record.mortalities" type="number" class="form-control" /></td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="onSaveChanges(i)">Save</button>
+                  <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+                </td>
+              </ng-template>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
+        <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+    </div>
+
+    <div *ngIf="!filteredPoultryRecords || filteredPoultryRecords.length === 0" class="alert alert-info text-center">
+      No records available to display.
     </div>
   </div>
 </div>
+
+
 
 
 <div class="modal" [ngClass]="{'show': isModalOpen}" tabindex="-1" role="dialog" *ngIf="isModalOpen" @modalAnimation>

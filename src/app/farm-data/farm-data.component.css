@@ -1,17 +1,44 @@
-.layout {
-  display: flex;
-  flex-direction: row;
-  min-height: 100vh;
-  background-color: #f1f3f5;
-}
 
-.main-content {
+.main-container {
   margin-left: 250px;
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
   margin-top: 65px;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 12px;
+  gap: 10px;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+
+.back-icon {
+  flex-shrink: 0;
+  margin-right: auto; 
+}
+
+.back-icon i {
+  font-size: 1.4rem; 
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+
+.header-title {
+  position: static; 
+  left: 50%;
+  transform: none;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 
 .dashboard-container {
   padding: 20px;
@@ -302,6 +329,34 @@ button.btn-responsive {
 }
 
 @media (max-width: 768px) {
+
+  .header {
+    flex-direction: column; 
+    align-items: center;   
+  }
+
+  .header-title {
+    margin-bottom: 8px;
+  }
+
+  .record-button {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+  }
+
+  .filter-container {
+    flex-direction: column; 
+    gap: 10px;            
+  }
+
+  .main-container {
+    margin-left: 0;
+    flex: 1;
+    padding: 10px;
+    background-color: #ffffff;
+  }
+
   .filter-input {
     max-width: 100%;
 

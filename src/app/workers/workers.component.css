@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+  background-color: #f4f7fc;
 }
 
 .main-content {
@@ -9,6 +10,49 @@
   flex: 1;
   padding: 30px;
   transition: margin 0.3s ease-in-out;
+  margin-top: 20px;
+
+}
+
+.navigations {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.back-btn {
+  cursor: pointer;
+  font-size: 20px;
+  color: #006400;
+  font-weight: bold;
+  transition: color 0.3s;
+
+}
+
+.back-btn:hover {
+  color: #28a745;
+}
+
+.add-worker-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.add-worker-btn:hover {
+  background-color: #218838;
+}
+
+.save-message {
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 16px;
 }
 
 .container-fluid {
@@ -35,8 +79,6 @@
    text-transform: uppercase;
  }
  
-
-
 .worker-table td {
   text-align: center;
   vertical-align: middle;
@@ -141,10 +183,23 @@
 }
 
 @media (max-width: 768px) {
-  .add-worker-btn {
+
+.navigations {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.back-btn {
+    margin-bottom: 10px;
+}
+
+.add-worker-btn {
+    width: 100%;
+    margin-top: 10px;
     font-size: 14px;
     padding: 8px 16px;
-  }
+}
 
   .worker-table th,
   .worker-table td {
@@ -154,9 +209,7 @@
   .save-message {
     font-size: 14px;
   }
-}
 
-@media (max-width: 576px) {
   .worker-image {
     width: 40px;
     height: 40px;
@@ -172,3 +225,4 @@
     font-size: 12px;
   }
 }
+

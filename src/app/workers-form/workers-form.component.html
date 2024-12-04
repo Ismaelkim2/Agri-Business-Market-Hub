@@ -1,14 +1,93 @@
-<div class="worker-form">
-  <form (ngSubmit)="saveWorker()">
-    <input type="text" [(ngModel)]="worker.name" name="name" placeholder="Name" required />
-    <input type="text" [(ngModel)]="worker.role" name="role" placeholder="Role" required />
-    <input type="number" [(ngModel)]="worker.salary" name="salary" placeholder="Salary" required />
-    <input type="text" [(ngModel)]="worker.status" name="status" placeholder="Status" required />
-    <input type="email" [(ngModel)]="worker.email" name="email" placeholder="Email" required />
-    <input type="text" [(ngModel)]="worker.phone" name="phone" placeholder="Phone" required />
-    <input type="file" (change)="onImageSelected($event)" accept="image/*" required />
+<div class="worker-form container-fluid">
+  <h2 class="form-title">Workers Data</h2>
 
-    <button type="submit" class="btn btn-primary">Save Worker</button>
-  </form>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="isFormVisible">
+    <form (ngSubmit)="saveWorker()" class="form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            [(ngModel)]="worker.name" 
+            name="name" 
+            placeholder="Enter worker's name" 
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <input 
+            type="text" 
+            id="role" 
+            [(ngModel)]="worker.role" 
+            name="role" 
+            placeholder="Enter worker's role" 
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="salary">Salary</label>
+          <input 
+            type="number" 
+            id="salary" 
+            [(ngModel)]="worker.salary" 
+            name="salary" 
+            placeholder="Enter salary amount" 
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <input 
+            type="text" 
+            id="status" 
+            [(ngModel)]="worker.status" 
+            name="status" 
+            placeholder="Active/Inactive" 
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            [(ngModel)]="worker.email" 
+            name="email" 
+            placeholder="Enter email address" 
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input 
+            type="text" 
+            id="phone" 
+            [(ngModel)]="worker.phone" 
+            name="phone" 
+            placeholder="Enter phone number" 
+            required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="photo">Upload Photo</label>
+        <input 
+          type="file" 
+          id="photo" 
+          (change)="onImageSelected($event)" 
+          accept="image/*" 
+          required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Worker</button>
+
+      <button type="button" class="btn btn-danger mt-1"  (click)="isFormVisible = false;">Cancel</button>
+    </form>
+  </div>
 </div>
-

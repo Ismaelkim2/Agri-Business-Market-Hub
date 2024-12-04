@@ -1,82 +1,86 @@
-.container-fluid {
+.worker-form {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.form-title {
   font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+  color: #006400;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.table {
-  margin-top: 20px;
-  border: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-}
-
-.table td {
-  text-align: center;
-  vertical-align: middle;
-}
-
-.table .btn {
-  margin-right: 5px;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-  border-color: #ffc107;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
-input, select {
+label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+input, select, button {
+  font-size: 16px;
   padding: 10px;
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  border: none;
+input:focus, select:focus, button:focus {
+  border-color: #006400;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.5);
+}
+
+.btn-primary {
+  background-color: #006400;
   color: white;
-  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button[disabled] {
-  background-color: #6c757d;
+.btn-warning {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.alert {
-  display: flex;
-  align-items: center;
-  font-size: 1.2em;
+.btn-primary :hover {
+  background-color: #004d00;
 }
 
-.alert .fa-check-circle {
-  margin-right: 10px;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  input, select, button {
+    font-size: 14px;
+  }
+
+  .form-title {
+    font-size: 18px;
+  }
 }

@@ -15,16 +15,15 @@ export class MortalitiesComponent implements OnInit {
     reason: '',
     recordedBy: ''
   };
+  
   isAddingNewMortality = false;
   isEditing = false;
   editingMortality: Mortality | null = null;
-
   addSuccess = false;  
   addError = false;  
-
   displayedMortalities: Mortality[] = []; 
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 10;
 
   constructor(private mortalitiesService: MortalitiesService) {}
 

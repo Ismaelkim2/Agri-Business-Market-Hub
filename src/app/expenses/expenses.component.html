@@ -1,39 +1,40 @@
 <app-sidebar></app-sidebar>
 <div class="main-container">
-  <div class="expenses-table">
-
-    <div class="header">
-      <div class="d-flex justify-content-between align-items-center flex-wrap">
-        <div (click)="goBack()">
-          <i class="fa fa-chevron-left mt-2" title="Back" style="cursor: pointer;"></i>
-        </div>
-        <div class="ms-4">
-          <h2 class="text-success fw-bold">Farm Expenses Records</h2>
-        </div>
+  <div class="expense-table">
+    <div class="header d-flex align-items-center">
+ 
+      <div class="back-icon" (click)="goBack()">
+        <i class="fa fa-chevron-left mt-2" title="Back" style="cursor: pointer;"></i>
       </div>
-
-      <div class="filter-container d-flex flex-row align-items-center justify-content-between gap-2 mb-3">
-        <div class="input-icon-container flex-grow-1">
-          <input 
-            type="text" 
-            id="filterInput" 
-            [(ngModel)]="filterText" 
-            (ngModelChange)="filterExpenses()" 
-            placeholder="Search expense type..." 
-            class="form-control" 
-            aria-label="Search expense type">
-          <i class="fa fa-search position-absolute search-icon"></i>
-        </div>
-        <div class="d-flex justify-content-center align-items-center max-width-100 col-sm-12">
-          <button 
-            class="btn btn d-flex align-items-center justify-content-center gap-1 fw-bold btn-responsive btn-lg"
-            style="background-color:#006400;color: whitesmoke;"
-            (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record new sales">
-            <i class="fa fa-plus"></i> Record Expense
-          </button>
-        </div>
+      
+      <div class="header-title text-center">
+        <h2 class=" fw-bold" style="color: #006400;"><i class="fa fa-cash-register"></i> Farm Expenses</h2>
       </div>
     </div>
+
+    <div class="filter-container d-flex flex-row align-items-center justify-content-between gap-2 mb-3">
+      <div class="input-icon-container flex-grow-1">
+        <input 
+          type="text" 
+          id="filterInput" 
+          [(ngModel)]="filterText" 
+          (ngModelChange)="filterExpenses()"  
+          placeholder="Search expense type..." 
+          class="form-control" 
+          aria-label="Search expense type">
+        <i class="fa fa-search position-absolute search-icon"></i>
+      </div>
+
+      <div class=" record-button d-flex justify-content-center align-items-center max-width-100">
+        <button 
+          class="btn d-flex align-items-center justify-content-center gap-1 fw-bold btn-responsive"
+          style="background-color:#006400;color: whitesmoke;"
+          (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record new expense">
+          <i class="fa fa-plus"></i>Record Expenses
+        </button>
+      </div>
+    </div>
+
 
     <div class="text-success fw-bold" style="max-width: 100%; height: 8px;">
       <hr class="fw-bold text-success">
