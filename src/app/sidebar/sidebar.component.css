@@ -59,16 +59,6 @@
   margin-left: 8px;
 }
 
-.collapse {
-  margin-top: 10px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-}
-
-
-
 .logo-text {
   color: green; 
 }
@@ -85,8 +75,14 @@
   background-color: #caccce;
   color: #44494e;
   border: none;
+  min-width: 100px; 
+  padding: 0.5rem 1rem;
+  white-space: nowrap; 
+  text-align: center; 
+  font-size: 16px; 
+  font-weight: bold;
+  border-radius: 5px;
 }
-
 .navbar .btn-success:hover {
   background-color: #666b71;
   color: white;
@@ -114,6 +110,58 @@
   color: #2C3E50 !important;
 }
 
+
+.notifications .notification-bell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #44494e;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.notifications .notification-bell:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notifications .notification-bell i {
+  font-size: 1.2rem;
+}
+
+@keyframes vibration {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(2px); }
+}
+
+.vibrating {
+  animation: vibration 0.3s ease-in-out infinite;
+}
+
+.notifications .notification-badge {
+  background-color: #dc3545;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 
 .logo-image {
@@ -201,11 +249,6 @@
   transform: scale(1.1);
 }
 
-.no-bullets {
-  list-style-type: none; 
-  padding: 0; 
-  margin: 0; 
-}
 
 
 .dropdown-item {
@@ -466,11 +509,6 @@
     font-size: 10px;
   }
 
-  .btn-sm-sm {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
   .btn-sm-sm i {
     font-size: 14px !important;
     margin-bottom: 8px;
@@ -479,42 +517,4 @@
   .btn-sm-sm .badge {
     font-size: 18px !important; 
   }
-}
-
-
-@keyframes vibration {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  50% {
-    transform: translateX(5px);
-  }
-  75% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(5px);
-  }
-}
-
-.vibrating {
-  animation: vibration 0.3s ease-in-out;
-}
-
-.notifications .btn {
-  position: relative;
-  border: none;
-}
-
-.notifications .btn i {
-  font-size: 1.2rem; 
-}
-
-.notifications .badge {
-  font-size: 10px;
-  top: 0;
-  right: 0;
 }

@@ -4,6 +4,7 @@ import { DataServiceService } from './../data-service.service';
 import { UserDTO } from './../models/user.model';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataServiceService,
-    private router:Router
+    private router:Router,
+    private location:Location
   ) {}
 
   ngOnInit(): void {
@@ -70,8 +72,12 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  SignOut(): void {
+  signOut(): void {
     this.dataService.signOut();
     this.router.navigate(['/login']);
   } 
+
+  goBack(){
+   this.location.back() 
+  }
 }

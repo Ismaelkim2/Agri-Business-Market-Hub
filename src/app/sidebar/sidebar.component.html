@@ -27,25 +27,29 @@
 
         <div class="notifications ms-2">
           <button
-            class="btn btn-light position-relative btn-sm-sm"
-            style="width: 35px; height: 35px;border-radius: 50%;background-color: rgb(184, 182, 182);justify-content: center;align-items: center;"
+            class="btn position-relative notification-bell"
             (click)="viewActivities()"
           >
-            <i class="fa fa-bell" [class.vibrating]="recentActivities.length > 0" style="font-size: 10px;"></i>
+            <i
+              class="fa fa-bell"
+              [class.vibrating]="recentActivities.length > 0"
+              aria-hidden="true"
+            ></i>
             <span
-              class="badge bg-danger position-absolute top-0 start-100 translate-middle justify-content-center align-items-center"
-              style="font-size: 8px;"
+              *ngIf="recentActivities.length > 0"
+              class="badge notification-badge"
             >
               {{ recentActivities.length }}
             </span>
           </button>
         </div>
+        
 
         
         <div class="vertical-line ms-3  d-lg-none"></div> 
 
-        <li class="nav-item d-flex align-items-center d-lg-none" *ngIf="loggedInUser">
-          <div class="user-info d-flex flex-column align-items-center ms-3">
+        <li class="nav-item d-flex align-items-center d-lg-none"   *ngIf="loggedInUser">
+          <div class="user-info d-flex flex-column align-items-center ms-3"  routerLink="/settings">
             <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
               <img 
                 [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
@@ -160,7 +164,7 @@
         
           <li class="nav-item d-flex align-items-center" *ngIf="loggedInUser">
            
-            <div class="user-info d-flex align-items-center ms-3">
+            <div class="user-info d-flex align-items-center ms-3" routerLink="/settings">
              
               <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
                 <img 
@@ -176,18 +180,16 @@
               <ng-template #defaultIcon>
                 <div
                   style="
-                    background-color: white;
                     border-radius: 50%;
                     width: 48px;
                     height: 48px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin-top: 4px;
                   "
                 >
                   <i
-                    class="fa fa-user user-photo2"
+                    class="fa fa-user user-photo"
                     style="font-size: 16px; color: rgb(102, 98, 98);"
                   ></i>
                 </div>
