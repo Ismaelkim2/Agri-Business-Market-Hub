@@ -90,11 +90,11 @@
 
 
   <div class="pagination mt-3 mb-5">
-    <button class="btn btn-outline-primary" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+    <button class="btn btn-outline-success" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
       Previous
     </button>
     <span class="page-info">Page {{ currentPage }} of {{ getTotalPages() }}</span>
-    <button class="btn btn-outline-primary " (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
+    <button class="btn btn-outline-success " (click)="goToPage(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
       Next
     </button>
 </div>

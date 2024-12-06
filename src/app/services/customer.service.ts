@@ -24,11 +24,13 @@ export class CustomerService {
         return this.http.get<any>(`${this.baseUrl}/${id}`); 
     }
 
-    updateCustomer(id: number, customer: any): Observable<any> {
+    updateCustomer(id: number, customer: FormData): Observable<any> {
         return this.http.put<any>(`${this.baseUrl}/${id}`, customer); 
     }
 
     deleteCustomer(id: number): Observable<void> {
         return this.http.delete<void>(`${this.baseUrl}/${id}`);
     }
+
+   
 }

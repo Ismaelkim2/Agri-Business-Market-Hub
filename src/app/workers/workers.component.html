@@ -3,13 +3,12 @@
 
   <div class="main-content container-fluid">
     <div class=" navigations d-flex justify-content-between align-items-center position-relative">
-      <!-- Back Arrow -->
+  
       <div (click)="goBack()" class="back-btn">
           <i class="fa fa-arrow-left" title="Back"></i>
       </div>
 
-      <!-- Add Worker Button -->
-      <button class="btn btn-success add-worker-btn" data-bs-toggle="collapse" data-bs-target="#addWorkerForm">
+      <button class="btn btn-success add-worker-btn mt-4" data-bs-toggle="collapse" data-bs-target="#addWorkerForm">
           <i class="fa fa-plus"></i> Add Worker
       </button>
   </div>
@@ -18,7 +17,7 @@
           <i class="fa fa-check-circle"></i> Worker details saved successfully!
       </div>
 
-      <div class="d-flex justify-content-center w-100 mb-3 action-buttons">
+      <!-- <div class="d-flex justify-content-center w-100 mb-3 action-buttons">
           <button class="btn action-btn copy-btn" (click)="copyToClipboard()" title="Copy">
               <i class="fa fa-copy"></i> Copy
           </button>
@@ -28,7 +27,7 @@
           <button class="btn action-btn share-btn ms-2" (click)="shareContent()" title="Share">
               <i class="fa fa-share-alt"></i> Share
           </button>
-      </div>
+      </div> -->
 
       <div id="addWorkerForm" class="collapse card p-4">
           <app-workers-form (workerAdded)="onWorkerAdded($event)"></app-workers-form>

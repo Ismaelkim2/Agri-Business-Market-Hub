@@ -12,24 +12,24 @@ export class AddCustomerComponent {
         name: '',
         email: '',
         phone: '',
-        image: null // Initialize as null
+        image: null 
     };
 
     constructor(private customerService: CustomerService, private router: Router) {}
 
     onFileChange(event: any) {
-        const file = event.target.files[0]; // Get the file from the input
+        const file = event.target.files[0]; 
         if (file) {
-            this.customer.image = file; // Store the file in the customer object
+            this.customer.image = file; 
         }
     }
 
     onSubmit() {
-        const formData = new FormData(); // Create a FormData object
+        const formData = new FormData(); 
         formData.append('name', this.customer.name);
         formData.append('email', this.customer.email);
         formData.append('phone', this.customer.phone);
-        formData.append('image', this.customer.image); // Append the image file
+        formData.append('image', this.customer.image);
 
         this.customerService.createCustomer(formData).subscribe(() => {
             this.router.navigate(['/customers']); 

@@ -8,6 +8,8 @@ import { CustomerService } from '../../services/customer.service';
     styleUrls: ['./edit-customer.component.css']
 })
 export class EditCustomerComponent implements OnInit {
+    selectedImage: File | null = null;
+
     customer: any = {
         id: null,
         name: '',
@@ -17,6 +19,16 @@ export class EditCustomerComponent implements OnInit {
     };
 
     constructor(private customerService: CustomerService, private route: ActivatedRoute, private router: Router) {}
+
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedImage = file;
+            this.customer.image = URL.createObjectURL(file); 
+        }
+    }
+    
+
 
     ngOnInit() {
         const idParam = this.route.snapshot.paramMap.get('id'); 
@@ -36,6 +48,14 @@ export class EditCustomerComponent implements OnInit {
     }
 
     onSubmit() {
+        const formData = new FormData(); 
+        formData.append('name', this.customer.name);
+        formData.append('email', this.customer.email);
+        formData.append('phone', this.customer.phone);
+        if (this.selectedImage) {
+            formData.append('image', this.selectedImage); 
+        }
+
         this.customerService.updateCustomer(this.customer.id, this.customer).subscribe(() => {
             this.router.navigate(['/customers']); 
         });

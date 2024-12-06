@@ -269,5 +269,22 @@
     <li class="nav-item">
       <a class="nav-link" routerLink="/our-services"><i class="fa fa-leaf"></i> Our Services</a>
     </li>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+      routerLinkActive="active-link" 
+      [routerLinkActiveOptions]="{ exact: true }" ><i class="fa fa-bars"></i> More</a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" (click)="navigateTo('/about-us')"
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }" >About Us</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('contact')"
+          routerLinkActive="active-link" 
+  [routerLinkActiveOptions]="{ exact: true }">Contact Us</a></li>
+        <li><a class="dropdown-item" (click)="navigateTo('/faq')"
+          routerLinkActive="active-link" 
+  [routerLinkActiveOptions]="{ exact: true }">FAQ</a></li>
+      </ul>
+    </li>
   </ul>
 </div>

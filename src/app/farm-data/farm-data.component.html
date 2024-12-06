@@ -102,7 +102,7 @@
         </table>
       </div>
 
-      <div class="pagination-controls mt-3 d-flex justify-content-center align-items-center">
+      <div class="pagination-controls mt-3  mb-5 d-flex justify-content-center align-items-center">
         <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
         <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
         <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>

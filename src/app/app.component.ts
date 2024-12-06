@@ -7,7 +7,7 @@ import { SessionTimeoutService } from './services/session-timeout.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Brishkim Eco_Eggs';
+  title = 'EcoEggs Management System';
   showTimeoutAlert = false;
 
   constructor(private sessionTimeoutService: SessionTimeoutService) {
