@@ -18,10 +18,9 @@ export class ArchivedEggRecordsComponent implements OnInit {
   colorScheme = {
     domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA'],
   };
-
-  viewSize: [number, number] = [1000, 400];
-  width: number = 1100; 
-  height: number = 600;
+  viewSize: [number, number] = [window.innerWidth, window.innerHeight];
+  width: number = window.innerWidth;
+  height: number = window.innerHeight;
 
   constructor(private eggsRecordService: EggsRecordService, private location: Location) {}
 
@@ -31,17 +30,11 @@ export class ArchivedEggRecordsComponent implements OnInit {
   }
 
   @HostListener('window:resize')
+  
   updateChartSize(): void {
-    const screenWidth = window.innerWidth;
-    if (screenWidth < 576) {
-      this.viewSize = [300, 250];
-    } else if (screenWidth < 768) {
-      this.viewSize = [400, 300];
-    } else if (screenWidth < 1024) {
-      this.viewSize = [700, 400];
-    } else {
-      this.viewSize = [1000, 400];
-    }
+    this.viewSize = [window.innerWidth, window.innerHeight];
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
   }
 
   goBack(): void {
