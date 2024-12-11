@@ -1,5 +1,5 @@
 .container {
-  max-width: 80%;
+  max-width: 100%;
   padding: 16px;
   margin-left: 250px;
   margin-top: 74px;
@@ -17,6 +17,8 @@
 .responsive-chart {
   width: 100%;
   height: auto;
+  max-width: 100%; 
+  box-sizing: border-box; 
 }
 
 .custom-legend {
@@ -130,6 +132,11 @@ td {
   td {
     font-size: 0.85rem;
   }
+
+  .responsive-chart {
+    width: 100% !important;
+    height: auto !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -141,6 +148,11 @@ td {
   th,
   td {
     font-size: 0.8rem;
+  }
+
+  .responsive-chart {
+    width: 100% !important;
+    height: auto !important;
   }
 }
 

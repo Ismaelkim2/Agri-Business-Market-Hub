@@ -13,31 +13,28 @@
 
   <div class="grid-container">
   
-      <div class="card summary-card">
-        <div class="card-body bg-white text-center position-relative">
-          <h5 class="my-2">
-            <i class="fa fa-chart-bar text-success me-2"></i>Sales
-            <button (click)="toggleVisibility('sales')" class="toggle-btn">
-              <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
-            </button>
-          </h5>
-          <div><hr></div>
-          <div>
-            <strong *ngIf="showSales" class="display-6 text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
-            <strong *ngIf="!showSales" class="text-muted">----</strong>
-          </div>
-          <div class="progress mt-3">
-            <div class="progress-bar bg-success" [style.width.%]="salesProgress" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="text-center mt-2">
-            <strong>{{ salesProgress | number: '1.0-0' }}%</strong>
-          </div>
-          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'sales']">
-            View More <i class="fa fa-arrow-right"></i>
-          </button> -->
+    <div class="card summary-card">
+      <div class="card-body bg-white text-center position-relative">
+        <h5 class="my-2">
+          <i class="fa fa-chart-bar text-success me-2"></i>Sales
+          <button (click)="toggleVisibility('sales')" class="toggle-btn">
+            <i class="fa" [ngClass]="{ 'fa-eye': showSales, 'fa-eye-slash': !showSales }"></i>
+          </button>
+        </h5>
+        <div><hr></div>
+        <div>
+          <strong *ngIf="showSales" class="display-6 text-success">{{ totalSalesAmount | currency: 'Kes.' }}</strong>
+          <strong *ngIf="!showSales" class="text-muted">----</strong>
+        </div>
+        <div class="progress mt-3">
+          <div class="progress-bar bg-success" [style.width.%]="salesProgress" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="text-center mt-2">
+          <strong>{{ salesProgress | number: '1.0-0' }}%</strong>
         </div>
       </div>
- 
+    </div>
+
     <!-- Card 2: Expenses -->
       <div class="card summary-card">
         <div class="card-body bg-light text-center position-relative">
@@ -66,35 +63,41 @@
         </div>
       </div>
   
-
-    <!-- Card 3: Profit -->
       <div class="card summary-card">
-        <div class="card-body bg-light text-center">
+        <div class="card-body bg-white text-center position-relative">
           <h5 class="my-2">
-           <i class="fa fa-business-time text-success me-1 "></i> Profit
+            <i class="fa fa-chart-bar text-primary me-2"></i>Profit
             <button (click)="toggleVisibility('profit')" class="toggle-btn">
               <i class="fa" [ngClass]="{ 'fa-eye': showProfit, 'fa-eye-slash': !showProfit }"></i>
             </button>
           </h5>
           <div><hr></div>
-           <div> <strong *ngIf="showProfit" class="display-6 text-success">{{ (totalSalesAmount - totalExpensesAmount) | currency: 'Kes.' }}</strong>
-            <strong *ngIf="!showProfit" class="text-muted">----</strong>
+          <div>
+            <strong 
+              [ngClass]="{
+                'text-success': profit >= 0, 
+                'text-danger': profit < 0
+              }">
+              {{ profit | currency: 'Kes.' }}
+              <strong *ngIf="!showProfit" class="text-muted">----</strong>
+            </strong>
           </div>
-         
           <div class="progress mt-3">
-            <div class="progress-bar bg-success" [style.width.%]="ProfitProgress" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar" 
+              [ngClass]="{ 'bg-success': profit >= 0, 'bg-danger': profit < 0 }" 
+              [style.width.%]="ProfitProgress" 
+              aria-valuemin="0" 
+              aria-valuemax="100">
+            </div>
           </div>
           <div class="text-center mt-2">
             <strong>{{ ProfitProgress | number: '1.0-0' }}%</strong>
           </div>
-          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'profit']">
-            View More <i class="fa fa-arrow-right"></i>
-          </button> -->
         </div>
       </div>
-  
+      
 
-    <div class="card summary-card">
+   <div class="card summary-card">
       <div class="card-body bg-light text-center">
         <div class="d-flex justify-content-between">
           <h5 class="my-2"><i class="fa fa-dove text-warning me-2">
@@ -215,10 +218,9 @@
           </table>
         </div>
 
-
-        <div class="pagination-controls d-flex justify-content-center mt-4 mb-5">
+        <div class="pagination-controls mt-2 mb-4">
           <button (click)="previousPage()" class="btn btn-outline-success">Previous</button>
-          <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+          <span >Page {{ currentPage }} of {{ totalPages }}</span>
           <button (click)="nextPage()" class="btn btn-outline-success">Next</button>
         </div>
 

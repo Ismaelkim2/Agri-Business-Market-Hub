@@ -30,12 +30,15 @@ export class ArchivedEggRecordsComponent implements OnInit {
   }
 
   @HostListener('window:resize')
-  
-  updateChartSize(): void {
-    this.viewSize = [window.innerWidth, window.innerHeight];
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
-  }
+
+updateChartSize(): void {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  this.viewSize = [width * 0.9, height * 0.4]; 
+  this.width = this.viewSize[0];
+  this.height = this.viewSize[1];
+}
+
 
   goBack(): void {
     this.location.back();

@@ -43,6 +43,8 @@ export class RecordsComponent implements OnInit {
 
   salesTarget: number = 50000;
 
+  profit: number = 0;
+
   customers: any[] = [];
 
   constructor(
@@ -63,6 +65,7 @@ export class RecordsComponent implements OnInit {
     this.fetchMortalities();
     this.calculateProgress();
     this.loadCustomers();
+    this.calculateProfit();
   }
 
 
@@ -114,13 +117,6 @@ export class RecordsComponent implements OnInit {
             beginAtZero: true,
             position: 'left',
           },
-          y1: {
-            beginAtZero: true,
-            position: 'right',
-            grid: {
-              drawOnChartArea: false,
-            },
-          },
         },
       },
     });
@@ -138,7 +134,16 @@ export class RecordsComponent implements OnInit {
   }
 
   formatChartData(data: { [month: number]: number }): number[] {
-    return Array.from({ length: 12 }, (_, i) => data[i + 1] || 0); // Months are 1-indexed
+    return Array.from({ length: 12 }, (_, i) => data[i + 1] || 0); 
+  }
+
+  calculateProfit(): void {
+    this.profit = this.totalSalesAmount - this.totalExpensesAmount;
+    this.ProfitProgress = this.calculateProfitProgress();
+  }
+
+  calculateProfitProgress(): number {
+    return (this.profit / (this.totalSalesAmount || 1)) * 100; 
   }
 
   calculateProgress(): void {

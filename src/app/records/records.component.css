@@ -173,6 +173,21 @@ th, td {
   color: white;
 }
 
+.pagination-controls {
+  margin-top: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; 
+  flex-wrap: nowrap;
+}
+
+.pagination-controls button {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
 .pagination-controls .btn-outline-success {
   border-color: #28a745;
   color: #28a745;
@@ -405,6 +420,20 @@ th, td {
     margin-left:0; 
     margin-top: 74px;
   } 
+
+  .pagination-controls {
+    gap: 5px; 
+    flex-wrap: nowrap; 
+  }
+
+  .pagination-controls button {
+    font-size: 12px; 
+    padding: 4px 8px;
+  }
+
+  .pagination-controls span {
+    font-size: 12px; 
+  }
 
   .toggle-btn {
     top: 2px;
