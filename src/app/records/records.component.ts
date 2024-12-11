@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RecordsService } from '../services/records.service';
 import { ExpenseService, ExpenseRecord } from '../services/expense.service';
 import { SalesRecord, SalesService } from '../services/sales.service';
@@ -52,7 +52,8 @@ export class RecordsComponent implements OnInit {
     private expenseService: ExpenseService,
     private salesService: SalesService,
     private mortalitiesService: MortalitiesService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private cdr: ChangeDetectorRef
   ) {
     Chart.register(...registerables);
   }
@@ -140,12 +141,15 @@ export class RecordsComponent implements OnInit {
   calculateProfit(): void {
     this.profit = this.totalSalesAmount - this.totalExpensesAmount;
     this.ProfitProgress = this.calculateProfitProgress();
+    this.cdr.detectChanges();
   }
 
   calculateProfitProgress(): number {
-    return (this.profit / (this.totalSalesAmount || 1)) * 100; 
+    return this.totalSalesAmount > 0
+      ? (this.profit / this.totalSalesAmount) * 100
+      : 0;
   }
-
+  
   calculateProgress(): void {
     if (this.salesTarget > 0) {
       this.salesProgress = (this.totalSalesAmount / this.salesTarget) * 100;
@@ -170,6 +174,7 @@ export class RecordsComponent implements OnInit {
       (records) => {
         this.salesList = records;
         this.calculateMonthlySales();
+        this.calculateProfit();
         this.updateChart();
       },
       (error) => console.error('Error fetching sales records:', error)
@@ -257,6 +262,7 @@ export class RecordsComponent implements OnInit {
     );
   }
 
+
   fetchMortalities(): void {
     this.mortalitiesService.getMortalities().subscribe(
       (records) => {
@@ -287,7 +293,6 @@ export class RecordsComponent implements OnInit {
     this.calculateMonthlyExpenses();
     this.updateChart();
   }
-
 
 
   getFilteredMonthlyRecords(): string[] {
