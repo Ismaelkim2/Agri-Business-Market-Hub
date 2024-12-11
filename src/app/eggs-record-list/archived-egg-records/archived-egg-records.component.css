@@ -1,25 +1,20 @@
 .container {
-  max-width: 100%;
-  margin: 0;
-  padding: 20px;
+  max-width: 80%;
+  padding: 16px;
   margin-left: 250px;
   margin-top: 74px;
+  background: #f9f9f9;
+  z-index: 1000;
 }
 
 .chart-container {
-  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  background: linear-gradient(135deg, #ffffff, #f4f6f8);
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 100%;
 }
 
 .responsive-chart {
-  width: 100%;
-}
-
-ngx-charts-line-chart {
-  display: block;
   width: 100%;
   height: auto;
 }
@@ -28,60 +23,63 @@ ngx-charts-line-chart {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .legend-item {
-  margin: 0 10px;
   display: flex;
   align-items: center;
+  margin: 5px 10px;
+  font-size: 0.9rem;
+  color: #333;
 }
 
 .legend-color-box {
   width: 15px;
   height: 15px;
   margin-right: 5px;
-  border: 1px solid #ccc;
-}
-
-.table-responsive {
-  overflow-x: hidden;
+  border-radius: 3px;
 }
 
 .table {
   width: 100%;
-  border-spacing: 0 8px;
+  margin-top: 20px;
+  border-spacing: 0 10px;
 }
 
 th {
-  font-weight: bold;
-  background-color: #006400;
-  color: white;
-  padding: 10px;
+  background: #006400;
+  color: #fff;
   text-align: center;
+  padding: 12px;
 }
 
 td {
-  background: white;
+  background: #ffffff;
   text-align: center;
   padding: 10px;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-view {
-  background-color: transparent;
+  background: transparent;
   border: none;
-  color: rgb(116, 226, 144);
+  color: #1e90ff;
   cursor: pointer;
 }
 
 .btn-view:hover {
-  color: forestgreen;
+  color: #0056b3;
 }
 
 .modal-content {
   border-radius: 15px;
-  padding: 20px;
+}
+
+.modal-header {
+  background: #006400;
+  color: #fff;
 }
 
 .modal-body {
@@ -89,35 +87,60 @@ td {
   overflow-y: auto;
 }
 
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-eggs {
+  font-size: 1.1rem;
+  color: #006400;
+}
+
+.custom-close {
+  color: whitesmoke;
+  background: none;
+  border: none;
+  font-size: 2.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.custom-close:hover {
+  color: red;
+}
+
+
+
 @media (max-width: 768px) {
   .container {
     margin-left: 0;
     padding: 15px;
+    max-width: 100%;
   }
 
-  .chart-container {
-    padding: 15px;
+  .custom-legend {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .table th,
-  .table td {
+  th,
+  td {
     font-size: 0.85rem;
   }
 }
 
 @media (max-width: 576px) {
-  .modal-header h5 {
-    font-size: 1rem;
-  }
-
-  .modal-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  ngx-charts-line-chart {
-    display: block;
-    width: 100%;
+  .container {
+    padding: 10px;
     max-width: 100%;
   }
+
+  th,
+  td {
+    font-size: 0.8rem;
+  }
 }
+

@@ -1,6 +1,6 @@
 <app-sidebar></app-sidebar>
 <div class="container">
-  <div class="chart-title text-center mt-1">
+  <div class="chart-title text-center mt-3">
     <div class="d-flex align-items-center justify-content-between">
       <div (click)="goBack()" class="me-3">
         <i class="fa fa-chevron-left" title="Back" style="cursor: pointer;"></i>
@@ -12,10 +12,10 @@
         <i class="fa fa-chevron-left"></i>
       </div>
     </div>
-    <p class="text-muted">Weekly Visual representation of egg production over time</p>
+    <p class="text-muted">A Comprehensive Visual Representation of Weekly Egg Production</p>
   </div>
 
-  <div class="chart-container mt-2">
+  <div class="chart-container mt-4">
     <div class="custom-legend">
       <span *ngFor="let item of chartData" class="legend-item">
         <span class="legend-color-box" [style.background]="item.color"></span>
@@ -24,8 +24,8 @@
     </div>
 
     <div class="responsive-chart">
-      <ngx-charts-line-chart
-        [view]="[width, height]"
+      <ngx-charts-bar-vertical
+        [view]="viewSize"
         [results]="chartData"
         [xAxis]="true"
         [yAxis]="true"
@@ -33,19 +33,21 @@
         [showXAxisLabel]="true"
         [showYAxisLabel]="true"
         [xAxisLabel]="'Week Range'"
-        [yAxisLabel]="'Weekly Egg Count'"
-        [autoScale]="true"
-      ></ngx-charts-line-chart>
+        [yAxisLabel]="'Egg Count'"
+        [roundEdges]="true"
+        [animations]="true"
+      >
+      </ngx-charts-bar-vertical>
     </div>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-hover mt-1 shadow-lg rounded">
+  <div class="table-responsive mt-4">
+    <table class="table table-hover shadow-sm rounded">
       <thead>
         <tr>
-          <th title="Range of the week">Week</th>
-          <th title="Number of eggs produced">Egg Count</th>
-          <th title="Actions">Action</th>
+          <th>Week</th>
+          <th>Egg Count</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -53,39 +55,37 @@
           <td>{{ record.startOfWeek | date: 'shortDate' }} - {{ record.endOfWeek | date: 'shortDate' }}</td>
           <td>{{ record.eggsCount }}</td>
           <td>
-            <button
-              class="btn btn-sm btn-view"
-              (click)="viewPreviousWeekData(record)"
-            >
+            <button class="btn btn-sm btn-view" (click)="viewPreviousWeekData(record)">
               <i class="fa fa-eye"></i>
             </button>
+
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Modal -->
+
   <div
-    class="modal fade"
+    class="modal fade show"
     tabindex="-1"
-    [class.show]="showModal"
-    style="display: block; background: rgba(0,0,0,0.5)"
     *ngIf="showModal"
+    style="display: block; background: rgba(0,0,0,0.5);"
   >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Daily Egg Records for the Selected Week</h5>
+          
           <button
-            type="button"
-            class="btn-close"
-            aria-label="Close"
-            (click)="closeModal()"
-          >
-            &times;
-          </button>
-        </div>
+          type="button"
+          class="btn-close custom-close"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+                </div>
         <div class="modal-body">
           <table class="table table-bordered table-striped">
             <thead>
@@ -105,10 +105,9 @@
           </table>
         </div>
         <div class="modal-footer">
-          <div>
+          <div class="total-eggs">
             <i class="fa fa-egg"></i>
-            Total Eggs This Week:
-            <span>{{ getTotalEggsForWeek() }}</span>
+            <span>Total Eggs This Week: <strong>{{ getTotalEggsForWeek() }}</strong></span>
           </div>
         </div>
       </div>

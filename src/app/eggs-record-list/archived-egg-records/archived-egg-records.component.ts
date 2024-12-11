@@ -58,23 +58,12 @@ export class ArchivedEggRecordsComponent implements OnInit {
             endOfWeek: new Date(record.endOfWeek),
           }))
           .sort((a, b) => b.startOfWeek.getTime() - a.startOfWeek.getTime());
-
-        this.chartData = [
-          {
-            name: 'Weekly Egg Counts',
-            series: this.previousRecords.map((record) => ({
-              name: `${record.startOfWeek.toLocaleDateString()} - ${record.endOfWeek.toLocaleDateString()}`,
-              value: record.eggsCount,
-            })),
-          },
-          {
-            name: 'Broken Eggs',
-            series: this.previousRecords.map((record) => ({
-              name: `${record.startOfWeek.toLocaleDateString()} - ${record.endOfWeek.toLocaleDateString()}`,
-              value: record.brokenEggsCount,
-            })),
-          },
-        ];
+  
+        // Prepare chartData for bar graph
+        this.chartData = this.previousRecords.map((record) => ({
+          name: `${record.startOfWeek.toLocaleDateString()} - ${record.endOfWeek.toLocaleDateString()}`,
+          value: record.eggsCount,
+        }));
       },
       (error) => {
         console.error('Error fetching previous records:', error);
@@ -82,7 +71,7 @@ export class ArchivedEggRecordsComponent implements OnInit {
       }
     );
   }
-
+  
   viewPreviousWeekData(record: WeeklyEggRecord): void {
     this.eggsRecordService.getDailyRecordsForWeek(record.startOfWeek, record.endOfWeek).subscribe({
       next: (data) => {
