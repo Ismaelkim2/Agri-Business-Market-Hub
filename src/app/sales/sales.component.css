@@ -191,11 +191,11 @@ tbody tr:hover {
 }
 
 
-.total-expenses {
+.total-sales {
   text-align: center;
   font-size: 1.2rem;
   font-weight: 600;
-  margin-top: 20px;
+  margin-top: 4px;
   color: #333;
 }
 
