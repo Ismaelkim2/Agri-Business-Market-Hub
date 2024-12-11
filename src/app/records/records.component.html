@@ -77,7 +77,7 @@
               [ngClass]="{
                 'text-success': profit >= 0, 
                 'text-danger': profit < 0
-              }">
+              }" class="display-6" >
               {{ profit | currency: 'Kes.' }}
               <strong *ngIf="!showProfit" class="text-muted">----</strong>
             </strong>
