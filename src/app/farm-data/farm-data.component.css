@@ -165,15 +165,33 @@ button.btn-responsive {
   transform: scale(1.05);
 }
 
-.pagination-controls .btn {
-  padding: 5px 20px;
-}
 
 .pagination-controls {
+  margin-top: 2px;
+  margin-bottom: 60px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 10px; 
+  flex-wrap: nowrap;
 }
+
+.pagination-controls button {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+.pagination-controls .btn-outline-success {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.pagination-controls .btn-outline-success:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
 
 .notification {
   color: #22c922;
@@ -317,15 +335,6 @@ button.btn-responsive {
     border-radius: 8px;
   }
 
-  .pagination-controls {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .pagination-controls .btn {
-    width: 100%;
-    margin-top: 5px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -376,7 +385,7 @@ button.btn-responsive {
     padding: 0.4rem 1.2rem;
   }
 
-  .btn,
+  
   .add-record-btn {
     width: 100%;
     margin-top: 8px;
@@ -389,4 +398,19 @@ button.btn-responsive {
   .card-header h5 {
     font-size: 1rem;
   }
+
+  .pagination-controls {
+    gap: 5px; 
+    flex-wrap: nowrap; 
+  }
+
+  .pagination-controls button {
+    font-size: 12px; 
+    padding: 4px 8px;
+  }
+
+  .pagination-controls span {
+    font-size: 12px; 
+  }
+
 }

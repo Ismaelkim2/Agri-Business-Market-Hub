@@ -102,11 +102,13 @@
         </table>
       </div>
 
-      <div class="pagination-controls mt-3  mb-5 d-flex justify-content-center align-items-center">
+      <div class="pagination-controls mt-3">
         <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-        <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+        <span >Page {{ currentPage }} of {{ totalPages }}</span>
         <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
       </div>
+
+
     </div>
 
     <div *ngIf="!filteredPoultryRecords || filteredPoultryRecords.length === 0" class="alert alert-info text-center">
