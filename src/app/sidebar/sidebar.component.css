@@ -110,6 +110,22 @@
   color: #2C3E50 !important;
 }
 
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  top: 50px;
+  right: 0;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 300px;
+}
+
 
 .notifications .notification-bell {
   width: 40px;
@@ -163,6 +179,19 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.notification-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+.notification-list {
+  transition: opacity 0.3s ease-in-out;
+}
+
 
 .logo-image {
   width: 65px;
@@ -181,6 +210,43 @@
   margin-bottom: 0; 
 }
 
+.search-section{
+  height: 52px;
+}
+
+.search i {
+  font-size: 20px; 
+  color: #333; 
+  margin: 0;
+}
+
+.search:hover {
+  background-color: #ddd;
+  border-color: #aaa;
+}
+
+.search-text {
+  font-size: larger;
+  color: green;
+  text-align: center;
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px; 
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+
+
 .vertical-line {
   height: 100%;
   width: 1px; 
@@ -194,7 +260,7 @@
 
 .text-white {
   color: white;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: bold;
 }
 
@@ -489,6 +555,21 @@
   .bottom-navbar .nav-link span {
     font-size: 0.75rem;
   }
+
+  .search-text {
+    font-size: 1rem; 
+    margin-bottom: 10px !important; 
+    height: 5px;
+    font-size: small;
+  }
+
+
+  .search-icon{
+    height: 40px;
+    width: 40px;
+  }
+
+  
 
 }
 

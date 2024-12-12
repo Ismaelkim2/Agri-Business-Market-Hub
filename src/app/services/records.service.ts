@@ -75,6 +75,8 @@ export class RecordsService {
   private weeklySummarySubject = new BehaviorSubject<WeeklySummary[]>([]);
   weeklySummary$ = this.weeklySummarySubject.asObservable();
 
+  private recentActivitiesSubject = new BehaviorSubject<string[]>([]);
+
   private apiUrl = `${environment.apiUrl}/api/records`;
 
   recentActivities$ = this.birdRecords$.pipe(
@@ -91,6 +93,15 @@ export class RecordsService {
 
   constructor(private http: HttpClient) {
     this.fetchBirdRecords();
+  }
+
+  addActivity(activity: string): void {
+    const currentActivities = this.recentActivitiesSubject.getValue();
+    this.recentActivitiesSubject.next([...currentActivities, activity]);
+  }
+
+  clearRecentActivities(): void {
+    this.recentActivitiesSubject.next([]);
   }
 
   getBirdRecords(): Observable<BirdRecord[]> {
