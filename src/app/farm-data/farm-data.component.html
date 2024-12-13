@@ -55,54 +55,43 @@
           </thead>
           <tbody>
             <tr 
-              *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index"
-              [ngClass]="{'table-warning': isEditing && poultryIndex === i}">
-              <ng-container *ngIf="!isEditing || poultryIndex !== i; else editForm">
-                <td>{{ formatDate(record.date) }}</td>
-                <td>{{ record.count }}</td>
-                <td>{{ calculateDescriptiveAge(record.date) }}</td>
-                <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
-                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
-                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
-                <td>
-                  <span [ngClass]="{ 'text-success': !record.sold, 'text-danger': record.sold }">
-                    {{ record.sold ? 'Yes ✓' : 'No' }}
-                  </span>
-                </td>
-                <td>
-                  <div class="d-flex">
-                    <button class="btn btn-warning btn-sm me-2" (click)="onEditFarm(i)" data-bs-toggle="tooltip" title="Edit record">
-                      <i class="fa fa-pen"></i>
-                    </button>
-                    <button *ngIf="!record.sold" class="btn btn-success btn-sm" (click)="onSellBird(i)" data-bs-toggle="tooltip" title="Make a sale">
-                      Sell
-                    </button>
-                    <button *ngIf="record.sold" class="btn btn-danger btn-sm" (click)="onDeleteBird(i)" data-bs-toggle="tooltip" title="Delete record">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </ng-container>
-
-              <ng-template #editForm>
-                <td><input [(ngModel)]="record.date" type="date" class="form-control" /></td>
-                <td><input [(ngModel)]="record.count" type="number" class="form-control" /></td>
-                <td>{{ calculateDescriptiveAge(record.date) }}</td>
-                <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
-                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
-                <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
-                <td><input [(ngModel)]="record.mortalities" type="number" class="form-control" /></td>
-                <td>
-                  <button class="btn btn-primary btn-sm" (click)="onSaveChanges(i)">Save</button>
-                  <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
-                </td>
-              </ng-template>
+              *ngFor="let record of filteredPoultryRecords | slice:(currentPage-1)*itemsPerPage:(currentPage*itemsPerPage); let i = index">
+              <td>{{ formatDate(record.date) }}</td>
+              <td>{{ record.count }}</td>
+              <td>{{ calculateDescriptiveAge(record.date) }}</td>
+              <td>{{ getFeedType(calculateAgeInDays(record.date)) }}</td>
+              <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).vaccine }}</td>
+              <td>{{ getNextVaccine(calculateAgeInDays(record.date), record.date).date }}</td>
+              <td>
+                <span [ngClass]="{ 'text-success': !record.sold, 'text-danger': record.sold }">
+                  {{ record.sold ? 'Yes ✓' : 'No' }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex">
+                  <button
+                    class="btn btn-warning btn-sm me-2"
+                    (click)="onEditFarm(record, i)"
+                    data-bs-toggle="tooltip"
+                    title="Edit record"
+                  >
+                    <i class="fa fa-pen"></i>
+                  </button>
+                  <button *ngIf="!record.sold" class="btn btn-success btn-sm" (click)="onSellBird(i)" data-bs-toggle="tooltip" title="Make a sale">
+                    Sell
+                  </button>
+                  <button *ngIf="record.sold" class="btn btn-danger btn-sm" (click)="onDeleteBird(i)" data-bs-toggle="tooltip" title="Delete record">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
+          
         </table>
       </div>
 
-      <div class="pagination-controls mt-3">
+      <div class="pagination-controls mt-2">
         <button class="btn btn-outline-success" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
         <span >Page {{ currentPage }} of {{ totalPages }}</span>
         <button class="btn btn-outline-success" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
@@ -170,3 +159,56 @@
     </div>
   </div>
 </div>
+
+<div class="modal" [ngClass]="{'show': isModalOpen}" tabindex="-1" role="dialog" *ngIf="isModalOpen" @modalAnimation>
+  <div class="modal-dialog modal-bottom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-plus"></i> Edit Record</h5>
+        <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true" style="color: red;font-weight: bold;cursor: pointer;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveEdit()">
+          <div class="form-group">
+            <label for="hatchDate">Hatch Date:</label>
+            <input
+              id="hatchDate"
+              type="date"
+              class="form-control"
+              [(ngModel)]="formData.hatchDate"
+              name="hatchDate"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="birdType">Bird Type:</label>
+            <input
+              id="birdType"
+              type="text"
+              class="form-control"
+              [(ngModel)]="formData.birdType"
+              name="birdType"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="birdCount">Bird Count:</label>
+            <input
+              id="birdCount"
+              type="number"
+              class="form-control"
+              [(ngModel)]="formData.birdCount"
+              name="birdCount"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->

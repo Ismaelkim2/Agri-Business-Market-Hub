@@ -75,16 +75,21 @@
           <div>
             <strong 
               [ngClass]="{
-                'text-success': profit >= 0, 
-                'text-danger': profit < 0
+                'text-success': profit > 0, 
+                'text-danger': profit < 0,
+                'text-muted': !showProfit
               }" class="display-6" >
-              {{ profit | currency: 'Kes.' }}
-              <strong *ngIf="!showProfit" class="text-muted">----</strong>
+              <span *ngIf="showProfit">{{ profit | currency: 'KES' }}</span>
+              <span *ngIf="!showProfit" class="text-muted">----</span>
             </strong>
           </div>
           <div class="progress mt-3">
             <div class="progress-bar" 
-              [ngClass]="{ 'bg-success': profit >= 0, 'bg-danger': profit < 0 }" 
+              [ngClass]="{ 
+                'bg-success': profit > 0, 
+                'bg-danger': profit < 0,
+                'bg-muted': profit === 0
+              }" 
               [style.width.%]="ProfitProgress" 
               aria-valuemin="0" 
               aria-valuemax="100">
@@ -95,7 +100,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="card summary-card">
         <div class="card-body bg-light text-center">
           <div class="d-flex justify-content-between">

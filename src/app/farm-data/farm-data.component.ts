@@ -32,7 +32,7 @@ declare var bootstrap: any;
 })
 
 export class FarmDataComponent implements OnInit, OnDestroy {
-  formData: any = {};
+  formData: Partial<BirdRecord> = {};
   isEditMode: boolean = false;
   selectedIndex: number = -1;
   isModalOpen = false;
@@ -62,6 +62,7 @@ export class FarmDataComponent implements OnInit, OnDestroy {
     role:''
     
   };
+
 
   birdRecords: BirdRecord[] = [];
   dailyRecords: DailyRecord[] = [];
@@ -209,6 +210,19 @@ export class FarmDataComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  openEditModal(record: BirdRecord, index: number): void {
+    this.isEditMode = true;
+    this.formData = { ...record };
+    this.poultryIndex = index;
+    this.isEditing = true;
+
+    const modalElement = document.getElementById('editModal');
+    if (modalElement) {
+      const modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
+  }
   
   openAddModal() {
     this.isEditMode = false;
@@ -216,73 +230,132 @@ export class FarmDataComponent implements OnInit, OnDestroy {
     this.isModalOpen = true;
   }
 
-  openEditModal(record: any, index: number) {
-    this.isEditMode = true;
-    this.selectedIndex = index;
-    this.formData = { ...record }; 
-    this.isModalOpen = true;
+  onEditFarm(record: BirdRecord, index: number): void {
+    const recordIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+    this.formData = { ...this.filteredPoultryRecords[recordIndex] }; 
+    this.isEditing = true;
+    this.poultryIndex = recordIndex;
+    this.isModalOpen = true;  
+  }
+  
+  
+  saveChanges(): void {
+    if (this.isEditing && this.formData.id) {
+      this.recordsService.updateBirdRecord(this.formData as BirdRecord).subscribe(
+        (updatedRecord) => {
+          const index = this.birdRecords.findIndex((record) => record.id === updatedRecord.id);
+          if (index !== -1) {
+            this.birdRecords[index] = updatedRecord;
+            this.filteredPoultryRecords[index] = updatedRecord;
+          }
+          this.showNotification = true;
+          this.hideModal();
+          this.resetFormData();
+
+          setTimeout(() => (this.showNotification = false), 3000);
+        },
+        (error) => console.error('Error saving changes:', error)
+      );
+    }
   }
 
-  onEditFarm(index: number): void {
-    const recordIndex = (this.currentPage - 1) * this.itemsPerPage + index;
-    this.formData = { ...this.filteredPoultryRecords[recordIndex] };
-    this.isEditing = true;
-    this.poultryIndex = index;
-    this.recordService.updateBirdRecord(this.formData).subscribe(
-      (updatedRecord) => {
-        const currentRecords = [...this.filteredPoultryRecords];
-        currentRecords[recordIndex] = updatedRecord;  
-        this.filteredPoultryRecords = currentRecords; 
-      },
-      (error) => {
-        console.error('Failed to update bird record', error);
-      }
-    );
+  saveEdit(): void {
+    if (this.isEditing && this.poultryIndex !== null) {
+      const updatedRecord = { ...this.formData }; 
+      
+      this.recordsService.updateBirdRecord(updatedRecord as BirdRecord).subscribe(
+        (updatedRecordResponse) => {
+          // Update both global and filtered records
+          this.birdRecords[this.poultryIndex ?? 0] = updatedRecordResponse;
+  
+          const filterIndex = this.filteredPoultryRecords.findIndex(
+            (record) => record.id === updatedRecordResponse.id
+          );
+          if (filterIndex !== -1) {
+            this.filteredPoultryRecords[filterIndex] = updatedRecordResponse;
+          }
+  
+          this.isEditing = false;
+          this.poultryIndex = null;
+          this.closeModal(); 
+  
+          this.showNotification = true;
+          setTimeout(() => {
+            this.showNotification = false;
+          }, 3000); 
+        },
+        (error) => {
+          console.error('Error saving record:', error);
+          alert('Failed to save changes. Please try again.');
+        }
+      );
+    }
   }
   
-  onSaveChanges(index: number) {
-    const updatedRecord = { ...this.filteredPoultryRecords[index] };
   
-    this.recordService.updateBirdRecord(updatedRecord).subscribe(
-      (updatedRecordResponse) => {
-        this.recordService.birdRecords$.subscribe(records => {
-          this.filteredPoultryRecords = [...records]; 
-        });
   
-        this.isEditing = false;
-        this.poultryIndex = null;
-        this.isSavedArray[index] = true;
-        this.showNotification = true;
-  
-        this.cd.detectChanges();
-  
-        setTimeout(() => {
-          this.showNotification = false;
-        }, 2000); 
-      },
-      (error) => {
-        console.error('Error updating record:', error);
-      }
-    );
+  resetEditMode() {
+    this.formData = {};
+    this.isEditMode = false;
+    this.selectedIndex = -1;
+    const modalElement = document.getElementById('editModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
   }
+  
+
+  showModal(): void {
+    const modalElement = document.getElementById('editModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  hideModal(): void {
+    const modalElement = document.getElementById('editModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+    this.resetFormData();
+  }
+  
   
   openModal() {
     console.log('Opening the modal...');
     this.isModalOpen = true;
   }
   
-
   toggleModal() {
-    this.isModalOpen = !this.isModalOpen; 
-    console.log('Modal is now', this.isModalOpen ? 'open' : 'closed');
+    this.isModalOpen = !this.isModalOpen;
+    if (this.isModalOpen) {
+      setTimeout(() => {
+        const modal = document.getElementById('editModal');
+        if (modal) {
+          modal.focus();
+        }
+      }, 0);
+    }
   }
 
-
-  closeModal() {
-    this.isModalOpen = false;
+  closeModal(): void {
+    const modalElement = document.getElementById('editModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+    this.resetFormData();
   }
-
- 
+  
+  resetFormData(): void {
+    this.formData = {}; 
+    this.isEditing = false;
+    this.poultryIndex = null;
+  }
+  
   calculateAgeInDays(date: string): number {
     const hatchDate = new Date(date);
     const today = new Date();

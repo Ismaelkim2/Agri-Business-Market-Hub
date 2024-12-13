@@ -152,13 +152,13 @@
   font-size: 1.2rem;
 }
 
-@keyframes vibration {
+/* @keyframes vibration {
   0% { transform: translateX(0); }
   25% { transform: translateX(-2px); }
   50% { transform: translateX(2px); }
   75% { transform: translateX(-2px); }
   100% { transform: translateX(2px); }
-}
+} */
 
 .vibrating {
   animation: vibration 0.3s ease-in-out infinite;
@@ -544,11 +544,11 @@
   }
 
   .bottom-navbar .nav-item {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .bottom-navbar .nav-link i {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .bottom-navbar .nav-link span {
@@ -599,5 +599,13 @@
 
   .btn-sm-sm .badge {
     font-size: 18px !important; 
+  }
+
+  .bottom-navbar .nav-item {
+    font-size: 12px;
+  }
+
+  .bottom-navbar .nav-link i {
+    font-size: 22px;
   }
 }

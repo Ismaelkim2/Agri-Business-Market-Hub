@@ -58,11 +58,11 @@
             <td>{{ expense.expenseType }}</td>
             <td>{{ expense.amount | currency: 'KES' }}</td>
             <td>{{ expense.notes }}</td>
-            <td class="action-icons text-center">
+            <td class="action-icons text-center justify-content-between">
               <button (click)="onEdit(expense, expenseModal)" class="btn btn-link p-0" data-bs-toggle="tooltip" title="Edit Sale" >
-                <i class="fa fa-edit text-secondary"></i>
+                <i class="fa fa-edit text-warning"></i>
               </button>
-              <button class="ms-1 btn btn-link p-0" (click)="onDeleteExpense(expense)" data-bs-toggle="tooltip" title="Delete Sale" >
+              <button class="ms-1 btn btn-link p-0 ms-2" (click)="onDeleteExpense(expense)" data-bs-toggle="tooltip" title="Delete Sale" >
                 <i class="fa fa-trash text-danger"></i>
               </button>
             </td>

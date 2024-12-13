@@ -143,12 +143,18 @@ export class RecordsComponent implements OnInit {
     this.ProfitProgress = this.calculateProfitProgress();
     this.cdr.detectChanges();
   }
+  
 
-  calculateProfitProgress(): number {
-    return this.totalSalesAmount > 0
-      ? (this.profit / this.totalSalesAmount) * 100
-      : 0;
+ 
+calculateProfitProgress(): number {
+  if (this.profit > 0) {
+    return (this.profit / this.totalSalesAmount) * 100;
+  } else if (this.profit < 0) {
+    return (this.profit / this.totalSalesAmount) * 100; 
+  } else {
+    return 0;
   }
+}
   
   calculateProgress(): void {
     if (this.salesTarget > 0) {
@@ -162,11 +168,11 @@ export class RecordsComponent implements OnInit {
       this.salesProgress = Math.min(this.salesProgress, 100);
     }
 
-    const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
-    if (totalAmount > 0) {
-      this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
-      this.ProfitProgress = Math.min(this.ProfitProgress, 100);
-    }
+    // const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
+    // if (totalAmount > 0) {
+    //   this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
+    //   this.ProfitProgress = Math.min(this.ProfitProgress, 100);
+    // }
   }
 
   fetchSalesRecords(): void {

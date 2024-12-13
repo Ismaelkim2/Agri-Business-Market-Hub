@@ -53,11 +53,11 @@
           <td>{{ sale.date | date: 'mediumDate' }}</td>
           <td>{{ sale.birdType }}</td>
           <td>{{ sale.sales | currency: 'KES' }}</td>
-          <td>
-            <button (click)="onEdit(i, salesModal)" class="action-button ms-1"  data-bs-toggle="tooltip" title="Edit Sale" >
-              <i class="fa fa-edit text-secondary"></i>
+          <td class="action-icons text-center justify-content-between">
+            <button (click)="onEdit(i, salesModal)" class="btn btn-link p-0"  data-bs-toggle="tooltip" title="Edit Sale" >
+              <i class="fa fa-edit text-warning"></i>
             </button>
-            <button (click)="onDeleteClick(sale)" class="action-button ms-1" data-bs-toggle="tooltip" title="Delete Sale" >
+            <button (click)="onDeleteClick(sale)" class="btn btn-link p-0 ms-2" data-bs-toggle="tooltip" title="Delete Sale" >
               <i class="fa fa-trash text-danger"></i>
             </button>
           </td>
