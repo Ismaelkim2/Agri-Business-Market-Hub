@@ -95,7 +95,29 @@
           </div>
         </div>
       </div>
-      
+
+      <div class="card summary-card">
+        <div class="card-body bg-light text-center">
+          <div class="d-flex justify-content-between">
+           <h5 class="my-2">
+            <i class="fa fa-people-roof text-dark me-2"></i>CUST
+              <button (click)="toggleVisibility('totalBirds')" class="toggle-btn">
+                <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
+              </button>
+          </h5>
+          </div>
+          <div><hr></div>
+          <h5 class="mt-1">
+            <strong *ngIf="showTotalBirds" class="display-6 fw-bold">{{totalCustomers}} <i class="fa fa-check-to-slot text-success"></i></strong>
+            <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
+          </h5>
+    
+          <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
+            View More <i class="fa fa-arrow-right"></i>
+          </button>
+       -->
+        </div>
+      </div>
 
    <div class="card summary-card">
       <div class="card-body bg-light text-center">
@@ -136,30 +158,6 @@
           <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
         </h5>
   
-      </div>
-    </div>
- 
-    
-    <div class="card summary-card">
-      <div class="card-body bg-light text-center">
-        <div class="d-flex justify-content-between">
-         <h5 class="my-2">
-          <i class="fa fa-people-roof text-dark me-2"></i>CUST
-            <button (click)="toggleVisibility('totalBirds')" class="toggle-btn">
-              <i class="fa" [ngClass]="{ 'fa-eye': showTotalBirds, 'fa-eye-slash': !showTotalBirds }"></i>
-            </button>
-        </h5>
-        </div>
-        <div><hr></div>
-        <h5 class="mt-1">
-          <strong *ngIf="showTotalBirds" class="display-6 fw-bold">{{totalCustomers}} <i class="fa fa-check-to-slot text-success"></i></strong>
-          <strong *ngIf="!showTotalBirds" class="text-muted">----</strong>
-        </h5>
-  
-        <!-- <button class="btn btn-outline-primary mt-3" [routerLink]="['/details', 'birds']">
-          View More <i class="fa fa-arrow-right"></i>
-        </button>
-     -->
       </div>
     </div>
   </div>

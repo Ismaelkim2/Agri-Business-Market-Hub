@@ -13,6 +13,8 @@ body {
   padding: 10px 20px;
   border-bottom: 1px solid #ddd;
   margin-left: 250px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .hello-admin-container h3 {
@@ -241,6 +243,23 @@ th, td {
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
+
+
+  .hello-admin-container {
+    margin-left: 0;
+    max-width: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   }
+ 
+   .hello-admin-container h3 {
+     margin: 0;
+     font-size: 1.4rem; 
+     text-align: center;
+   }
+
   .grid-container {
     grid-template-columns: repeat(3, 1fr); 
   }
@@ -311,6 +330,22 @@ th, td {
 }
 
 @media (max-width: 767px) {
+
+  .hello-admin-container {
+    margin-left: 0;
+    max-width: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   }
+ 
+   .hello-admin-container h3 {
+     margin: 0;
+     font-size: 1.2rem; 
+     text-align: center;
+   }
+
   .grid-container {
     grid-template-columns: repeat(3, 1fr); 
     grid-gap: 10px;
@@ -397,6 +432,17 @@ th, td {
   
   .hello-admin-container {
    margin-left: 0;
+   max-width: 100%;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+  }
+
+  .hello-admin-container h3 {
+    margin: 0;
+    font-size: 1rem; 
+    text-align: center;
   }
   
 
