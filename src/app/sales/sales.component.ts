@@ -21,7 +21,7 @@ export class SalesComponent implements OnInit {
   editIndex: number | null = null;
   salesList: SalesRecord[] = [];
   filteredSalesList: SalesRecord[] = [];
-  pageSize = 5;
+  pageSize = 6;
   currentPage = 1;
   totalPages = 1;
   currentSalesPage: SalesRecord[] = [];

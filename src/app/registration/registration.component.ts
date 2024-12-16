@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 
+
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',

@@ -67,6 +67,7 @@ export class RecordsComponent implements OnInit {
     this.calculateProgress();
     this.loadCustomers();
     this.calculateProfit();
+    this.calculateProfitProgress();
   }
 
 
@@ -140,7 +141,6 @@ export class RecordsComponent implements OnInit {
 
   calculateProfit(): void {
     this.profit = this.totalSalesAmount - this.totalExpensesAmount;
-    this.ProfitProgress = this.calculateProfitProgress();
     this.cdr.detectChanges();
   }
   
@@ -168,11 +168,11 @@ calculateProfitProgress(): number {
       this.salesProgress = Math.min(this.salesProgress, 100);
     }
 
-    // const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
-    // if (totalAmount > 0) {
-    //   this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
-    //   this.ProfitProgress = Math.min(this.ProfitProgress, 100);
-    // }
+    const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
+    if (totalAmount > 0) {
+      this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
+      this.ProfitProgress = Math.min(this.ProfitProgress, 100);
+    }
   }
 
   fetchSalesRecords(): void {

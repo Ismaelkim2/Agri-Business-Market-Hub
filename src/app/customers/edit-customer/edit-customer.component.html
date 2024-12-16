@@ -49,11 +49,11 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="image" class="form-label">Image</label>
-          <!-- Existing Image Preview -->
+         
           <div *ngIf="customer.image" class="mb-3">
             <img [src]="customer.image" alt="Customer Image" class="img-thumbnail" style="max-width: 150px;">
           </div>
-          <!-- File Input for New Image -->
+    
           <input
             type="file"
             id="image"

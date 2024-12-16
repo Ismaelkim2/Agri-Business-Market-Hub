@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { Worker, WorkersService } from '../services/workers.service';
 import { environment } from '../../environments/environment.prod';
 
+
+
 @Component({
   selector: 'app-workers',
   templateUrl: './workers.component.html',

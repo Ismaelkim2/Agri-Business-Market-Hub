@@ -3,6 +3,7 @@ import { CustomerService } from '../services/customer.service';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 
+
 @Component({
     selector: 'app-customers',
     templateUrl: './customers.component.html',
@@ -34,7 +35,7 @@ export class CustomersComponent implements OnInit {
         this.customerService.getCustomers().subscribe(data => {
             this.customers = data.map(customer => ({
                 ...customer,
-                image: `${this.baseUrl}/${customer.image.replace(/\\/g, '/')}` 
+                image: customer.image?.replace(/\\/g, '/')
             }));
         });
     }

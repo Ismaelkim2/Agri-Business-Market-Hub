@@ -64,12 +64,13 @@
           <div class="user-info d-flex flex-column align-items-center ms-3"  routerLink="/settings">
             <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
               <img 
-                [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
-                alt="User Image" 
-                class="user-photo rounded-circle" 
-                (error)="onImageError($event)" 
-                routerLink="/settings"
-              >
+              [src]="loggedInUser.userImageUrl ? loggedInUser.userImageUrl : ''" 
+              alt="User Image" 
+              class="user-photo rounded-circle" 
+              (error)="onImageError($event)" 
+              routerLink="/settings"
+              style="width: 50px; height: 50px; object-fit: cover;">
+            
             </ng-container>
             
             <ng-template #defaultIcon>
@@ -180,13 +181,13 @@
              
               <ng-container *ngIf="!imageError && loggedInUser?.userImageUrl; else defaultIcon">
                 <img 
-                  [src]="loggedInUser.userImageUrl ? environment.apiUrl + '/' + loggedInUser.userImageUrl.replace('\\', '/') : ''" 
-                  alt="User Image" 
-                  class="user-photo rounded-circle" 
-                  (error)="onImageError($event)" 
-                  routerLink="/settings"
-                  style="width: 50px; height: 50px; object-fit: cover;"
-                >
+  [src]="loggedInUser.userImageUrl ? loggedInUser.userImageUrl : ''" 
+  alt="User Image" 
+  class="user-photo rounded-circle" 
+  (error)="onImageError($event)" 
+  routerLink="/settings"
+  style="width: 50px; height: 50px; object-fit: cover;">
+
               </ng-container>
           
               <ng-template #defaultIcon>

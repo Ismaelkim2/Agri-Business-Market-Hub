@@ -1,38 +1,25 @@
 <div class="layout">
-  <app-sidebar></app-sidebar>
-
-  <div class="main-content container-fluid">
-    <div class=" navigations d-flex justify-content-between align-items-center position-relative">
+    <app-sidebar></app-sidebar>
   
-      <div (click)="goBack()" class="back-btn">
-          <i class="fa fa-arrow-left" title="Back"></i>
+    <div class="main-content container-fluid">
+      <div class="navigations d-flex justify-content-between align-items-center position-relative">
+        <div (click)="goBack()" class="back-btn">
+            <i class="fa fa-arrow-left" title="Back"></i>
+        </div>
+  
+        <button class="btn btn-success add-worker-btn mt-4" data-bs-toggle="collapse" data-bs-target="#addWorkerForm">
+            <i class="fa fa-plus"></i> Add Worker
+        </button>
       </div>
-
-      <button class="btn btn-success add-worker-btn mt-4" data-bs-toggle="collapse" data-bs-target="#addWorkerForm">
-          <i class="fa fa-plus"></i> Add Worker
-      </button>
-  </div>
-
+  
       <div *ngIf="saveSuccess" class="alert alert-success save-message">
           <i class="fa fa-check-circle"></i> Worker details saved successfully!
       </div>
-
-      <!-- <div class="d-flex justify-content-center w-100 mb-3 action-buttons">
-          <button class="btn action-btn copy-btn" (click)="copyToClipboard()" title="Copy">
-              <i class="fa fa-copy"></i> Copy
-          </button>
-          <button class="btn action-btn print-btn ms-2" (click)="onPrint()" title="Print">
-              <i class="fa fa-print"></i> Print
-          </button>
-          <button class="btn action-btn share-btn ms-2" (click)="shareContent()" title="Share">
-              <i class="fa fa-share-alt"></i> Share
-          </button>
-      </div> -->
-
+  
       <div id="addWorkerForm" class="collapse card p-4">
           <app-workers-form (workerAdded)="onWorkerAdded($event)"></app-workers-form>
       </div>
-
+  
       <div *ngIf="isEditFormVisible" class="card p-4">
           <h5>Edit Worker Details</h5>
           <form #editForm="ngForm">
@@ -67,15 +54,15 @@
                   <label for="image">Worker Image:</label>
                   <input type="file" (change)="onImageFileSelected($event)" name="image" class="form-control" />
               </div>
-
+  
               <div *ngIf="editableWorker.image" class="form-group">
-                  <img [src]="baseUrl + '/' + editableWorker.image" alt="Current Worker Image" class="worker-image" />
+                  <img [src]="editableWorker.image" alt="Current Worker Image" class="worker-image" />
               </div>
-
+  
               <button (click)="onSaveWorkerChanges()" class="btn btn-primary mt-3">Save Changes</button>
           </form>
       </div>
-
+  
       <div class="table-responsive mt-4">
           <table class="table table-bordered worker-table">
               <thead>
@@ -96,7 +83,7 @@
                       <td>{{ i + 1 }}</td>
                       <td>
                           <ng-container *ngIf="worker.image && isValidImage(worker.image); else defaultImage">
-                              <img [src]="baseUrl + '/' + worker.image" alt="Worker Image" class="worker-image" (error)="imageError($event)" />
+                              <img [src]="worker.image" alt="Worker Image" class="worker-image" (error)="imageError($event)" />
                           </ng-container>
                           <ng-template #defaultImage>
                               <i class="fa fa-user worker-image"></i>
@@ -124,5 +111,6 @@
               </tbody>
           </table>
       </div>
+    </div>
   </div>
-</div>
+  
