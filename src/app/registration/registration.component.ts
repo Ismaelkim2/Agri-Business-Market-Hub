@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 
-
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -50,26 +48,24 @@ export class RegistrationComponent {
 
     this.http.post(`${apiUrl}/api/user/create`, formData).subscribe(
       (response: any) => {
-        this.formData = { firstName: '', lastName: '', email: '', phoneNumber: '', password: '', above18: false, createdBy: 'self', userImage: null };
-        this.error = '';
+        this.resetForm();
         this.success = 'Registration successful. Redirecting to login...';
-        setTimeout(() => {
-          this.success = '';
-          this.router.navigate(['/login']);
-        }, 3000);
+        setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       (error) => {
-        this.error = error.status === 409 ? 'Phone number is already registered. Redirecting to login...' : 'Registration failed. Please try again.';
-        setTimeout(() => { this.error = ''; }, 2000);
-        setTimeout(() => { this.router.navigate(['/login']); }, 3000);
+        if (error.status === 409) {
+          this.error = 'Phone number is already registered. Please use a different phone number.';
+        } else {
+          this.error = 'Registration failed. Please try again.';
+        }
+        setTimeout(() => { this.error = ''; }, 3000);
       }
     ).add(() => this.loading = false);
   }
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formData.userImage = file;
+      this.formData.userImage = event.target.files[0];
     }
   }
 
@@ -80,19 +76,19 @@ export class RegistrationComponent {
 
     if (!phoneNumberPattern.test(this.formData.phoneNumber)) {
       this.error = 'Please enter a valid phone number with at least 10 digits.';
-      setTimeout(() => { this.error = ''; }, 2000);
+      this.clearError();
       return false;
     }
 
     if (!emailPattern.test(this.formData.email)) {
       this.error = 'Please enter a valid email address.';
-      setTimeout(() => { this.error = ''; }, 2000);
+      this.clearError();
       return false;
     }
 
     if (!passwordPattern.test(this.formData.password)) {
       this.error = 'Password must contain both letters and numbers and be at least 6 characters long.';
-      setTimeout(() => { this.error = ''; }, 2000); 
+      this.clearError();
       return false;
     }
 
@@ -101,5 +97,22 @@ export class RegistrationComponent {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  private clearError() {
+    setTimeout(() => { this.error = ''; }, 3000);
+  }
+
+  private resetForm() {
+    this.formData = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      above18: false,
+      createdBy: 'self',
+      userImage: null
+    };
   }
 }
