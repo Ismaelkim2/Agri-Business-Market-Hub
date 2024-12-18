@@ -11,6 +11,9 @@ import { environment } from '../../environments/environment.prod';
   styleUrls: ['./workers.component.css']
 })
 export class WorkersComponent implements OnInit {
+
+  imageUrl: string = `https://res.cloudinary.com/${environment.cloudinaryUrl}/image/upload`;
+
   workers: Worker[] = [];
   editableWorker: Worker = {
     id: 0,
@@ -44,6 +47,11 @@ export class WorkersComponent implements OnInit {
     iconElement.classList.add('fa', 'fa-user', 'worker-image');
     event.target.replaceWith(iconElement);
   }
+
+  getImageUrl(image: string): string {
+    return image.startsWith('http') ? image : `${this.imageUrl}/${image}`;
+  }
+  
   
   loadWorkers() {
     this.workersService.loadWorkers();
@@ -61,7 +69,7 @@ export class WorkersComponent implements OnInit {
       this.workersService.saveWorker(newWorker, this.selectedImageFile).subscribe(() => {
         this.displaySaveMessage();
         this.selectedImageFile = null;
-        this.loadWorkers(); // Refresh worker list
+        this.loadWorkers();
       });
     }
   }

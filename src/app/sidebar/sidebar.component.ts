@@ -69,10 +69,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
           console.log("User Details:", user);
           this.userFirstName = user ? user.firstName : null;
           this.userImageUrl = user ? user.userImageUrl : '';
-          
           if (user && user.userImageUrl) {
-            console.log("User Image URL:", this.environment.apiUrl + '/' + user.userImageUrl.replace('\\', '/'));
+            // Use the full URL if it's already a valid Cloudinary URL or other full URLs
+            if (user.userImageUrl.startsWith('http://') || user.userImageUrl.startsWith('https://')) {
+              this.userImageUrl = user.userImageUrl;  // If already a valid URL from Cloudinary or another source
+            } else {
+              // If the image URL is just a file name (e.g., "image123.jpg"), construct the Cloudinary URL
+              this.userImageUrl = `https://res.cloudinary.com/dg70z4hug/image/upload/${user.userImageUrl}`;
+            }
+            console.log("User Image URL:", this.userImageUrl);
           }
+          
         });
       } else {
         this.userFirstName = null;

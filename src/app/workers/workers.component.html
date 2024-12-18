@@ -83,7 +83,7 @@
                       <td>{{ i + 1 }}</td>
                       <td>
                           <ng-container *ngIf="worker.image && isValidImage(worker.image); else defaultImage">
-                              <img [src]="worker.image" alt="Worker Image" class="worker-image" (error)="imageError($event)" />
+                              <img [src]="getImageUrl(worker.image)" alt="Worker Image" class="worker-image" (error)="imageError($event)" />
                           </ng-container>
                           <ng-template #defaultImage>
                               <i class="fa fa-user worker-image"></i>
