@@ -141,40 +141,29 @@ export class RecordsComponent implements OnInit {
 
   calculateProfit(): void {
     this.profit = this.totalSalesAmount - this.totalExpensesAmount;
-    this.cdr.detectChanges();
+    this.calculateProfitProgress();
   }
   
-
- 
-calculateProfitProgress(): number {
-  if (this.profit > 0) {
-    return (this.profit / this.totalSalesAmount) * 100;
-  } else if (this.profit < 0) {
-    return (this.profit / this.totalSalesAmount) * 100; 
-  } else {
-    return 0;
-  }
-}
+  calculateProfitProgress(): void {
+    if (this.totalSalesAmount > 0) {
+      this.ProfitProgress = (this.profit / this.totalSalesAmount) * 100;
+    } else {
+      this.ProfitProgress = 0;
+    }
+    }
   
   calculateProgress(): void {
-    if (this.salesTarget > 0) {
-      this.salesProgress = (this.totalSalesAmount / this.salesTarget) * 100;
-      this.salesProgress = Math.min(this.salesProgress, 100);
-    }
-
-
-    if (this.salesTarget > 0) {
-      this.expenseProgress = (this.totalExpensesAmount / this.salesTarget) * 100;
-      this.salesProgress = Math.min(this.salesProgress, 100);
-    }
-
-    const totalAmount = this.totalSalesAmount + this.totalExpensesAmount;
-    if (totalAmount > 0) {
-      this.ProfitProgress = ((this.totalSalesAmount - this.totalExpensesAmount) / totalAmount) * 100;
-      this.ProfitProgress = Math.min(this.ProfitProgress, 100);
-    }
+    this.salesProgress = this.salesTarget > 0 
+      ? Math.min((this.totalSalesAmount / this.salesTarget) * 100, 100) 
+      : 0;
+  
+    this.expenseProgress = this.salesTarget > 0 
+      ? Math.min((this.totalExpensesAmount / this.salesTarget) * 100, 100) 
+      : 0;
+    this.calculateProfitProgress();
   }
 
+  
   fetchSalesRecords(): void {
     this.salesService.SalesRecord$.subscribe(
       (records) => {
@@ -192,6 +181,7 @@ calculateProfitProgress(): number {
       (records) => {
         this.expenseRecords = records;
         this.calculateMonthlyExpenses();
+        this.calculateProfit();
         this.updateChart();
       },
       (error) => console.error('Error fetching expense records:', error)
@@ -210,8 +200,6 @@ calculateProfitProgress(): number {
         this.totalSalesAmount += record.sales;
       }
     });
-
-    console.log('Monthly sales calculated:', this.monthlySales);
     this.calculateProgress();
   }
 
@@ -228,7 +216,6 @@ calculateProfitProgress(): number {
       }
     });
 
-    console.log('Monthly expenses calculated:', this.monthlyExpenses);
     this.calculateProgress();
   }
 
@@ -262,7 +249,6 @@ calculateProfitProgress(): number {
       (records) => {
         this.birdRecords = records;
         this.totalBirds = this.birdRecords.reduce((sum, record) => sum + (record.count || 0), 0);
-        console.log('Total birds calculated:', this.totalBirds);
       },
       (error) => console.error('Error fetching bird records:', error)
     );
@@ -274,7 +260,6 @@ calculateProfitProgress(): number {
       (records) => {
         this.mortalityRecords = records;
         this.totalMortalities = this.mortalityRecords.reduce((sum, record) => sum + (record.numberOfMortalities || 0), 0);
-        console.log('Total mortalities calculated:', this.totalMortalities);
       },
       (error) => console.error('Error fetching mortality records:', error)
     );

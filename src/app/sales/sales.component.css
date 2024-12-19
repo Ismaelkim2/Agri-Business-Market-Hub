@@ -142,7 +142,7 @@ table {
 table th
  {
   font-weight: bold;
-  background-color: #006400;
+  background-color: #4CAF50;
   color: white;
   padding: 12px;
   text-align: center;
@@ -154,6 +154,7 @@ tbody td {
   padding: 10px;
   border: 1px solid #ddd;
   vertical-align: middle;
+  text-align: center;
 }
 
 tbody tr:nth-child(even) {
@@ -200,9 +201,42 @@ tbody tr:hover {
 }
 
 .modal-header {
+  display: flex;
+  justify-content:center ;
+  align-items: center;
   background-color: #28a745;
   color: white;
   padding: 10px;
+  position: relative;
+}
+
+.modal-title {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.close-section {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.vertical-line {
+  border-left: 2px solid white;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
 }
 
 .modal-body {
@@ -217,11 +251,26 @@ tbody tr:hover {
   max-width: 500px;
   margin: 0 auto;
   border-radius: 10px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .modal.show .modal-content {
   opacity: 1;
   transform: translateY(0);
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form-group {
@@ -237,7 +286,12 @@ input, .filter-container input {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .main-container {
+    margin-left: 0;
+    padding: 15px;
+  }
+
   .header {
     flex-direction: column;
     align-items: flex-start;
@@ -257,7 +311,20 @@ input, .filter-container input {
 
   .modal-content {
     width: 100%;
-    margin: 0 auto;
+    max-width: 100%;
+    
+  }
+
+  .modal-header {
+    padding: 8px;
+  }
+
+  .modal-body {
+    padding: 10px;
+  }
+
+  .close {
+    font-size: 1.2rem;
   }
 
   .filter-container {
@@ -297,9 +364,3 @@ input, .filter-container input {
   }
 }
 
-@media (max-width: 768px) {
-  .main-container {
-    margin-left: 0;
-    padding: 15px;
-  }
-}

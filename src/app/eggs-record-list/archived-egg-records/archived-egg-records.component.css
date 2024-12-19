@@ -49,14 +49,14 @@
   border-spacing: 0 10px;
 }
 
-th {
+.table th {
   background: #006400;
   color: #fff;
   text-align: center;
   padding: 12px;
 }
 
-td {
+.table td {
   background: #ffffff;
   text-align: center;
   padding: 10px;
@@ -75,16 +75,29 @@ td {
   color: #0056b3;
 }
 
+.modal-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .modal-content {
   border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
 }
 
 .modal-header {
-  background: #006400;
-  color: #fff;
+  background-color: #006400;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 15px 20px;
 }
 
 .modal-body {
+  padding: 20px;
   max-height: 60vh;
   overflow-y: auto;
 }
@@ -93,26 +106,60 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.total-eggs {
-  font-size: 1.1rem;
-  color: #006400;
+  text-align: center;
+  justify-content: center;
+  padding: 15px 20px;
+  background-color: #f1f1f1;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .custom-close {
-  color: whitesmoke;
+  font-size: 1.6rem;
+  color: white;
   background: none;
   border: none;
-  font-size: 2.1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
   font-weight: bold;
+}
+
+.custom-close:hover {
+  color: rgb(243, 70, 70);
+}
+
+.modal .table th {
+  background-color: #006400;
+  color: white;
+  text-align: center;
+  padding: 12px;
+}
+
+.modal .table td {
+  text-align: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.btn-view {
+  background: none;
+  border: none;
+  color: #1e90ff;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.custom-close:hover {
-  color: red;
+.btn-view:hover {
+  color: #0056b3;
 }
+
+.total-eggs {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #006400;
+}
+
 
 
 
@@ -128,14 +175,25 @@ td {
     align-items: center;
   }
 
-  th,
-  td {
+  .table th,
+  .table td {
     font-size: 0.85rem;
   }
 
   .responsive-chart {
     width: 100% !important;
     height: auto !important;
+  }
+
+  .modal-dialog {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .modal-body {
+    padding: 16px;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 }
 
@@ -145,14 +203,29 @@ td {
     max-width: 100%;
   }
 
-  th,
-  td {
+  .table th,
+  .table td {
     font-size: 0.8rem;
   }
 
   .responsive-chart {
     width: 100% !important;
     height: auto !important;
+  }
+
+  .modal-title {
+    font-size: 1rem;
+  }
+
+  .modal .table th,
+  .modal .table td {
+    font-size: 0.8rem;
+  }
+
+  .modal-body {
+    padding: 14px;
+    max-height: 50vh;
+    overflow-y: auto;
   }
 }
 

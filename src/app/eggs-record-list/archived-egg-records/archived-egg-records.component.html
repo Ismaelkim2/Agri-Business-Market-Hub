@@ -67,17 +67,16 @@
 
 
   <div
-    class="modal fade show"
-    tabindex="-1"
-    *ngIf="showModal"
-    style="display: block; background: rgba(0,0,0,0.5);"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Daily Egg Records for the Selected Week</h5>
-
-          <button
+  class="modal fade show"
+  tabindex="-1"
+  *ngIf="showModal"
+  style="display: block; background: rgba(0,0,0,0.5);"
+>
+  <div class="modal-dialog modal-lg modal-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Weekly Egg Records</h5>
+        <button
           type="button"
           class="btn-close custom-close"
           aria-label="Close"
@@ -85,43 +84,42 @@
         >
           &times;
         </button>
-                </div>
-        <div class="modal-body">
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Egg Count</th>
-                <th>Broken Eggs</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let record of previousWeekRecords">
-                <td>{{ record.date | date: 'fullDate' }}</td>
-                <td>{{ record.eggsCount }}</td>
-                <td>{{ record.brokenEggsCount || 'NA' }}</td>
-                <td>
-                  <button class="btn btn-sm btn-view">
-                    <i class="fa fa-eye"></i>
-                  </button>
-
-                  <button class="btn btn-sm btn-view">
-                    <i class="fa fa-trash text-danger"></i>
-                  </button>
-      
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <div class="total-eggs">
-            <i class="fa fa-egg"></i>
-            <span>Total Eggs This Week: <strong>{{ getTotalEggsForWeek() }}</strong></span>
-          </div>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Egg Count</th>
+              <th>Broken Eggs</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of previousWeekRecords">
+              <td>{{ record.date | date: 'fullDate' }}</td>
+              <td>{{ record.eggsCount }}</td>
+              <td>{{ record.brokenEggsCount || 'NA' }}</td>
+              <td>
+                <button class="btn btn-sm btn-view">
+                  <i class="fa fa-pen"></i>
+                </button>
+                <button class="btn btn-sm btn-view">
+                  <i class="fa fa-trash text-danger"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="total-eggs">
+          <i class="fa fa-egg"></i>
+           <span>Total Eggs This Week: <strong>{{ getTotalEggsForWeek() }}</strong></span>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 </div>

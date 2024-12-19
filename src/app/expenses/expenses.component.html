@@ -8,7 +8,7 @@
       </div>
       
       <div class="header-title text-center">
-        <h2 class=" fw-bold" style="color: #006400;"><i class="fa fa-cash-register"></i> Farm Expenses</h2>
+        <h2 class=" fw-bold" style="color: #39b339;"><i class="fa fa-cash-register"></i> Farm Expenses</h2>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
       <div class=" record-button d-flex justify-content-center align-items-center max-width-100">
         <button 
           class="btn d-flex align-items-center justify-content-center gap-1 fw-bold btn-responsive"
-          style="background-color:#006400;color: whitesmoke;"
+          style="background-color:#39b339;color: whitesmoke;"
           (click)="openExpenseModal(expenseModal)" data-bs-toggle="tooltip" title="Record new expense">
           <i class="fa fa-plus"></i>Record Expenses
         </button>
@@ -87,12 +87,19 @@
  
   <ng-template #expenseModal let-modal>
     <div class="modal-content">
-    <div class="modal-header bg-success">
-      <h4 class="modal-title">Record Farm Expenses</h4>
-      <button type="button ms-3" class="close text-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Record Farm Expense</h4>
+        <div class="close-section">
+          <span class="vertical-line"></span>
+          <button 
+            type="button" 
+            class="close text-danger" 
+            aria-label="Close" 
+            (click)="modal.dismiss('Cross click')">
+            &times;
+          </button>
+        </div>
+      </div>
 
     <div class="modal-body">
       <form (ngSubmit)="saveExpense()">

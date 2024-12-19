@@ -11,7 +11,7 @@ export class EditCustomerComponent implements OnInit {
   selectedImage: File | null = null;
 
   customer: any = {
-    id: null,
+    id: 0,
     name: '',
     email: '',
     phone: '',
@@ -24,7 +24,7 @@ export class EditCustomerComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
-      this.customer.image = URL.createObjectURL(file);
+      this.customer.image = URL.createObjectURL(file); 
     }
   }
 
@@ -53,10 +53,20 @@ export class EditCustomerComponent implements OnInit {
       formData.append('image', this.selectedImage); 
     }
 
-    this.customerService.updateCustomer(this.customer.id, formData).subscribe(() => {
-      this.router.navigate(['/customers']); 
-    }, error => {
-      console.error('Error updating customer:', error);
-    });
-  }
+   
+    if (!this.customer.id) {
+      console.error('Customer ID is missing!');
+      return;
+    }
+
+    this.customerService.updateCustomer(this.customer.id, formData).subscribe(
+      () => {
+        this.router.navigate(['/customers']);
+      }, 
+      (error) => {
+        console.error('Error updating customer:', error);
+      }
+    );
+}
+
 }

@@ -111,16 +111,19 @@ input[type="text"] {
 
 .mortalities-table th,
 .mortalities-table td {
-    padding: 6px;
     text-align: left;
     border-bottom: 1px solid #dee2e6;
     font-size: 14px; 
 }
 
+.mortalities-table td {
+    padding: 6px;
+}
+
 .mortalities-table th {
    
      font-weight: bold;
-     background-color: #006400;
+     background-color: #4CAF50;
      color: white;
      padding: 10px;
      text-align: center;
@@ -203,7 +206,7 @@ input[type="text"] {
     .mortalities-table th,
     .mortalities-table td {
         font-size: 12px;
-        padding: 8px;
+        padding: 6px;
     }
 
     .action-button {
@@ -217,10 +220,15 @@ input[type="text"] {
         width: 100%;
     }
 
+    .mortalities-table th{
+        font-size: 10px;
+        padding: 6px;
+    }
+
     .mortalities-table th,
     .mortalities-table td {
         font-size: 10px;
-        padding: 5px;
+        padding: 4px;
     }
 
     .container {

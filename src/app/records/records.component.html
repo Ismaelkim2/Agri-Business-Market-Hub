@@ -83,7 +83,7 @@
               <span *ngIf="!showProfit" class="text-muted">----</span>
             </strong>
           </div>
-          <div class="progress mt-3">
+          <!-- <div class="progress mt-3">
             <div class="progress-bar" 
               [ngClass]="{ 
                 'bg-success': profit > 0, 
@@ -94,9 +94,9 @@
               aria-valuemin="0" 
               aria-valuemax="100">
             </div>
-          </div>
+          </div> -->
           <div class="text-center mt-2">
-            <strong>{{ ProfitProgress | number: '1.0-0' }}%</strong>
+            (<strong> {{ ProfitProgress | number: '1.0-0' }}% </strong>)
           </div>
         </div>
       </div>

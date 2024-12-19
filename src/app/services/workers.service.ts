@@ -5,7 +5,6 @@ import { environment } from '../../environments/environment.prod';
 
 
 
-
 export interface Worker {
   id: number;
   name: string;
